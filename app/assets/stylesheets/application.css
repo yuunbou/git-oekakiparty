@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
+
+
+.signup_title {
+    font-family: 'Zen Maru Gothic', sans-serif;
+}
