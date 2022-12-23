@@ -21,3 +21,7 @@
 .signup_title {
     font-family: 'Zen Maru Gothic', sans-serif;
 }
+
+.navbar {
+  background-image: linear-gradient(to top, #37ecba 0%, #72afd3 100%);
+}

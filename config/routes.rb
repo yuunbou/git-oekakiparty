@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
 
-  #root to: 'homes#top'
+  root to: 'homes#top'
 
   devise_for :users, controllers:{
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-
+  
+  scope module: :public do
+    post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
+  end
 
 
   devise_for :admin,　controllers: {

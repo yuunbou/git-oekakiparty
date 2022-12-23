@@ -19,7 +19,15 @@
   <!-- %= else %> -->
     <div class="row">
       <div class="mx-auto">
-        <%= link_to "新規登録", 
+        <div class="group-form">
+          <%= link_to "新規登録", new_user_registration_path, class:'btn btn-Wstning' %>
+        </div>
+        <div class="group-form">
+          <%= link_to "ログイン", new_user_session_path, class:'btn btn-primary' %>
+        </div>
+        <div class="group-form">
+          <!--%= link_to "ゲストログイン" %>-->
+        </div>
       </div>
     </div>
 </div>
