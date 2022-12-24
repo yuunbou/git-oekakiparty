@@ -46,7 +46,7 @@
             <p>ログイン</p>
           </li>
           <li class="nav-item m-2">
-            <p>ゲストログイン</p>
+            <%= link_to "ゲストログイン", homes_guest_sign_in_path, method: :post, class:'btn btn-dark' %>
           </li>
         <% end %>
         </ul>

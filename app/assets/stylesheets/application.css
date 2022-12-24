@@ -18,8 +18,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
 
 
-.signup_title {
+.signup_title,.signup-text, .signin_title, .btn-lg {
     font-family: 'Zen Maru Gothic', sans-serif;
+}
+
+.btn-lg {
+  background: #589DA4;
+  color: #fff;
 }
 
 .navbar {

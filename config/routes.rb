@@ -6,9 +6,10 @@ Rails.application.routes.draw do
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-  
+
   scope module: :public do
     post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
+    resources :users, only:[:index, :show, :edit, :update]
   end
 
 
