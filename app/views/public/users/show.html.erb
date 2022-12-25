@@ -1,15 +1,19 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <%= image_tag user.get_profile_image(200,200) %> <!-- ユーザプロフィール画像-->
-      <%= link_to "プロフィール編集", edit_user_path(user), class:'btn btn-success btn-sm' %>
+      <%= image_tag @user.get_profile_image(200,200) %> <!-- ユーザプロフィール画像-->
+      <% if @user.id == current_user.id %>
+        <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
+      <% end %>
     </div>
     <div class="col-8">
       <div class="form-group">
-        <%= user.nickname %>
+        <p>ユーザー名</p>
+        <%= @user.nickname %>
       </div>
       <div class="form-group">
-        <%= user.introduction %>
+        <p>自己紹介</p>
+        <%= @user.introduction %>
       </div>
     </div>
   </div>
