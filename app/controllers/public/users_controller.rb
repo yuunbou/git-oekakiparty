@@ -22,12 +22,13 @@ class Public::UsersController < ApplicationController
   end
 
   def index
+    @users = User.all
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:nickname)
+    params.require(:user).permit(:nickname, :introduction, :profile_image)
   end
 
 end

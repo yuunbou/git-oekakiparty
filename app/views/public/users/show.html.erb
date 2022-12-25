@@ -1,12 +1,9 @@
 <div class="container">
   <div class="row">
-    <div class="col-4">
+    <div class="col-2 m-4">
       <%= image_tag @user.get_profile_image(200,200) %> <!-- ユーザプロフィール画像-->
-      <% if @user.id == current_user.id %>
-        <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
-      <% end %>
     </div>
-    <div class="col-8">
+    <div class="col-6 m-4">
       <div class="form-group">
         <p>ユーザー名</p>
         <%= @user.nickname %>
@@ -15,11 +12,23 @@
         <p>自己紹介</p>
         <%= @user.introduction %>
       </div>
+      <% if @user.id == current_user.id %>
+        <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
+      <% end %>
     </div>
   </div>
   <div class="row">
     <div class="col-11">
-
+      <h3>投稿する</h3>
+      <p>作品投稿ボタン</p>
     </div>
+  </div>
+  <div class="row">
+    <div>
+      
+    </div>
+  </div>
+  <div class="row">
+    
   </div>
 </div>
