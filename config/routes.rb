@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   scope module: :public do
     post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
     resources :users, only:[:index, :show, :edit, :update]
+    resources :posts, only:[:new, :create, :show, :edit, :update, :destroy, :index]
+    #get "/users/:id/posts" => "posts#post_index"
   end
 
 
