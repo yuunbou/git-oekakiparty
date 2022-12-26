@@ -7,8 +7,9 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_one_attached :profile_image
 
-  validates :nickname, length: { in: 2..20 }
-  validates :introduction, presence: true
+  validates :nickname,presence: true, length: { in: 2..20 }
+  validates :introduction, length: {maximum: 300 }
+  validates :email, uniqueness: true
 
 
   def get_profile_image(width, height)
