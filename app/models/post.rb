@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   
-  has_many_attached :image
+  has_many_attached :images
   belongs_to :user 
   
   enum type: { public: 0, private: 1 } 

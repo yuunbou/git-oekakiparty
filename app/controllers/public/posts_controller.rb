@@ -6,11 +6,12 @@ class Public::PostsController < ApplicationController
   end
   
   def create
-    post = Post.new(post_params)
-    post.type = "public"
+    @post = Post.new(post_params)
+    @post.type = "public"
     #投稿のタイプ（個人投稿）
+    @post.user_id = current_user.id
     if @post.save!
-        redirect_to post_path(@post.id)
+      redirect_to post_path(@post.id)
     else
         render :new
     end
@@ -35,6 +36,9 @@ class Public::PostsController < ApplicationController
   end
   
   def destroy
+    post = Post.find(params[:id])
+    post.destroy
+    redirect_to posts_path
   end
   
   def index

@@ -1,0 +1,27 @@
+<dev class="container">
+  <dev class="row">
+    <h3 class="text-center">作品投稿</h3>
+  </dev>
+  <div class="row">
+    <div class="mx-auto col-11">
+      <%= form_with model: @post, url: '/posts', method: :post do |f| %>
+        <div class="form-group">
+          <%= f.file_field :images, class: 'form-control-file text-center' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :title, "タイトル" %>
+          <%= f.text_field :title, required: true, class: 'form-control p-1' %>
+        </div>
+        <div class="form-group">
+          <%= f.text_area :caption, placeholder: "キャプション", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.radio_button :is_status, :true %>
+          <%= f.label :is_status, "公開", {value: :true, style: "desplay: inline-block"} %>
+          <%= f.radio_button :is_status, :false %>
+          <%= f.label :is_status, "非公開", {value: :false, style: "desplay: inline-block"} %>
+        </div>
+      
+    </div>
+  </div>
+</dev>
