@@ -1,0 +1,33 @@
+<% if @user.id == current_user.id && @post.is_status == false %>
+  <div class="container">
+    <div class="row">
+      <div class="mx-auto">
+        <div class="form-group">
+          <%= image_tag @post.get_images %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="mx-auto">
+        <div class="form-group">
+          <!-- 画像にユーザ詳細リンクをつける  -->
+          <%= image_tag @post.user.get_profile_image(100,100) %>
+          <p><%= @post.user.nickname %></p>
+        </div>
+        <div class="form-group">
+          <%= @post.title %>
+          <!-- タイトル -->
+        </div>
+        <div class="form-group">
+          <%= @post.caption %>
+          <!-- キャプション -->
+        </div>
+        <div class="form-group">
+          <%= post.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+          <!-- 作成日時 -->
+        </div>
+        <!-- いいね＆コメント機能を後に追加 -->
+      </div>
+    </div>
+  </div>
+<% end %>
