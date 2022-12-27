@@ -3,12 +3,6 @@ class Public::PostsController < ApplicationController
 
   def new
       @post = Post.new
-      #if @post.user == current_user
-        #render "new"
-      #else
-        #redirect_to posts_path
-      #end
-      #他人に非公開のページへ行けないようにするため
   end
 
   def create
@@ -26,6 +20,12 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @user = @post.user
+    #if @post.user == current_user
+        #render "new"
+      #else
+        #redirect_to posts_path
+      #end
+      #他人に非公開のページへ行けないようにするため
   end
 
   def edit
