@@ -20,5 +20,7 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit:[width, height]).processed
   end
 
-
+  def me?(user_id)
+    id == user_id
+  end
 end

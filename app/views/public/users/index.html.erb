@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-11 mx-auto">
+      <h2>ユーザー一覧</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mx-auto">
+      <table class="table">
+        <tbody>
+          <% @users.each do |user| %>
+          <tr>
+            <td>
+              <%= link_to user_path(user.id) do %>
+                <%= image_tag user.get_profile_image(100,100), class: "rounded-circle" %>
+              <% end %>
+            </td>
+            <td><%= user.nickname %></td>
+            <td>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,13 @@
-<% if @user.id == current_user.id && @post.is_status == false %>
+
   <div class="container">
     <div class="row">
       <div class="mx-auto">
         <div class="form-group">
-          <%= image_tag @post.get_images %>
+          <% if @post.images.attached? %>
+            <% @post.images.each do |image| %>
+              <%= image_tag image.variant(resize: '200x200') %>
+            <% end %>
+          <% end %>
           <!-- 投稿した画像 -->
         </div>
       </div>
@@ -24,7 +28,7 @@
           <!-- キャプション -->
         </div>
         <div class="form-group">
-          <%= post.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+          <%= @post.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
           <!-- 作成日時 -->
         </div>
         <!-- いいね＆コメント機能を後に追加 -->
@@ -38,4 +42,3 @@
       </div>
     </div>
   </div>
-<% end %>

@@ -1,25 +1,16 @@
-<% if @user.id == current_user.id && @post.is_status == false %>
-  <div class="card-list-container">
-    <% @posts.each do |post| %>
-    <div class="card">
-      <%= link_to post_path(post.id) do %>
-        <%= image_tag post.get_imgaes(100,100), class: "card-img-top" %>
-      <% end %>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-2">
-            <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
-          </div>
-          <div class="col-10">
-            <p class="card-title">
-              <strong><%= post.title %></strong>
-            </p>
-            <p class="card-text">
-              <%= post.caption %>
-            </p>
-          </div>
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 d-flex flex-wrap">
+      <% @posts.each do |post| %>
+      <div class="form-group col-3">
+        <%= link_to post_path(post.id) do %>
+          <%= image_tag post.images[0].variant(resize: '100x100'), class: "review-img" %>
+        <% end %>
+        <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
+        <strong><%= post.title %></strong>
+        <%= post.caption %>
       </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>

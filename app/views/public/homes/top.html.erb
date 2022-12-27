@@ -9,25 +9,26 @@
       </p>
     </div>
   </div>
-  <!-- % if user_signed_in? %>-->
+  <% if user_signed_in? %>
     <div class="row">
-      <!--<h3>新着投稿</h3>-->
+      <h3>新着投稿</h3>
       <div class="mx-auto col-11">
-        <!-- ここに新着投稿を表示 -->
+        <p>ここに新着投稿を表示</p>
       </div>
     </div>
-  <!-- %= else %> -->
+  <% else %>
     <div class="row">
       <div class="mx-auto">
         <div class="group-form">
           <%= link_to "新規登録", new_user_registration_path, class:'btn btn-Wstning' %>
         </div>
         <div class="group-form">
-          <%= link_to "ログイン", new_user_session_path, class:'btn btn-primary' %>
+          <%= link_to "ログイン", new_user_session_path, class:'btn btn-info-login' %>
         </div>
         <div class="group-form">
           <!--%= link_to "ゲストログイン" %>-->
         </div>
       </div>
     </div>
+  <% end %>
 </div>

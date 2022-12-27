@@ -5,7 +5,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.string :title, null: false
       t.text :caption
       t.boolean :is_status, null: false, default: true
-      t.integer :type, null: false
+      t.integer :post_type, null: false
 
       t.timestamps
     end

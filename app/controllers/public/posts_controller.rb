@@ -9,7 +9,7 @@ class Public::PostsController < ApplicationController
     @post = Post.new(post_params)
     #投稿のタイプ（個人投稿）
     @post.user_id = current_user.id
-    @post.type = "post_public"
+    @post.post_type = "post_public"
     if @post.save!
       redirect_to post_path(@post.id)
     else
@@ -20,11 +20,11 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @user = @post.user
-    #if @post.user == current_user
-        #render "new"
-      #else
-        #redirect_to posts_path
-      #end
+    if @post.user == current_user
+      render "show"
+    else
+      redirect_to posts_path
+    end
       #他人に非公開のページへ行けないようにするため
   end
 
@@ -54,12 +54,21 @@ class Public::PostsController < ApplicationController
   end
 
   def index
+    @user = current_user
+    if @user.me?(current_user)
+      # login user == current_user
+      @posts = Post.post_public
+      @posts = Post.published
+      @posts += @user.posts.unpublished
+    else
+      @posts = Post.published
+    end
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:title, :caption, :is_status, :type, images: []).merge(user_id: current_user.id)
+    params.require(:post).permit(:title, :caption, :is_status, :post_type, images: []).merge(user_id: current_user.id)
   end
 
 

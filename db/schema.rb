@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2022_12_25_093521) do
     t.string "title", null: false
     t.text "caption"
     t.boolean "is_status", default: true, null: false
-    t.integer "type", null: false
+    t.integer "post_type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
