@@ -4,6 +4,7 @@
       <div class="mx-auto">
         <div class="form-group">
           <%= image_tag @post.get_images %>
+          <!-- 投稿した画像 -->
         </div>
       </div>
     </div>
@@ -27,6 +28,13 @@
           <!-- 作成日時 -->
         </div>
         <!-- いいね＆コメント機能を後に追加 -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-11">
+        <% if @user.id == current_user.id %>
+          <%= link_to "プロフィール編集", edit_post_path(@post), class:'btn btn-success btn-sm' %>
+        <% end %>
       </div>
     </div>
   </div>
