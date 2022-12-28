@@ -1,5 +1,5 @@
 class Public::UsersController < ApplicationController
-  #before_action :correct_user, only:[:edit, :update]
+  before_action :correct_user, only:[:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -29,13 +29,20 @@ class Public::UsersController < ApplicationController
   end
 
   def index
+    @user = current_user
     @users = User.all
+    @posts = @user.posts
   end
 
   private
 
   def user_params
     params.require(:user).permit(:nickname, :introduction, :profile_image)
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to user_path(current_user.id) unless @user == current_user
   end
 
 end
