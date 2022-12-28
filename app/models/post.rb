@@ -11,7 +11,9 @@ class Post < ApplicationRecord
   #タイトルのバリデーション
   #validates :is_status, presence: true
 
+  # 公開・非公開の設定
   scope :published, -> {where(is_status: true)}
+  # is_statusカラムがtrueであるものを
   scope :unpublished, -> {where(is_status: false)}
 
   def me?(user_id)

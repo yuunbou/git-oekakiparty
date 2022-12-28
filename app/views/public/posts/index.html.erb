@@ -1,16 +1,22 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12 d-flex flex-wrap">
-      <% @posts.each do |post| %>
-      <div class="form-group col-3">
+    <% @posts.each do |post| %>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
         <%= link_to post_path(post.id) do %>
-          <%= image_tag post.images[0].variant(resize: '100x100'), class: "review-img" %>
+          <%= image_tag post.images[0].variant(resize: '100x100'), class: "review-img card-img-top" %>
         <% end %>
-        <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
-        <strong><%= post.title %></strong>
-        <%= post.caption %>
+        <div class="card-body">
+          <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
+          <h5 class="card-title"><%= post.title %></h5>
+          <p class="card-text"><%= post.caption %></p>
+          <% if post.is_status == true %>
+            <p class="text-success font-width-bold">公開</p>
+          <% else %>
+            <p class="text-secondary font-width-bold">非公開</p>
+          <% end %>
       </div>
-      <% end %>
     </div>
+  <% end %>
   </div>
 </div>
