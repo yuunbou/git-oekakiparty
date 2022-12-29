@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
     resources :users, only:[:index, :show, :edit, :update]
-    resources :posts, only:[:new, :create, :show, :edit, :update, :destroy, :index]
+    resources :posts, only:[:new, :create, :show, :edit, :update, :destroy, :index] do
+      resource :favorites, only: [:create, :destroy]
+    end
     #get "/users/:id/posts" => "posts#post_index"
   end
 

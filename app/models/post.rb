@@ -2,6 +2,7 @@ class Post < ApplicationRecord
 
   has_many_attached :images
   belongs_to :user
+  has_many :favorites, dependent: :destroy
 
   enum type: { post_public: 0, post_private: 1 }
   # 投稿タイプ(0=個人投稿　1=グループ投稿)
@@ -16,7 +17,14 @@ class Post < ApplicationRecord
   # is_statusカラムがtrueであるものを
   scope :unpublished, -> {where(is_status: false)}
 
+  #今ログインしているのが本人か確認する
   def me?(user_id)
     id == user_id
   end
+  
+  #いいね機能
+  def favorited_by?(user)
+    favorites.exists?(user_id: user.id)
+  end
+  
 end
