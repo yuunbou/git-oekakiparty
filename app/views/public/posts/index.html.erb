@@ -3,13 +3,13 @@
     <% @posts.each do |post| %>
     <div class="col-4 pt-3">
       <div class="card mb-4 shadow-sm">
+        <svg class="review-img card-img-top", style:"height:150px;">
         <%= link_to post_path(post.id) do %>
-          <%= image_tag post.images[0].variant(resize: '100x100'), class: "review-img card-img-top", style:"height:150px;" %>
+          <%= image_tag post.images[0].variant(resize: '100x100') %>
         <% end %>
         <div class="card-body" style="border-top:solid">
-          <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
+          <svg class="rounded-circle"><%= image_tag post.user.get_profile_image(50,50) %></svg>
           <h5 class="card-title"><%= post.title %></h5>
-          <p class="card-text"><%= post.caption %></p>
           <% if post.is_status == true %>
             <p class="text-success font-width-bold">公開</p>
           <% else %>
