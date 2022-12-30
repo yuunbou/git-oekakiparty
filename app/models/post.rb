@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   has_many_attached :images
   belongs_to :user
   has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   enum type: { post_public: 0, post_private: 1 }
   # 投稿タイプ(0=個人投稿　1=グループ投稿)
