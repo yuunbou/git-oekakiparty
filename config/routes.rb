@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :users, only:[:index, :show, :edit, :update]
     resources :posts do
       resource :favorites, only: [:create, :destroy]
+      resources :comments, only:[:create, :destroy]
     end
     #get "/users/:id/posts" => "posts#post_index"
   end

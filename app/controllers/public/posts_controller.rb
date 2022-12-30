@@ -19,13 +19,13 @@ class Public::PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comment = Comment.new
     @user = @post.user
     if @post.user == current_user
       render "show"
     else
       redirect_to posts_path
     end
-      #他人に非公開のページへ行けないようにするため
   end
 
   def edit
