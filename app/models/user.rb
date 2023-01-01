@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
 
 
-  validates :nickname,presence: true, length: { in: 2..20 }
+  validates :nickname, presence: true, length: { in: 2..20 }
   validates :introduction, length: {maximum: 300 }
   validates :email, uniqueness: true
 

@@ -16,7 +16,6 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="d-flex flex-row bd-highlight">
-          <!-- 画像にユーザ詳細(マイページ)リンクをつける  -->
           <%= link_to user_path(@user.id) do %>
             <%= image_tag @post.user.get_profile_image(100,100), class:"rounded-circle" %>
           <% end %>
