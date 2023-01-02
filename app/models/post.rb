@@ -15,7 +15,7 @@ class Post < ApplicationRecord
 
   # 公開・非公開の設定
   scope :published, -> {where(is_status: true)}
-  # is_statusカラムがtrueであるものを
+  # ↑is_statusカラムがtrueであるものを
   scope :unpublished, -> {where(is_status: false)}
 
   #今ログインしているのが本人か確認する

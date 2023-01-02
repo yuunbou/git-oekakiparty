@@ -50,14 +50,16 @@ class Public::PostsController < ApplicationController
 
   def index
     @user = current_user
-    if @user.me?(current_user)
+    @posts = Post.published
+    #下記、投稿したユーザーは非公開でも表示される設定
+    #if @user.me?(current_user)
       # login user == current_user
-      @posts = Post.post_public
-      @posts = Post.published
-      @posts += @user.posts.unpublished
-    else
-      @posts = Post.published
-    end
+      #@posts = Post.post_public
+      #@posts = Post.published
+      #@posts += @user.posts.unpublished
+    #else
+      #@posts = Post.published
+    #end
   end
 
   private

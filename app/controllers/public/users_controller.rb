@@ -5,6 +5,14 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
     @user = current_user
     @posts = @user.posts
+    if @user.me?(current_user)
+      # login user == current_user
+      @posts = Post.post_public
+      @posts = Post.published
+      @posts += @user.posts.unpublished
+    else
+      @posts = Post.published
+    end
   end
 
   def edit
