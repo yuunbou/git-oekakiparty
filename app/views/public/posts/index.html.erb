@@ -1,9 +1,14 @@
 <div class="container">
   <div class="row">
-    <div class="mx-auto">
+    <div class="mx-auto m-2">
+      <!-- 検索フォーム -->
       <%= form_with url: posts_path, local: true, method: :get do |form| %>
-        <%= form.text_field :keyword, class:'form-control' %>
-        <%= form.submit "検索", class:'btn btn-primary' %>
+        <div class="input-group">
+          <%= form.text_field :keyword, class:'form-control  input-group-prepend' %>
+          <span class="input-group-btn input-group-append">
+            <%= form.submit "検索", class:'btn btn-primary' %>
+          </span>
+        </div>
       <% end %>
     </div>
   </div>
