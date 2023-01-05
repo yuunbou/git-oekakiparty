@@ -21,11 +21,7 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comment = Comment.new
     @user = @post.user
-    if @post.user == current_user
-      render "show"
-    else
-      redirect_to posts_path
-    end
+    
   end
 
   def edit
@@ -47,11 +43,10 @@ class Public::PostsController < ApplicationController
     post.destroy
     redirect_to posts_path
   end
-  
-  #検索アクション
-  
 
+  #検索アクション
   def index
+    @posts = Post.where(post_type: 0).published
     if params[:keyword].present?
       @posts = Post.where('caption LIKE ?', "%#{params[:keyword]}%")
       @keyword = params[:keyword]
