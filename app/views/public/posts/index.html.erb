@@ -9,7 +9,8 @@
         <% end %>
         </div>
         <div class="card-body" style="border-top:solid">
-          <%= link_to user_path(@user.id) do %>
+          <!--　引数には投稿したユーザーに遷移したいので（post.user）と　-->
+          <%= link_to user_path(post.user) do %>
             <%= image_tag post.user.get_profile_image(50,50) %>
           <% end %>
           <h5 class="card-title"><%= post.title %></h5>

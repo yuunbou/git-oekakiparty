@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  enum type: { post_public: 0, post_private: 1 }
+  enum post_type: { post_public: 0, post_private: 1 }
   # 投稿タイプ(0=個人投稿　1=グループ投稿)
 
   validates :images, presence: true

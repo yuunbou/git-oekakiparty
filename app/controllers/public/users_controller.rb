@@ -3,15 +3,14 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @user = current_user
-    @posts = @user.posts
-    if @user.me?(current_user)
-      # login user == current_user
-      @posts = Post.post_public
-      @posts = Post.published
-      @posts += @user.posts.unpublished
+    if @user.me?(current_user.id)
+      #今ログインしているのが自分か確認
+
+      @posts = @user.posts.where(post_type: 0)
+      #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
     else
-      @posts = Post.published
+     #公開中のもののみ他人に表示される 非公開は他人に表示されない
+      @posts = @user.posts.where(post_type: 0).published
     end
   end
 
@@ -48,7 +47,7 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:nickname, :introduction, :profile_image)
   end
 
-  def correct_user
+  def currect_user
     @user = User.find(params[:id])
     redirect_to user_path(current_user.id) unless @user == current_user
   end
