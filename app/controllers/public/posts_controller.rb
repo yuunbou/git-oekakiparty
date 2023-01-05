@@ -48,9 +48,27 @@ class Public::PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  def search
+    if params[:keyword].present?
+      @posts = Post.where('caption LIKE ?', "%#{params[:keyword]}%")
+      @keyword = params[:keyword]
+    else
+      @posts = @user.posts.where(post_type: 0).published
+    end
+  end
+
+
   def index
-    @user = current_user
-    @posts = Post.published
+    if params[:keyword].present?
+      @posts = Post.where('caption LIKE ?', "%#{params[:keyword]}%")
+      @keyword = params[:keyword]
+    else
+      @posts = Post.where(post_type: 0).published
+    end
+
+
+    #@user = current_user
+    #@posts = Post.published
     #下記、投稿したユーザーは非公開でも表示される設定
     #if @user.me?(current_user)
       # login user == current_user

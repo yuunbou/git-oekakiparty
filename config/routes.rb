@@ -12,9 +12,7 @@ Rails.application.routes.draw do
     resources :posts do
       resource :favorites, only: [:create, :destroy]
       resources :comments, only:[:create, :destroy]
-      collection do
-        get 'search'
-      end
+      
     end
     #get "/users/:id/posts" => "posts#post_index"
   end
