@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
 
+  #アソシエーション
   has_many_attached :images
   belongs_to :user
   has_many :favorites, dependent: :destroy
