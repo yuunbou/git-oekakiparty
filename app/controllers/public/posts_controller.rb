@@ -2,15 +2,16 @@ class Public::PostsController < ApplicationController
   before_action :correct_user, only:[:edit, :update]
 
   def new
-      @post = Post.new
+      @post = current_user.posts.new
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
     #投稿のタイプ（個人投稿）
-    @post.user_id = current_user.id
     @post.post_type = "post_public"
+    tag_list = params[:post][:tag_name].split(nil)
     if @post.save!
+      @post.save_tag(tag_list)
       redirect_to post_path(@post.id)
     else
       render :new
@@ -21,7 +22,6 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comment = Comment.new
     @user = @post.user
-    
   end
 
   def edit
@@ -46,13 +46,16 @@ class Public::PostsController < ApplicationController
 
   #検索アクション
   def index
-    @posts = Post.where(post_type: 0).published
+    #キーワード検索のアクション
     if params[:keyword].present?
       @posts = Post.where('caption LIKE ?', "%#{params[:keyword]}%")
       @keyword = params[:keyword]
+      #tag_listを定義しないとエラーが出る
     else
       @posts = Post.where(post_type: 0).published
+      #投稿とタグが一致したものを表示
     end
+
   end
 
   private
@@ -61,6 +64,8 @@ class Public::PostsController < ApplicationController
     params.require(:post).permit(:title, :caption, :is_status, :post_type, images: []).merge(user_id: current_user.id)
   end
 
+  #correct_userとは・・レコードを本当にログインユーザの所有しているものかを判別するメソッド
+  #レコードの編集、更新、削除など、持ち主しかやってはいけない機能を作るときによく使う
   def correct_user
     @post = Post.find(params[:id])
     @user = @post.user
