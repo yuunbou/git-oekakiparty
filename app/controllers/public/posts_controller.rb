@@ -26,13 +26,15 @@ class Public::PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    @tag_list = @post.tags.pluck(:tag_name).join(nil)
   end
 
   def update
     post = Post.find(params[:id])
-    post.type = 'post_public'
+    tag_list = params[:post][:tag_name].split(nil)
     if post.update(post_params)
-        redirect_to post_path(@post.id)
+      @post.save_tag(tag_list)
+      redirect_to post_path(@post.id)
     else
         render :edit
     end
@@ -46,14 +48,17 @@ class Public::PostsController < ApplicationController
 
   #検索アクション
   def index
+    #タグ検索のアクション
+    #if params[:tag_name].present?
+      #@posts = Post.where('tag_name LIKE ?', "%#{params[:tag_name]}%")
+      #@keyword = params[:tag_name]
     #キーワード検索のアクション
     if params[:keyword].present?
-      @posts = Post.where('caption LIKE ?', "%#{params[:keyword]}%")
+      @posts = Post.where('caption LIKE ?', "%#{params[:keyword]}%").published
       @keyword = params[:keyword]
-      #tag_listを定義しないとエラーが出る
     else
       @posts = Post.where(post_type: 0).published
-      #投稿とタグが一致したものを表示
+
     end
 
   end
