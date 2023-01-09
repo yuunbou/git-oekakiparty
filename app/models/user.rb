@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :group_users
+  has_many :groups, through: :group_users
+  
 
 
   validates :nickname, presence: true, length: { in: 2..20 }
