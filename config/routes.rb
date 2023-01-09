@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
-    resources :users, only:[:index, :show, :edit, :update]
+    resources :users, only:[:index, :show, :edit, :update] do
+      member do
+        get :favorites
+      end
+    end
     resources :posts do
       resource :favorites, only: [:create, :destroy]
       resources :comments, only:[:create, :destroy]

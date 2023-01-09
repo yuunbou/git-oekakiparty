@@ -48,19 +48,8 @@ class Public::PostsController < ApplicationController
 
   #検索アクション
   def index
-    #タグ検索のアクション
-    #if params[:tag_name].present?
-      #@posts = Post.where('tag_name LIKE ?', "%#{params[:tag_name]}%")
-      #@keyword = params[:tag_name]
-    #キーワード検索のアクション
-    if params[:keyword].present?
-      @posts = Post.where('caption LIKE ?', "%#{params[:keyword]}%").published
-      @keyword = params[:keyword]
-    else
-      @posts = Post.where(post_type: 0).published
-
-    end
-
+    @posts = Post.search(params[:search], params[:word])
+    # @posts = Post.where(post_type: 0).published
   end
 
   private
