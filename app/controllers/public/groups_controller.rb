@@ -1,0 +1,58 @@
+class Public::GroupsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :correct_user, only:[:edit, :update]
+
+  #グループの新規作成
+  #グループの部屋を作る
+  def new
+    @group = Group.new
+  end
+
+  #グループ作成
+  def create
+    @group = Group.new(group_params)
+    @group.owner_id = current_user.id
+    if @group.save!
+      redirect_to group_path
+    else
+      render 'new'
+    end
+  end
+
+  #作成したグループの一覧
+  def index
+    @groups = Group.all
+  end
+
+  #グループ内の詳細（投稿したものなど）
+  def show
+    @group = Group.find(params[:id])
+  end
+
+  #グループの編集
+  def edit
+    @group = Group.find(params[:id])
+  end
+
+  #グループ編集の更新
+  def update
+    if @group.update(group_params)
+      redirect_to groups_path
+    else
+      render "edit"
+    end
+  end
+
+  private
+
+  def group_params
+    params.require(:group).permit(:name, :content, :group_image)
+  end
+
+  def correct_user
+    @group = Group.find(params[:id])
+    @user = @group.user
+    redirect_to(posts_path) unless @group.owner_id == current_user.id
+  end
+
+end

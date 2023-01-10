@@ -14,7 +14,7 @@
       <% if @user.id == current_user.id %>
         <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
         <%= link_to "作品を投稿する", new_post_path, class:'btn btn-info btn-sm' %>
-        <p>グループ作成</p>
+        <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm' %>
       <% end %>
     </div>
   </div>

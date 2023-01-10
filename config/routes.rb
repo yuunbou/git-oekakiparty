@@ -14,10 +14,11 @@ Rails.application.routes.draw do
       end
     end
     resources :posts do
-      resource :favorites, only: [:create, :destroy]
+      resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
     #get "/users/:id/posts" => "posts#post_index"
+    resources :groups
   end
 
 

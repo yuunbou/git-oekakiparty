@@ -1,0 +1,23 @@
+<dev class="container">
+  <dev class="row">
+    <div class="col-12 mx-auto">
+      <h3 class="text-center">部屋を作る</h3>
+    </div>
+  </dev>
+  <div class="row">
+    <div class="mx-auto colsm-12 col-md-8 col-lg-5 px-5 px-sm-0">
+      <%= form_with model: @group, url: groups_path, method: :post do |f| %>
+        <div class="form-group">
+          <%= f.label :name, "グループ名" %>
+          <%= f.text_field :name, required: true, class: 'form-control p-1' %>
+        </div>
+        <div class="form-group">
+          <%= f.text_area :content, placeholder: "グループ内容", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.submit '作成', class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</dev>
