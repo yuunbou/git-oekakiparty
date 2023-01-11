@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3><%= group.neame %></h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>メンバー</th>
+            <th>グループ内容</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= image_tag @group.get_group_image(200,200) %></td>
+            <td>
+              <% @group.users.each do |user| %>
+                <%= user.nickname %><br>
+              <% end %>
+            </td>
+            <td><%= @group.content %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
