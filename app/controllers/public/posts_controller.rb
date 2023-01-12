@@ -8,14 +8,24 @@ class Public::PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    #投稿のタイプ（個人投稿）
-    @post.post_type = "post_public"
-    tag_list = params[:post][:tag_name].split(nil)
-    if @post.save!
-      @post.save_tag(tag_list)
-      redirect_to post_path(@post.id)
+    if @post.group_id.nil?
+      #投稿のタイプ（個人投稿）
+      @post.post_type = "post_public"
+      tag_list = params[:post][:tag_name].split(nil)
+      if @post.save!
+        @post.save_tag(tag_list)
+        redirect_to post_path(@post.id)
+        #group_idが空の場合はpostのshowに移動
+        #もしgroup_idが入っていたらgroup_post_indexに移動する
+      else
+        render :new
+      end
     else
-      render :new
+      #投稿タイプ（グループ内投稿）
+      @post.post_type = "post_private"
+      @post.save!
+      redirect_to group_post_index_path(@post.group)
+      #post_privateで投稿されたらgroup_post_index_pathに移動する
     end
   end
 
@@ -56,7 +66,7 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :caption, :is_status, :post_type, images: []).merge(user_id: current_user.id)
+    params.require(:post).permit(:group_id, :title, :caption, :is_status, :post_type, images: []).merge(user_id: current_user.id)
   end
 
   #correct_userとは・・レコードを本当にログインユーザの所有しているものかを判別するメソッド
