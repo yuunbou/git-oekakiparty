@@ -17,8 +17,12 @@ Rails.application.routes.draw do
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
-    #get "/users/:id/posts" => "posts#post_index"
-    resources :groups
+    resources :groups do
+      get '/post_index' => "groups#post_index" , as: "post_index"
+    end
+    #グループの投稿のルーティングについて
+    #resources :group_posts? :posts?
+
   end
 
 
