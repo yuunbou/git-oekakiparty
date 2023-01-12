@@ -20,8 +20,6 @@ Rails.application.routes.draw do
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
     end
-    #グループの投稿のルーティングについて
-    #resources :group_posts? :posts?
 
   end
 
