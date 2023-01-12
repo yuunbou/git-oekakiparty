@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h3><%= group.neame %></h3>
+      <h3><%= @group.name %></h3>
       <table class="table">
         <thead>
           <tr>
             <th></th>
             <th>メンバー</th>
             <th>グループ内容</th>
-            <th colspan="3"></th>
+            <th>グループ投稿</th>
           </tr>
         </thead>
         <tbody>
@@ -20,9 +20,11 @@
               <% end %>
             </td>
             <td><%= @group.content %></td>
+            <td><%= link_to "グループ作品集", group_post_index_path(@group.id), class:'btn btn-dark' %></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+
 </div>
