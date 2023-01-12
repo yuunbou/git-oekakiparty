@@ -7,6 +7,8 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :post_tags, dependent: :destroy
   has_many :tags, through: :post_tags
+  belongs_to :group, optional: true
+  #optional: true　＝　なくても保存できますよという記述
 
   enum post_type: { post_public: 0, post_private: 1 }
   # 投稿タイプ(0=個人投稿　1=グループ投稿)
