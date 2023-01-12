@@ -46,6 +46,17 @@ class Public::GroupsController < ApplicationController
     end
   end
 
+  def post_index
+    @group = Group.find(params[:group_id])
+    @post = current_user.posts.new
+    @posts = @group.posts
+    #Postモデルwhereで検索してgroup_idを元にして取り出す
+
+  end
+
+
+
+
   private
 
   def group_params
