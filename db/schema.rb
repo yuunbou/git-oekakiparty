@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2023_01_09_160709) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.integer "group_id"
     t.string "title", null: false
     t.text "caption"
     t.boolean "is_status", default: true, null: false

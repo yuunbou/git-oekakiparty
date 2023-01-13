@@ -18,9 +18,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
 
 
-.signup_title,.signup-text, .signin_title, .btn-lg {
+.signup_title,.signup-text, .signin_title, .btn-lg, .top-text {
     font-family: 'Zen Maru Gothic', sans-serif;
 }
+
 
 .btn-info-login {
   background: #589DA4;
@@ -34,4 +35,14 @@
 .card-img-top {
   height: 200px;
   width: 200px
+}
+
+.btn-Wstning-registration {
+  background: #0075A9;
+  color: #fff;
+}
+
+.btn-Wstning-about {
+  background: #009E96;
+  color: #fff;
 }

@@ -23,7 +23,7 @@ class Public::GroupsController < ApplicationController
 
   #作成したグループの一覧
   def index
-    @groups = Group.where(owner_id: current_user.id)
+    @groups = Group.where(id: current_user)
     #グループの一覧は作成者のみのものを表示
   end
 
@@ -53,8 +53,6 @@ class Public::GroupsController < ApplicationController
     #Postモデルwhereで検索してgroup_idを元にして取り出す
 
   end
-
-
 
 
   private

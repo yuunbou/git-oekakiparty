@@ -8,15 +8,17 @@
             <th>グループ名</th>
             <th>内容</th>
             <th>メンバー人数</th>
+            <th></th>
           </tr>
         </thead>
         <% @groups.each do |group| %>
         <tbody>
           <tr>
             <td><%= image_tag group.get_group_image(100,100), class: "rounded-circle" %></td>
-            <td><%= link_to group.name, group_path(group.id) %></td>
+            <td><%= group.name %></td>
             <td><%= group.content %></td>
             <td><%= group.users.count %></td>
+            <td><td><%= link_to "入室", group_path(group.id), class:'btn btn-success' %></td></td>
           </tr>
         </tbody>
         <% end %>

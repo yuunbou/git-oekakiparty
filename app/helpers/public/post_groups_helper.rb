@@ -1,0 +1,2 @@
+module Public::PostGroupsHelper
+end

@@ -43,9 +43,12 @@ class Public::UsersController < ApplicationController
   end
 
   def index
-    @user = current_user
+    @users = current_user
     @users = User.all
-    @posts = @user.posts
+    #公開中のもののみ他人に表示される 非公開は他人に表示されない
+    @posts = Post.where(post_type: 0).published
+    #@posts = @user.posts.where(post_type: 0).published
+    #ユーザー一覧のpost一覧は個人投稿のみ
   end
 
   private
@@ -59,6 +62,7 @@ class Public::UsersController < ApplicationController
     redirect_to user_path(current_user.id) unless @user == current_user
   end
 
+  #favorites用
   def set_user
     @user = User.find(params[:id])
   end

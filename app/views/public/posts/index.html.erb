@@ -15,8 +15,8 @@
   </div>
   <div class="row">
   <% @posts.each do |post| %>
-    <div class="col-4 pt-3">
-      <div class="card mb-4 shadow-sm">
+    <div class="col-sm-3 pt-3 m-2">
+      <div class="card mb-4 shadow-sm" style="width: 18rem;">
         <div class="review-img card-img-top">
         <%= link_to post_path(post.id) do %>
           <%= image_tag post.images[0].variant(resize: '200x200') %>

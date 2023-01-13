@@ -18,8 +18,8 @@
             <td><%= user.nickname %></td>
             <% @posts.each do |post| %>
             <td>
-              <%= link_to post_path(post.id) do %>
-                <%= image_tag post.images[0].variant(resize: '100x100'), class: "review-img card-img-top" %>
+              <%= link_to post_path(post) do %>
+                <%= image_tag post.images[0].variant(resize: '200x200'), class: "review-img card-img-top" %>
               <% end %>
             </td>
             <% end %>
