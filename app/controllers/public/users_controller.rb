@@ -10,11 +10,12 @@ class Public::UsersController < ApplicationController
     if @user.me?(current_user.id)
       #今ログインしているのが自分か確認
 
-      @posts = @user.posts.where(post_type: 0)
+      @posts = @user.posts.where(post_type: 0).order('id DESC').limit(5)
       #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
     else
      #公開中のもののみ他人に表示される 非公開は他人に表示されない
-      @posts = @user.posts.where(post_type: 0).published
+      @posts = @user.posts.where(post_type: 0).published.order('id DESC').limit(5)
+
     end
   end
 
@@ -44,6 +45,11 @@ class Public::UsersController < ApplicationController
 
   def index
     @users = User.all
+  end
+
+  #グループにユーザーを追加する為のリスト
+  def user_list
+    @user = User.all
   end
 
   private

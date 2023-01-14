@@ -15,11 +15,16 @@ Rails.application.routes.draw do
       end
     end
     resources :posts do
+      collection do
+        get '/search_index' => "posts#search_index", as: "search_index"
+      end
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
+    resources :group_users, only:[:index, :create, :destroy]
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
+      get '/user_list' => "groups#user_lists", as: "user_list"
     end
 
   end

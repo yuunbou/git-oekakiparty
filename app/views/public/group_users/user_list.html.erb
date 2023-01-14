@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="table">
+      <tbody>
+        <% @users.each do |user| %>
+          <%= form_with model: @group, url: edit_group_path(@group.id), method: :get, local: true do |f| %>
+          <tr>
+            <td>
+              <%= image_tag user.get_profile_image(100,100), class: "rounded-circle" %></br>
+            </td>
+            <td><%= user.nickname %></td>
+            <td></td>
+          </tr>
+        </tbody>
+    </div>
+  </div>
+</div>

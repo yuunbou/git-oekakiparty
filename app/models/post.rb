@@ -66,4 +66,8 @@ class Post < ApplicationRecord
     end
   end
 
+  def me?(user_id)
+    id == user_id
+  end
+
 end

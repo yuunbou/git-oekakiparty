@@ -4,25 +4,33 @@
       <%= image_tag @user.get_profile_image(200,200), class:"rounded-circle" %>
       <!-- ユーザプロフィール画像-->
     </div>
-    <div class="col-6 m-4">
+    <div class="col-sm-6 m-4">
       <div class="form-group">
         <p class="h3 font-weight-bold"><%= @user.nickname %></p>
       </div>
       <div class="form-group border border-dark rounded p-1">
         <%= @user.introduction %>
       </div>
-      <% if @user.id == current_user.id %>
-        <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
-        <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm' %>
-      <% end %>
-      <%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm' %>
-      <!-- ()内に変数を渡すことでそのviewに飛べる -->
+      <div class="d-flex flex-row">
+        <% if @user.id == current_user.id %>
+          <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
+          <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm' %>
+        <% end %>
+        <%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm' %>
+        <!-- ()内に変数を渡すことでそのviewに飛べる -->
+        <%= form_with model: @group_users, url: group_users_path, method: :post, local: true do |f| %>
+          <%= f.hidden_field :user_id, :value => @user.id %>
+          <%= f.submit 'メンバーに追加' , class: 'btn btn-light-list btn-sm' %></div>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-11">
-      <div>
-        <h2>作品一覧</h2>
+
+    <div class="col-sm-12">
+      <div class="d-flex">
+        <h2 class="title flex-row">作品一覧</h2>
+        <div class="button offset-1 mt-2">
+          <%= link_to "作品一覧", posts_path(@post), class: "btn btn-info btn-sm" %>
+        </div>
       </div>
       <table class="d-flex border-top">
         <% @posts.each do |post| %>
@@ -38,9 +46,8 @@
         <% end %>
       </table>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-11">
+
+    <div class="col-sm-12">
       <div class="d-flex">
         <h2 class="title flex-row">いいね一覧</h2>
         <div class="button offset-1 mt-2">
@@ -63,9 +70,4 @@
     </div>
   </div>
 
-
-
-  <div class="row">
-
-  </div>
 </div>

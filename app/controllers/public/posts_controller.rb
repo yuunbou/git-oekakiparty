@@ -56,8 +56,21 @@ class Public::PostsController < ApplicationController
     redirect_to posts_path
   end
 
-  #検索アクション
   def index
+    #indexに自分の投稿したものだけの一覧表示
+    if @posts == current_user
+      #今ログインしているのが自分か確認
+      @posts = Post.where(post_type: 0)
+      #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
+    else
+     #公開中のもののみ他人に表示される 非公開は他人に表示されない
+      @posts = Post.where(post_type: 0).published
+
+    end
+  end
+
+  #検索アクション
+  def search_index
     #タグのリンクを押した場合
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])

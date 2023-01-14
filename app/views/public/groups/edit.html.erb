@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="mx-auto">
+      <h3>グループ編集/メンバー追加</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <%= form_with model: @group, url: group_path, method: :patch do |f| %>
+        <div class="form-group">
+          <p>画像</p>
+          <%= f.file_field :group_image, multiple: true, accept: "image/*", class: 'form-control-file' %>
+        </div>
+        <div class="form-group">
+           <!--%= link_to "ユーザーリスト", user_lists_path, %>-->
+        </div>
+        <div class="form-group">
+          <% @user_lists.each do |user_list| %>
+            <div>
+              <%= link_to user_path(user.id) do %>
+                <%= image_tag user.get_profile_image(100,100), class: "rounded-circle" %></br>
+              <% end %>
+              <td><%= user.nickname %></td>
+            </div>
+          <% end %>
+        </div>
+        <%= f.submit "更新", class:'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+</div>
