@@ -15,7 +15,8 @@
         <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
         <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm' %>
       <% end %>
-      <%= link_to "グループ一覧", groups_path, class:'btn btn-dark btn-sm' %>
+      <%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm' %>
+      <!-- ()内に変数を渡すことでそのviewに飛べる -->
     </div>
   </div>
   <div class="row">

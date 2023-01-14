@@ -18,7 +18,8 @@
             <td><%= group.name %></td>
             <td><%= group.content %></td>
             <td><%= group.users.count %></td>
-            <td><td><%= link_to "入室", group_path(group.id), class:'btn btn-success' %></td></td>
+            <!--　グループのメンバーのみボタンを表示　-->
+            <td><%= link_to "入室", group_path(group.id), class:'btn btn-success' %></td>
           </tr>
         </tbody>
         <% end %>

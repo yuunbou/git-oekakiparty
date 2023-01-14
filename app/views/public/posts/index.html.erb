@@ -14,9 +14,9 @@
     </div>
   </div>
   <div class="row">
-  <% @posts.each do |post| %>
-    <div class="col-sm-3 pt-3 m-2">
-      <div class="card mb-4 shadow-sm" style="width: 18rem;">
+    <div class="col-sm-12 m-2 d-flex flex-wrap">
+    <% @posts.each do |post| %>
+      <div class="card m-2 shadow-sm" style="width: 13rem;">
         <div class="review-img card-img-top">
         <%= link_to post_path(post.id) do %>
           <%= image_tag post.images[0].variant(resize: '200x200') %>
@@ -29,7 +29,8 @@
           <% end %>
           <h5 class="card-title"><%= post.title %></h5>
           <% post.tags.each do |tag| %>
-            <%= tag.tag_name %>
+            <%= link_to tag.tag_name, posts_path(tag_id: tag.id) %>
+            <!--%= tag.tag_name %>-->
           <% end %>
           <% if post.is_status == true %>
             <p class="text-success font-width-bold">公開</p>
@@ -38,7 +39,7 @@
           <% end %>
         </div>
       </div>
+    <% end %>
     </div>
-  <% end %>
   </div>
 </div>

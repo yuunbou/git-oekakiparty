@@ -12,11 +12,11 @@
           <tr>
             <td>
               <%= link_to user_path(user.id) do %>
-                <%= image_tag user.get_profile_image(100,100), class: "rounded-circle" %>
+                <%= image_tag user.get_profile_image(100,100), class: "rounded-circle" %></br>
               <% end %>
+              <%= user.nickname %>
             </td>
-            <td><%= user.nickname %></td>
-            <% @posts.each do |post| %>
+            <% user.posts.where(post_type: 0).published.each do |post| %>
             <td>
               <%= link_to post_path(post) do %>
                 <%= image_tag post.images[0].variant(resize: '200x200'), class: "review-img card-img-top" %>

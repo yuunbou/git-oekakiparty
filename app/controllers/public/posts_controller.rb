@@ -12,7 +12,7 @@ class Public::PostsController < ApplicationController
       #postにgroup_idがあるかないか？
       #投稿のタイプ（個人投稿）
       @post.post_type = "post_public"
-      tag_list = params[:post][:tag_name].split(nil)
+      tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
       if @post.save!
         @post.save_tag(tag_list)
         redirect_to post_path(@post.id)
@@ -36,12 +36,12 @@ class Public::PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    @tag_list = @post.tags.pluck(:tag_name).join(nil)
+    @tag_list = @post.tags.pluck(:tag_name)
   end
 
   def update
     @post = Post.find(params[:id])
-    tag_list = params[:post][:tag_name].split(nil)
+    tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
     if @post.update(post_params)
       @post.save_tag(tag_list)
       redirect_to post_path(@post.id)
@@ -58,8 +58,18 @@ class Public::PostsController < ApplicationController
 
   #検索アクション
   def index
-    @posts = Post.search(params[:search], params[:word])
-    # @posts = Post.where(post_type: 0).published
+    #タグのリンクを押した場合
+    if params[:tag_id].present?
+      @tag = Tag.find(params[:tag_id])
+      @posts = @tag.posts
+      #.order(created_at: :desc)
+      #order＝並び順　:descだったら大きい順　:ascで小さい順
+    #＆＆を使うことでxx かつという意味になる
+    elsif params[:search].present? && params[:word].present?
+      @posts = Post.search(params[:search], params[:word])
+    else
+      @posts = Post.where(post_type: 0).published
+    end
   end
 
   private

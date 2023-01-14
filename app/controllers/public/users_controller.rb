@@ -43,12 +43,7 @@ class Public::UsersController < ApplicationController
   end
 
   def index
-    @users = current_user
     @users = User.all
-    #公開中のもののみ他人に表示される 非公開は他人に表示されない
-    @posts = Post.where(post_type: 0).published
-    #@posts = @user.posts.where(post_type: 0).published
-    #ユーザー一覧のpost一覧は個人投稿のみ
   end
 
   private

@@ -13,6 +13,7 @@ class Public::GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.owner_id = current_user.id
     @group.users << current_user
+    #@group.usersに、current_userを追加
     #グループ作成者もメンバーに含ませるための記述
     if @group.save!
       redirect_to groups_path
@@ -23,8 +24,9 @@ class Public::GroupsController < ApplicationController
 
   #作成したグループの一覧
   def index
-    @groups = Group.where(id: current_user)
-    #グループの一覧は作成者のみのものを表示
+    puts params["user_id"]
+    @groups = Group.where(owner_id: params[:user_id])
+    #グループの一覧は作成者（owner_id）のものが一覧に表示される
   end
 
   #グループ内の詳細（投稿したものなど）
@@ -35,6 +37,7 @@ class Public::GroupsController < ApplicationController
   #グループの編集
   def edit
     @group = Group.find(params[:id])
+    #リストからユーザーを持ってきて追加するイメージ
   end
 
   #グループ編集の更新
