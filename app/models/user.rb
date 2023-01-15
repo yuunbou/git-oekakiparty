@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
-  
+
 
 
   validates :nickname, presence: true, length: { in: 2..20 }
@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
 
+  #プロフィール画像設定
   def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
@@ -26,7 +27,23 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit:[width, height]).processed
   end
 
+  #マイページ（show）アクションで使用
   def me?(user_id)
     id == user_id
   end
+
+  #検索の条件分岐　部分一致と完全一致で検索
+  def self.search(method,word)
+    #byebug
+    if method == "partial_match"
+      @users = User.where("nickname LIKE ?", "%#{word}%")
+      #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
+      #@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
+    elsif method == "perfect_match"
+      @users = User.where(nickname: word)
+    else
+      @users = User.all
+    end
+  end
+
 end
