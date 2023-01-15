@@ -39,12 +39,33 @@ class Public::UsersController < ApplicationController
 
   def favorites
     @user = User.find(params[:id])
-    favorites= Favorite.where(user_id: @user.id).pluck(:post_id)
+    favorites = Favorite.where(user_id: @user.id).pluck(:post_id)
     @favorite_posts = Post.find(favorites)
   end
 
+  #ユーザーの投稿一覧
+  def posts
+    @user = User.find(params[:id])
+    @posts = Post.where(user_id: @user.id).pluck(:post_id)
+    #pluck = 指定したカラム(この場合post_id)のレコードの配列を取得
+    if @user.me?(current_user.id)
+      #今ログインしているのが自分か確認
+
+      @posts = @user.posts.where(post_type: 0).order('id DESC').limit(5)
+      #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
+    else
+     #公開中のもののみ他人に表示される 非公開は他人に表示されない
+      @posts = @user.posts.where(post_type: 0).published.order('id DESC').limit(5)
+
+    end
+  end
+
   def index
-    @users = User.all
+    if params[:search].present? && params[:word].present?
+      @users = User.search(params[:search], params[:word])
+    else
+      @users = User.all
+    end
   end
 
   #グループにユーザーを追加する為のリスト
