@@ -26,7 +26,7 @@
               <% end %>
               <%= user.nickname %>
             </td>
-            <% user.posts.where(post_type: 0).published.each do |post| %>
+            <% user.posts.where(post_type: 0).published.recent.each do |post| %>
             <td>
               <%= link_to post_path(post) do %>
                 <%= image_tag post.images[0].variant(resize: '200x200'), class: "review-img card-img-top" %>

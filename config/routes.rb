@@ -12,12 +12,14 @@ Rails.application.routes.draw do
     resources :users, only:[:index, :show, :edit, :update] do
       member do
         get :favorites
+        get :posts
       end
     end
-    resources :posts do
+    resources :posts, only:[:show, :new, :create, :edit, :update] do
       collection do
         get '/search_index' => "posts#search_index", as: "search_index"
       end
+
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end

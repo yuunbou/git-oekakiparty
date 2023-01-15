@@ -21,8 +21,13 @@ class Post < ApplicationRecord
 
   # 公開・非公開の設定
   scope :published, -> {where(is_status: true)}
-  # ↑is_statusカラムがtrueであるものを
+  #scope　：published　= 下記の内容をpublishedという一つのメソッドとして定義
+  #postのテーブルからwhereでis_statusカラムを検索し、true(公開)
   scope :unpublished, -> {where(is_status: false)}
+  #postのテーブルからwhereでis_statusカラムを検索し、false(公開)
+
+  scope :recent, -> { order(id: :desc).limit(5) }
+  #recent = マイページの投稿一覧の表示件数の定義
 
   #今ログインしているのが本人か確認する
   def me?(user_id)
@@ -64,10 +69,6 @@ class Post < ApplicationRecord
     else
       @posts = Post.where(post_type: 0).published
     end
-  end
-
-  def me?(user_id)
-    id == user_id
   end
 
 end

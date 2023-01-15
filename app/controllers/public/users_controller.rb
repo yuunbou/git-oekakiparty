@@ -10,12 +10,12 @@ class Public::UsersController < ApplicationController
     if @user.me?(current_user.id)
       #今ログインしているのが自分か確認
 
-      @posts = @user.posts.where(post_type: 0).order('id DESC').limit(5)
-      #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
+      @posts = @user.posts.where(post_type: 0).recent
+      #whereを使ってpostモデルで設定したenumのpost_typeの0:個人投稿を検索し、自分だったら全て表示
     else
-     #公開中のもののみ他人に表示される 非公開は他人に表示されない
-      @posts = @user.posts.where(post_type: 0).published.order('id DESC').limit(5)
-
+      @posts = @user.posts.where(post_type: 0).published.recent
+      #published = postモデルのscopeで定義した投稿のステータスがtrue(公開)
+      #公開中のもののみ他人に表示される 非公開は他のユーザーに表示されない
     end
   end
 
@@ -51,11 +51,11 @@ class Public::UsersController < ApplicationController
     if @user.me?(current_user.id)
       #今ログインしているのが自分か確認
 
-      @posts = @user.posts.where(post_type: 0).order('id DESC').limit(5)
+      @posts = @user.posts.where(post_type: 0)
       #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
     else
      #公開中のもののみ他人に表示される 非公開は他人に表示されない
-      @posts = @user.posts.where(post_type: 0).published.order('id DESC').limit(5)
+      @posts = @user.posts.where(post_type: 0).published
 
     end
   end
@@ -63,6 +63,7 @@ class Public::UsersController < ApplicationController
   def index
     if params[:search].present? && params[:word].present?
       @users = User.search(params[:search], params[:word])
+      #Userモデルファイルにsearchとwordを定義
     else
       @users = User.all
     end

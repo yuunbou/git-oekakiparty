@@ -13,14 +13,14 @@
       </div>
       <div class="d-flex flex-row">
         <% if @user.id == current_user.id %>
-          <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm' %>
-          <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm' %>
+          <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm mx-1' %>
+          <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm mx-1' %>
         <% end %>
-        <%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm' %>
+        <%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm mx-1' %>
         <!-- ()内に変数を渡すことでそのviewに飛べる -->
         <%= form_with model: @group_users, url: group_users_path, method: :post, local: true do |f| %>
           <%= f.hidden_field :user_id, :value => @user.id %>
-          <%= f.submit 'メンバーに追加' , class: 'btn btn-light-list btn-sm' %></div>
+          <%= f.submit 'メンバーに追加' , class: 'btn btn-light-list btn-sm mx-1' %></div>
         <% end %>
       </div>
     </div>
@@ -29,7 +29,7 @@
       <div class="d-flex">
         <h2 class="title flex-row">作品一覧</h2>
         <div class="button offset-1 mt-2">
-          <%= link_to "作品一覧", posts_path(@post), class: "btn btn-info btn-sm" %>
+          <%= link_to "作品一覧", posts_user_path(@user), class: "btn btn-info btn-sm" %>
         </div>
       </div>
       <table class="d-flex border-top">
