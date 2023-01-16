@@ -11,11 +11,19 @@ class User < ApplicationRecord
   has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
 
-
-
   validates :nickname, presence: true, length: { in: 2..20 }
   validates :introduction, length: {maximum: 300 }
   validates :email, uniqueness: true
+
+  #ゲストログイン用
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.nickname = "ゲストユーザー"
+      #  nickname を入力必須のため， user.nickname = "ゲスト"
+    end
+    redirect_to root_path
+  end
 
 
   #プロフィール画像設定

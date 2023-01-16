@@ -16,7 +16,8 @@
           <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm mx-1' %>
           <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm mx-1' %>
         <% end %>
-        <%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm mx-1' %>
+        <%= link_to "グループ一覧", groups_user_path(@user), class:'btn btn-dark btn-sm mx-1' %>
+        <!--%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm mx-1' %>-->
         <!-- ()内に変数を渡すことでそのviewに飛べる -->
         <%= form_with model: @group_users, url: group_users_path, method: :post, local: true do |f| %>
           <%= f.hidden_field :user_id, :value => @user.id %>

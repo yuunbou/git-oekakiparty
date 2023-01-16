@@ -60,6 +60,12 @@ class Public::UsersController < ApplicationController
     end
   end
 
+  def groups
+    @user = User.find(params[:id])
+    groups= GroupUser.where(user_id: @user.id).pluck(:group_id)
+    @groups = Group.find(groups)
+  end
+
   def index
     if params[:search].present? && params[:word].present?
       @users = User.search(params[:search], params[:word])

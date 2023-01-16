@@ -23,11 +23,11 @@ class Public::GroupsController < ApplicationController
   end
 
   #作成したグループの一覧
-  def index
-    puts params["user_id"]
-    @groups = Group.where(owner_id: params[:user_id])
+  #def index
+    #puts params["user_id"]
+    #@groups = Group.where(owner_id: params[:user_id])
     #グループの一覧は作成者（owner_id）のものが一覧に表示される
-  end
+  #end
 
   #グループ内の詳細（投稿したものなど）
   def show
@@ -37,11 +37,13 @@ class Public::GroupsController < ApplicationController
   #グループの編集
   def edit
     @group = Group.find(params[:id])
+    @group_users = 
     #リストからユーザーを持ってきて追加するイメージ
   end
 
-  #グループ編集の更新
+  #グループ編集の更新 ユーザーの追加
   def update
+    @group_users = 
     if @group.update(group_params)
       redirect_to groups_path
     else

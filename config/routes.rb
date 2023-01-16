@@ -5,14 +5,20 @@ Rails.application.routes.draw do
     sessions: 'public/sessions'
   }
 
+  devise_scope :users do
+    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  end
+
   scope module: :public do
     root to: 'homes#top'
     get "/about" => "homes#about", as: "about"
-    post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
+    #post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
+
     resources :users, only:[:index, :show, :edit, :update] do
       member do
         get :favorites
         get :posts
+        get :groups
       end
     end
     resources :posts, only:[:show, :new, :create, :edit, :update] do
@@ -26,7 +32,7 @@ Rails.application.routes.draw do
     resources :group_users, only:[:index, :create, :destroy]
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
-      get '/user_list' => "groups#user_lists", as: "user_list"
+      #get '/user_list' => "groups#user_lists", as: "user_list"
     end
 
   end
