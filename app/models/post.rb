@@ -59,14 +59,22 @@ class Post < ApplicationRecord
   def self.search(method,word)
     #byebug
     if method == "partial_match"
-      @posts = Post.joins(:tags).merge(Tag.where("tag_name LIKE ?", "%#{word}%")).merge(Post.where(post_type: 0)).published
-      @ward = @word.split(/[[:blank:]]+/)
+      word = "tag_name"#ここを修正
+      @word = word.split(/[[:blank:]]+/)
+      @words.each do |word|
       #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
       #@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
+        @posts = Post.joins(:tags).merge(Tag.where("tag_name LIKE ?", "%#{word}%")).merge(Post.where(post_type: 0)).published
+      end
     elsif method == "perfect_match"
       @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).published
     elsif method == "keyword"
-      @posts = Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").where(post_type: 0).published
+      @word = "title"
+      @word = @word.split(/[[:blank:]]+/)
+      @words.each do |word|
+        @posts = Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").where(post_type: 0).published
+      end
+      #{word}の部分を別の変数名に変更
     else
       @posts = Post.where(post_type: 0).published
     end
