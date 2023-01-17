@@ -5,8 +5,13 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    favorites= Favorite.where(user_id: @user.id).pluck(:post_id)
+    # where→条件に一致したカラムをすべて取得
+    # find→条件に一致したカラムを1件だけ取得
+    #whereで絞り込んだデータからpluckでpost_idの配列を作る
+    #where→order→pluckの
+    favorites = Favorite.where(user_id: @user.id).order(id: :desc).limit(5).pluck(:post_id)
     @favorite_posts = Post.find(favorites)
+
     if @user.me?(current_user.id)
       #今ログインしているのが自分か確認
 

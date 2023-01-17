@@ -19,6 +19,7 @@
         <%= link_to "グループ一覧", groups_user_path(@user), class:'btn btn-dark btn-sm mx-1' %>
         <!--%= link_to "グループ一覧", groups_path(user_id: @user.id), class:'btn btn-dark btn-sm mx-1' %>-->
         <!-- ()内に変数を渡すことでそのviewに飛べる -->
+        <!-- 下記　グループにユーザーを追加する　-->
         <%= form_with model: @group_users, url: group_users_path, method: :post, local: true do |f| %>
           <%= f.hidden_field :user_id, :value => @user.id %>
           <%= f.submit 'メンバーに追加' , class: 'btn btn-light-list btn-sm mx-1' %></div>

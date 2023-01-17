@@ -4,9 +4,9 @@ Rails.application.routes.draw do
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-
-  devise_scope :users do
-    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  #ゲストログイン
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
 
   scope module: :public do
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
-    resources :group_users, only:[:index, :create, :destroy]
+    resources :group_users, only:[:create, :destroy]
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
       #get '/user_list' => "groups#user_lists", as: "user_list"

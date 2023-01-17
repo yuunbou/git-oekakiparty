@@ -60,6 +60,7 @@ class Post < ApplicationRecord
     #byebug
     if method == "partial_match"
       @posts = Post.joins(:tags).merge(Tag.where("tag_name LIKE ?", "%#{word}%")).merge(Post.where(post_type: 0)).published
+      @ward = @word.split(/[[:blank:]]+/)
       #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
       #@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
     elsif method == "perfect_match"

@@ -32,18 +32,19 @@ class Public::GroupsController < ApplicationController
   #グループ内の詳細（投稿したものなど）
   def show
     @group = Group.find(params[:id])
+    @group.owner_id = current_user.id
   end
 
   #グループの編集
   def edit
     @group = Group.find(params[:id])
-    @group_users = 
+    @group_users = GroupUser.where(user_id: @user.ids)
     #リストからユーザーを持ってきて追加するイメージ
   end
 
   #グループ編集の更新 ユーザーの追加
   def update
-    @group_users = 
+    @group_users = GroupUser.where(user_id: @user.id)
     if @group.update(group_params)
       redirect_to groups_path
     else
@@ -68,7 +69,7 @@ class Public::GroupsController < ApplicationController
 
   def correct_user
     @group = Group.find(params[:id])
-    @user = @group.user
+    @user = @group.users
     redirect_to(posts_path) unless @group.owner_id == current_user.id
   end
 

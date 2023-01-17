@@ -12,17 +12,17 @@
           <%= f.file_field :group_image, multiple: true, accept: "image/*", class: 'form-control-file' %>
         </div>
         <div class="form-group">
-           <!--%= link_to "ユーザーリスト", user_lists_path, %>-->
+          <%= f.label :name, "グループ名" %>
+          <%= f.text_field :name, required: true, class: 'form-control p-1' %>
         </div>
         <div class="form-group">
-          <% @group_users.each do |group_user| %>
-            <div>
-              <%= link_to user_path(user.id) do %>
-                <%= image_tag user.get_profile_image(100,100), class: "rounded-circle" %></br>
-              <% end %>
-              <td><%= user.nickname %></td>
-            </div>
-          <% end %>
+          <!--% @group_users.each do |group_user| %>-->
+            <!--<div>-->
+              <!--%= image_tag @group.user.get_profile_image(100,100), class: "rounded-circle" %></br>-->
+              <!--%= user.nickname %>-->
+            <!--</div>-->
+            <!--%= link_to "削除", group_user_path(@group_user.id), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "削除しますか？"} %>-->
+          <!--% end %>-->
         </div>
         <%= f.submit "更新", class:'btn btn-success' %>
       <% end %>
