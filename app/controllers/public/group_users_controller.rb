@@ -7,5 +7,11 @@ class Public::GroupUsersController < ApplicationController
     redirect_to edit_group_path(group)
   end
   
+ private
+ 
+ def group_user_params
+   params.require(:group_user).permit(:user_id)
+ end
+  
   
 end

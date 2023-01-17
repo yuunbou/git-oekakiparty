@@ -16,7 +16,7 @@ class Public::GroupsController < ApplicationController
     #@group.usersに、current_userを追加
     #グループ作成者もメンバーに含ませるための記述
     if @group.save!
-      redirect_to groups_path
+      redirect_to groups_user_path(@user)
     else
       render 'new'
     end
