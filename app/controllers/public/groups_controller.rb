@@ -1,7 +1,8 @@
 class Public::GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only:[:edit, :update]
+  before_action :ensure_correct_user, only:[:edit, :update]
 
+  
   #グループの新規作成
   #グループの部屋を作る
   def new
@@ -21,13 +22,14 @@ class Public::GroupsController < ApplicationController
       render 'new'
     end
   end
-
-  #作成したグループの一覧
-  #def index
-    #puts params["user_id"]
-    #@groups = Group.where(owner_id: params[:user_id])
-    #グループの一覧は作成者（owner_id）のものが一覧に表示される
-  #end
+  
+  #加入追記
+  def join 
+    @group = Group.find(params[:group_id])
+    @group.users << current_user
+    redirect_to  groups_path
+  end
+  
 
   #グループ内の詳細（投稿したものなど）
   def show
