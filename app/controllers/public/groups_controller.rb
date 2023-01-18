@@ -1,6 +1,6 @@
 class Public::GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_correct_user, only:[:edit, :update]
+  before_action :correct_user, only:[:edit, :update]
 
   
   #グループの新規作成
@@ -12,10 +12,12 @@ class Public::GroupsController < ApplicationController
   #グループ作成
   def create
     @group = Group.new(group_params)
-    @group.owner_id = current_user.id
-    @group.users << current_user
     #@group.usersに、current_userを追加
     #グループ作成者もメンバーに含ませるための記述
+    @group.owner_id = current_user.id
+    
+     #グループにメンバーを追加するため
+    @group.users << current_user
     if @group.save!
       redirect_to groups_user_path(current_user)
     else
@@ -27,14 +29,14 @@ class Public::GroupsController < ApplicationController
   def join 
     @group = Group.find(params[:group_id])
     @group.users << current_user
-    redirect_to  groups_path
+    redirect_to  group_path(@group.id)
   end
   
 
   #グループ内の詳細（投稿したものなど）
   def show
     @group = Group.find(params[:id])
-    @group.owner_id = current_user.id
+    #@group.owner_id = current_user.id
   end
 
   #グループの編集
@@ -61,6 +63,13 @@ class Public::GroupsController < ApplicationController
     #Postモデルwhereで検索してgroup_idを元にして取り出す
 
   end
+  
+  def destroy
+    @group = Group.find(params[:id])
+    #current_userは、@group.usersから消されるという記述。
+    @group.users.delete(current_user)
+    redirect_to groups_user_path(current_user)
+  end
 
 
   private
@@ -68,6 +77,7 @@ class Public::GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(:name, :content, :group_image)
   end
+  #フォームから渡す必要がないためowner_idはparamsに入れる必要がない
 
   def correct_user
     @group = Group.find(params[:id])
