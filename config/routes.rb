@@ -29,9 +29,11 @@ Rails.application.routes.draw do
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
-    resources :group_users, only:[:create, :destroy]
+    #resources :group_users, only:[:create, :destroy]
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
+      get '/join' => "groups#join", as: "join"
+      #join = 加入
       #get '/user_list' => "groups#user_lists", as: "user_list"
     end
 

@@ -3,8 +3,14 @@ class Public::UsersController < ApplicationController
   before_action :correct_user, only:[:edit, :update]
   before_action :set_user, only: [:favorites]
 
+
   def show
     @user = User.find(params[:id])
+    
+    if @user.email == "guest@example.com" 
+      redirect_to root_path
+    end
+      
     # where→条件に一致したカラムをすべて取得
     # find→条件に一致したカラムを1件だけ取得
     #whereで絞り込んだデータからpluckでpost_idの配列を作る
@@ -22,6 +28,7 @@ class Public::UsersController < ApplicationController
       #published = postモデルのscopeで定義した投稿のステータスがtrue(公開)
       #公開中のもののみ他人に表示される 非公開は他のユーザーに表示されない
     end
+    
   end
 
   def edit
@@ -91,6 +98,7 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:nickname, :introduction, :profile_image)
   end
 
+  #correct_user = レコードを本当にログインユーザの所有しているものかを判別するメソッド
   def correct_user
     @user = User.find(params[:id])
     redirect_to user_path(current_user.id) unless @user == current_user
@@ -100,5 +108,7 @@ class Public::UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
+  
+  
 
 end

@@ -32,6 +32,13 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comment = Comment.new
     @user = @post.user
+    if params[:tag_id].present?
+      @tag = Tag.find(params[:tag_id])
+      @posts = @tag.posts
+    else
+      @posts = Post.where(post_type: 0).published
+    end
+
   end
 
   def edit
@@ -67,9 +74,11 @@ class Public::PostsController < ApplicationController
     #＆＆を使うことでxx かつという意味になる
     elsif params[:search].present? && params[:word].present?
       @posts = Post.search(params[:search], params[:word])
+
     else
       @posts = Post.where(post_type: 0).published
     end
+
   end
 
   private

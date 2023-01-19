@@ -19,6 +19,11 @@
       <table class="table">
         <tbody>
           <% @users.each do |user| %>
+            <% if user.email == "guest@example.com" %>
+            <!-- current.user.emailにすると、ログインしているユーザーが表示されないので注意　-->
+            <!-- 表示の指定をするならuser.emailなどにする　-->
+             <% next %>
+            <% end %>
           <tr>
             <td>
               <%= link_to user_path(user.id) do %>
