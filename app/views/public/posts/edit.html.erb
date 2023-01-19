@@ -6,6 +6,8 @@
   </div>
   <div class="row">
     <div class="mx-auto">
+      <p><%= @post.inspect %></p>
+      <p><%= @post.post_type %></p>
       <%= form_with model: @post, url: post_path, method: :patch do |f| %>
         <div class="form-group">
           <p>画像</p>
@@ -18,10 +20,12 @@
         <div class="form-group">
           <%= f.text_area :caption, class: "form-control" %>
         </div>
-        <div class="form-group">
-          <!--% if @post. == グループ内で投稿されたものだった場合表示しない -->
-          <%= f.text_field :tag_name, value: @tag_list, class: 'form-control' %>
-        </div>
+        <!-- post_typeがpost_publicだったら表示 -->
+        <% if @post.post_type == "post_public" %>
+          <div class="form-group">
+            <%= f.text_field :tag_name, value: @tag_list, class: 'form-control' %>
+          </div>
+        <% end %>
         <div class="form-group">
           <%= f.radio_button :is_status, :true %>
           <%= f.label :is_status, "公開", {value: :true, style: "desplay: inline-block"} %>
