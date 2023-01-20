@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="bg-light">ユーザー一覧</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 mx-auto">
+            <table class="table">
+                <thead>
+                    <tr class="bg-light">
+                        <th>ユーザID</th>
+                        <th>ユーザ名</th>
+                        <th>メールアドレス</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%= @users.each do |user| %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
