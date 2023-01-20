@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :authentivate_admin!
+  #before_action :authentivate_admin!
   
   def index
     @users = User.all  
@@ -7,6 +7,7 @@ class Admin::UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.where(post_type: 0).recent
   end
   
   def edit
