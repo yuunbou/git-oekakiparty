@@ -12,12 +12,27 @@
                         <th>ユーザID</th>
                         <th>ユーザ名</th>
                         <th>メールアドレス</th>
-                        <th></th>
+                        <th>ステータス</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <%= @users.each do |user| %>
-                </tbody>
+                <% @users.each do |user| %>
+                    <tbody>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td>
+                                <%= link_to admin_user_path(user.id) do %>
+                                    <%= user.nickname %>
+                                <% end %>
+                            </td>
+                            <td><%= user.email %></td>
+                            <% if user.is_active == true %>
+                                <td class="text-primary font-width-bold">有効</td>
+                            <% else %>
+                                <td class="text-secondary font-width-bold">退会</td>
+                            <% end %>
+                        </tr>
+                    </tbody>
+                <% end %>
             </table>
         </div>
     </div>
