@@ -44,5 +44,17 @@
         <% end %>
       </table>
     </div>
+    <div class="table">
+      <tbody>
+        <tr>
+          <th class="col-sm-4">会員ステータス</th>
+          <% if @user.is_active == true %>
+            <td>有効</td>
+        　<% else %>
+        　  <td>退会</td>
+        　<% end %>
+        </tr>   
+      </tbody>
+    </div>
   </div>
 </div>
