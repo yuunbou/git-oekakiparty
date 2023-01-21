@@ -73,19 +73,19 @@ class Post < ApplicationRecord
         posts = posts + tag_posts.pluck(:post_id)
       end
       
-      @posts = Post.where(id: posts).where(post_type: 0).published
+      @posts = Post.where(id: posts).where(post_type: 0).page(params[:page]).published
 
     elsif method == "perfect_match"
-      @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).published
+      @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).page(params[:page]).published
     elsif method == "keyword"
       #@word = "title"
       #@word = @word.split(/[[:blank:]]+/)
       #@words.each do |word|
-        @posts = Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").where(post_type: 0).published
+        @posts = Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").where(post_type: 0).page(params[:page]).published
       #end
       #{word}の部分を別の変数名に変更
     else
-      @posts = Post.where(post_type: 0).published
+      @posts = Post.where(post_type: 0).page(params[:page]).published
     end
     @posts
   end

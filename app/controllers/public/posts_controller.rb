@@ -76,7 +76,7 @@ class Public::PostsController < ApplicationController
       @posts = Post.search(params[:search], params[:word])
 
     else
-      @posts = Post.where(post_type: 0).published
+      @posts = Post.page(params[:page]).where(post_type: 0).published
     end
 
   end
