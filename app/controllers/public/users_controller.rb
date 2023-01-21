@@ -6,11 +6,10 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    
+    #ゲストログインはマイページへ遷移できない
     if @user.email == "guest@example.com" 
       redirect_to root_path
     end
-      
     # where→条件に一致したカラムをすべて取得
     # find→条件に一致したカラムを1件だけ取得
     #whereで絞り込んだデータからpluckでpost_idの配列を作る

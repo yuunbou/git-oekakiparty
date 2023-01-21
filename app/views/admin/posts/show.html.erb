@@ -1,0 +1,71 @@
+ <div class="container">
+    <div class="row">
+      <div class="mx-auto">
+        <h5>詳細</h5>
+        <div class="form-group">
+          <% if @post.images.attached? %>
+            <% @post.images.each do |image| %>
+              <%= image_tag image.variant(resize: '300x300') %>
+            <% end %>
+          <% end %>
+        </div>
+          <!-- 投稿した画像 -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="d-flex flex-row bd-highlight">
+          <%= link_to user_path(@user.id) do %>
+            <%= image_tag @post.user.get_profile_image(100,100), class:"rounded-circle" %>
+          <% end %>
+          <p><%= @post.user.nickname %></p>
+        </div>
+        <div class="form-group">
+            <%= link_to "編集", edit_post_path(@post.id), class: "btn btn-success btn-sm" %>
+            <%= link_to "削除", post_path(@post.id), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "削除しますか？"} %>
+        </div>
+        <div class="form-group">
+          <h4 class="font-weight-bold"><%= @post.title %></h4>
+          <!-- タイトル -->
+        </div>
+        <div class="form-group">
+          <% @post.tags.each do |tag| %>
+            <%= link_to tag.tag_name, admin_posts_path(tag_id: tag.id), class:'btn btn-primary btn-sm' %>
+          <% end %>
+        </div>
+        <div class="form-group">
+          <p class="text-muted"><%= @post.created_at.strftime('%Y/%m/%d %H:%M:%S') %></br></p>
+          <%= @post.caption %>
+          <!-- キャプション -->
+        </div>
+        <table class="table table-hover table-inverse">
+          <thead>
+            <tr>
+              <th>コメント<%= @post.comments.count %>件</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @post.comments.each do |comment| %>
+            <tr>
+              <td scope="col-sm-3">
+                <%= image_tag comment.user.get_profile_image(50,50) %>
+                <%= comment.user.nickname %>
+              </td>
+              <td>
+                <%= comment.comment %></br>
+                <%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+              </td>
+              <td>
+                  <%= link_to "削除", post_comment_path(comment.post, comment), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "コメントを削除しますか？"} %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+

@@ -6,8 +6,6 @@
   </div>
   <div class="row">
     <div class="mx-auto">
-      <p><%= @post.inspect %></p>
-      <p><%= @post.post_type %></p>
       <%= form_with model: @post, url: post_path, method: :patch do |f| %>
         <div class="form-group">
           <p>画像</p>
