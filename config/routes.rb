@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       resources :comments, only:[:destroy]
     end
     resources :comments, only:[:index]
+    resources :groups, only:[:index, :show]
   end
   
   
