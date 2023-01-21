@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="bg-light">ユーザー一覧</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 mx-auto">
+            <table class="table">
+                <thead>
+                    <tr class="bg-light">
+                        <th>日時</th>
+                        <th>作品名(ID)</th>
+                        <th>コメント</th>
+                        <th>ユーザー名(ID)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <% @comments.each do |comment| %>
+                    <tbody>
+                        <tr>
+                            <td><%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+                            <td>
+                                <%= comment.post.title %>
+                                (<%= comment.post.id %>)
+                            </td>
+                            <td><%= comment.comment %></td>
+                            <td>
+                                <%= comment.user.nickname %>
+                                (<%= comment.user.id %>)
+                            </td>
+                            <td>
+                                <%= link_to "削除", admin_post_comment_path(comment.post, comment), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "コメントを削除しますか？"} %>
+                            </td>
+                        </tr>
+                    </tbody>
+                <% end %>
+            </table>
+        </div>
+    </div>
+</div>
