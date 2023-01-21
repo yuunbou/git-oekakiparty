@@ -44,7 +44,7 @@
           <!-- キャプション -->
         </div>
         <!-- ゲストユーザーは表示しない -->
-        <% if @user.email == "guest@example.com" %>
+        <% if current_user.email != "guest@example.com"  %>
           <div class="form-group">
             <!-- いいね機能 -->
             <% if @post.favorited_by?(current_user) %>
@@ -64,7 +64,7 @@
         <% end %>
         <div class="form-group">
           <!-- ゲストログインなら表示させない -->
-          <% if @user.email == "guest@example.com" %>
+          <% if current_user.email != "guest@example.com"  %>
             <%= form_with model:[@post, @comment] do |f| %>
               <%= f.text_area :comment, row: '5', placeholder: "コメントする", class:"form-control col-sm-7 mb-2" %>
               <%= f.submit "送る", class:"btn btn-info" %>
@@ -92,7 +92,7 @@
                 <%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
               </td>
               <td>
-                <% if comment.user == current_user.id %>
+                <% if comment.user == current_user %>
                   <%= link_to "削除", post_comment_path(comment.post, comment), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "コメントを削除しますか？"} %>
                 <% end %>
               </td>
