@@ -56,7 +56,7 @@ class Post < ApplicationRecord
     end
   end
   #検索の条件分岐　タグは部分一致と完全一致で検索　キーワードはタイトルとキャプションでのキーワード検索にしたい
-  def self.search(method,word)
+  def self.search(method,word,page)
     #byebug
     if method == "partial_match"
       @words = word.split(/[[:blank:]]+/)
@@ -64,30 +64,32 @@ class Post < ApplicationRecord
       #[]の中にeachの検索結果を収納
       posts = []
       @words.each do |word|
-      #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
-      #@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
-        #@posts = Post.joins(:tags).merge(Tag.where("tag_name LIKE ?", "%#{word}%")).merge(Post.where(post_type: 0)).published
-        
         tags = Tag.where("tag_name LIKE ?", "%#{word}%")
         tag_posts = PostTag.where(tag_id: tags.ids)
         posts = posts + tag_posts.pluck(:post_id)
+        #+(プラス)...concatと同じ意味
       end
       
-      @posts = Post.where(id: posts).where(post_type: 0).page(params[:page]).published
+      @posts = Post.where(id: posts.uniq).where(post_type: 0).published.page(page)
 
     elsif method == "perfect_match"
-      @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).page(params[:page]).published
+      #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
+    　#@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
+      #@posts = Post.joins(:tags).merge(Tag.where("tag_name LIKE ?", "%#{word}%")).merge(Post.where(post_type: 0)).published
+      @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).published.page(page)
     elsif method == "keyword"
-      #@word = "title"
-      #@word = @word.split(/[[:blank:]]+/)
-      #@words.each do |word|
-        @posts = Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").where(post_type: 0).page(params[:page]).published
-      #end
+      @words = word.split(/[[:blank:]]+/)
+      posts = []
+      @words.each do |word|
+        posts = posts.concat(Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").ids)
+        #concat.. 配列同士を結合するメソッド
+      end
       #{word}の部分を別の変数名に変更
+      @posts = Post.where(id: posts.uniq).where(post_type: 0).published.page(page)
+      #uniq..重複をなくすメソッド
     else
-      @posts = Post.where(post_type: 0).page(params[:page]).published
+      @posts = Post.where(post_type: 0).published.page(page)
     end
-    @posts
   end
 
 end
