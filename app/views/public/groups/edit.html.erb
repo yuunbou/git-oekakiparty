@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row">
     <div class="mx-auto">
-      <h3>グループ編集</h3>
+      <h3 class="font-weight-bold m-3">グループ編集</h3>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="mx-auto">
       <%= form_with model: @group, url: group_path, method: :patch do |f| %>
         <div class="form-group">
           <p>グループ画像</p>
