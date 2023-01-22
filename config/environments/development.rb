@@ -78,4 +78,7 @@ Rails.application.configure do
 
   #config.hosts << "680f629bf36f4c048e08918a298f9479.vfs.cloud9.ap-northeast-1.amazonaws.com"
   config.hosts << "abd9732a11454fd885018b17ba278a3c.vfs.cloud9.ap-northeast-1.amazonaws.com"
+  
+  #annotation
+  config.annotations.register_tags("NOTE")
 end
