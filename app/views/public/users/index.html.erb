@@ -20,14 +20,14 @@
         <tbody>
           <% @users.each do |user| %>
             <% if user.email == "guest@example.com" %>
-            <!-- current.user.emailにすると、ログインしているユーザーが表示されないので注意　-->
-            <!-- 表示の指定をするならuser.emailなどにする　-->
+            <% #NOTE: current.user.emailにすると、ログインしているユーザーが表示されないので注意　%>
+            <% #NOTE: 表示の指定をするならuser.emailなどにし ==の後に指定する値を入れる(この場合メアド等)　%>
              <% next %>
             <% end %>
           <tr>
             <td>
               <%= link_to user_path(user.id) do %>
-                <%= image_tag user.get_profile_image(100,100), class: "rounded-circle" %></br>
+                <%= image_tag user.get_profile_image(100,100), class: "rounded-circl" %></br>
               <% end %>
               <%= user.nickname %>
             </td>
