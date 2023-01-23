@@ -68,7 +68,7 @@ class Public::GroupsController < ApplicationController
     @group = Group.find(params[:id])
     #current_userは、@group.usersから消されるという記述。
     @group.users.delete(current_user)
-    redirect_to groups_user_path(current_user)
+    redirect_to user_path(current_user.id)
   end
 
 
