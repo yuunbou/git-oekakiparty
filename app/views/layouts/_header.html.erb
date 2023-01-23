@@ -12,17 +12,17 @@
         <% if user_signed_in? %> <!-- ユーザーのヘッダー -->
           <% if current_user.email != "guest@example.com"  %>
             <li class="nav-item m-2">
-              <%= link_to "作品を投稿する", new_post_path, class:'btn btn-info' %>
+              <%= link_to "作品を投稿する", new_post_path, class:'btn btn-info-header' %>
             </li>
             <li class="nav-item m-2">
-              <%= link_to "マイページ", user_path(current_user.id), class: 'btn btn-info' %>
+              <%= link_to "マイページ", user_path(current_user.id), class: 'btn btn-info-header' %>
             </li>
           <% end %>
           <li class="nav-item m-2">
-            <%= link_to "検索", search_index_posts_path, class: 'btn btn-success' %>
+            <%= link_to "検索", search_index_posts_path, class: 'btn btn-info-header' %>
           </li>
           <li class="nav-item m-2">
-            <%= link_to "ユーザー一覧", users_path, class: 'btn btn-info' %>
+            <%= link_to "ユーザー一覧", users_path, class: 'btn btn-info-header' %>
           </li>
           <li class="nav-item m-2">
             <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'btn btn-secondary' %>
