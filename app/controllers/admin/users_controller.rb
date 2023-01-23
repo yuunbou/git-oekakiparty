@@ -2,7 +2,12 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   
   def index
-    @users = User.page(params[:page])  
+    if params[:search].present? && params[:word].present?
+      #Userモデルファイルにsearchとwordを定義
+      @users = User.search(params[:search], params[:word], params[:page])
+    else
+      @users = User.page(params[:page])
+    end
   end
   
   def show
