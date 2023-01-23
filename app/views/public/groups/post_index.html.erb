@@ -2,7 +2,7 @@
   <div class="row">
     <div class="mx-auto m-2">
      <%= form_with model: @post, url: posts_path, method: :post do |f| %>
-     <%= f.hidden_field :group_id, value: @group.id %>
+      <%= f.hidden_field :group_id, value: @group.id %>
         <div class="form-group">
           <%= f.file_field :images, multiple: true, accept: "images/*", class: 'form-control-file text-center' %>
           <!-- 複数画像のアップロード  -->
