@@ -39,8 +39,13 @@
           <% end %>
         </div>
       </div>
-      <% #TODO: 検索結果がない場合　検索結果がありませんというメッセージを出す　%>
     <% end %>
+    </div>
+    <% #NOTE: size..数　@postsの数が０の場合メッセージを表示する　%>
+    <div class="col-sm-12">
+      <% if @posts.size == 0 %>
+        <p class="text-center">検索結果がありませんでした</p>
+      <% end %>
     </div>
     <div class="mx-auto">
       <%= paginate @posts %>
