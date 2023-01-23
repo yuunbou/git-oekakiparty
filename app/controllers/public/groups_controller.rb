@@ -48,9 +48,9 @@ class Public::GroupsController < ApplicationController
 
   #グループ編集の更新 ユーザーの追加
   def update
-    @group_users = GroupUser.where(user_id: @user.id)
+    @group_users = GroupUser.where(user_id: @user.ids)
     if @group.update(group_params)
-      redirect_to groups_path
+      redirect_to groups_user_path(current_user)
     else
       render "edit"
     end
@@ -74,10 +74,11 @@ class Public::GroupsController < ApplicationController
 
   private
 
+  #フォームから渡す必要がないためowner_idはparamsに入れる必要がない
   def group_params
     params.require(:group).permit(:name, :content, :group_image)
   end
-  #フォームから渡す必要がないためowner_idはparamsに入れる必要がない
+  
 
   def correct_user
     @group = Group.find(params[:id])
