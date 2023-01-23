@@ -17,26 +17,21 @@ class Public::UsersController < ApplicationController
     favorites = Favorite.where(user_id: @user.id).order(id: :desc).limit(5).pluck(:post_id)
     @favorite_posts = Post.find(favorites)
 
+    #今ログインしているのが自分か確認
     if @user.me?(current_user.id)
-      #今ログインしているのが自分か確認
-
-      @posts = @user.posts.where(post_type: 0).recent
       #whereを使ってpostモデルで設定したenumのpost_typeの0:個人投稿を検索し、自分だったら全て表示
+      @posts = @user.posts.where(post_type: 0).recent
+      
     else
-      @posts = @user.posts.where(post_type: 0).published.recent
       #published = postモデルのscopeで定義した投稿のステータスがtrue(公開)
       #公開中のもののみ他人に表示される 非公開は他のユーザーに表示されない
+      @posts = @user.posts.where(post_type: 0).published.recent
     end
     
   end
 
   def edit
     @user = User.find(params[:id])
-    if @user == current_user
-      render "edit"
-    else
-      redirect_to posts_path
-    end
   end
 
   def update
@@ -57,13 +52,13 @@ class Public::UsersController < ApplicationController
   #ユーザーの投稿一覧
   def posts
     @user = User.find(params[:id])
-    @posts = Post.where(user_id: @user.id).pluck(:post_id)
     #pluck = 指定したカラム(この場合post_id)のレコードの配列を取得
+    @posts = Post.where(user_id: @user.id).pluck(:post_id)
+    #今ログインしているのが自分か確認
     if @user.me?(current_user.id)
-      #今ログインしているのが自分か確認
 
-      @posts = @user.posts.where(post_type: 0)
       #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
+      @posts = @user.posts.where(post_type: 0)
     else
      #公開中のもののみ他人に表示される 非公開は他人に表示されない
       @posts = @user.posts.where(post_type: 0).published
@@ -79,16 +74,11 @@ class Public::UsersController < ApplicationController
 
   def index
     if params[:search].present? && params[:word].present?
-      @users = User.search(params[:search], params[:word])
       #Userモデルファイルにsearchとwordを定義
+      @users = User.search(params[:search], params[:word], params[:page])
     else
-      @users = User.all
+      @users = User.page(params[:page])
     end
-  end
-
-  #グループにユーザーを追加する為のリスト
-  def user_list
-    @user = User.all
   end
 
   private
