@@ -41,16 +41,14 @@ class User < ApplicationRecord
   end
 
   #検索の条件分岐　部分一致と完全一致で検索
-  def self.search(method,word)
+  def self.search(method,word,page)
     #byebug
     if method == "partial_match"
-      @users = User.where("nickname LIKE ?", "%#{word}%")
-      #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
-      #@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
+      @users = User.where("nickname LIKE ?", "%#{word}%").page(page)
     elsif method == "perfect_match"
-      @users = User.where(nickname: word)
+      @users = User.where(nickname: word).page(page)
     else
-      @users = User.all
+      @users = User.page(page)
     end
   end
 
