@@ -12,7 +12,8 @@ class Admin::PostsController < ApplicationController
       @posts = Post.search(params[:search], params[:word])
 
     else
-      @posts = Post.where(post_type: 0)
+      #何も入力せず検索を押した場合
+      @posts = Post.page(params[:page]).where(post_type: 0)
     end
 
   end
@@ -33,5 +34,12 @@ class Admin::PostsController < ApplicationController
     post.destroy
     redirect_to admin_posts_path
   end
+  
+  private  
+  
+  def post_params
+    params.require(:post).permit(:group_id, :title, :caption, :is_status, :post_type, images: []).merge(user_id: current_user.id)
+  end
+  
     
 end
