@@ -8,8 +8,15 @@
     <div class="mx-auto colsm-12 col-md-8 col-lg-5 px-5 px-sm-0">
       <%= form_with model: @post, url: posts_path, method: :post do |f| %>
         <div class="form-group">
-          <%= f.file_field :images, multiple: true, accept: "images/*", class: 'form-control-file text-center' %>
-          <!-- 複数画像のアップロード  -->
+          <%= f.file_field :images, multiple: true, accept: "images/*", onchange: "loadImage(this);", class: 'form-control-file text-center　push' %>
+          <% #NOTE: 複数画像のアップロード  %>
+          <% #TODO: 画像のプレビュー　%>
+          <% #NOTE: 下記のコードが選択した画像を表示するようにするもの　%>
+          <div id="post_images" style="display: none;">
+            <p id="preview"></p>
+          </div>
+          <% #NOTE: 部分テンプレートでプレビューを表示する　%>
+          <%= render "loadimage" %>
         </div>
         <div class="form-group">
           <%= f.label :title, "タイトル" %>
