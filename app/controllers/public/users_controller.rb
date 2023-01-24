@@ -45,8 +45,9 @@ class Public::UsersController < ApplicationController
 
   def favorites
     @user = User.find(params[:id])
-    favorites = Favorite.where(user_id: @user.id).pluck(:post_id)
-    @favorite_posts = Post.find(favorites)
+#    @favorites = Favorite.where(user_id: @user.id).page(params[:page]).pluck(:post_id)
+    #＠favorites_posts..userモデルファイルで定義
+    @favorite_posts = @user.favorite_posts.page(params[:page]) #Post.find(@favorites)
   end
 
   #ユーザーの投稿一覧
@@ -58,18 +59,19 @@ class Public::UsersController < ApplicationController
     if @user.me?(current_user.id)
 
       #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
-      @posts = @user.posts.where(post_type: 0)
+      @posts = @user.posts.where(post_type: 0).page(params[:page])
     else
      #公開中のもののみ他人に表示される 非公開は他人に表示されない
-      @posts = @user.posts.where(post_type: 0).published
+      @posts = @user.posts.where(post_type: 0).page(params[:page]).published
 
     end
   end
 
   def groups
     @user = User.find(params[:id])
-    groups= GroupUser.where(user_id: @user.id).pluck(:group_id)
-    @groups = Group.find(groups)
+    #@groups= GroupUser.where(user_id: @user.id).page(params[:page]).pluck(:group_id)
+    #アソシエーションでgroupは持っているためwhereを使わずとも下記の定義でとってこれる
+    @groups = @user.groups.page(params[:page])#Group.find(groups)
   end
 
   def index

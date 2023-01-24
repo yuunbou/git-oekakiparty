@@ -8,6 +8,7 @@ class Group < ApplicationRecord
   validates :content, presence: true
   validates :owner_id, presence: true
 
+  #グループイメージの
   def get_group_image(width, height)
     unless group_image.attached?
       file_path = Rails.root.join('app/assets/images/no_group_image.jpg')
@@ -19,5 +20,7 @@ class Group < ApplicationRecord
   def me?(user_id)
     id == user_id
   end
+  
+  
 
 end
