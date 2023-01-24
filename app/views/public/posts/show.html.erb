@@ -2,8 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="mx-auto">
-        <h5>詳細</h5>
-        <div class="form-group">
+        <div class="form-group mt-3">
           <% if @post.images.attached? %>
             <% @post.images.each do |image| %>
               <%= image_tag image.variant(resize: '300x300') %>
@@ -15,11 +14,11 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <div class="d-flex flex-row bd-highlight">
+        <div class="form-group col-sm-2">
           <%= link_to user_path(@user.id) do %>
             <%= image_tag @post.user.get_profile_image(100,100), class:"rounded-circle" %>
           <% end %>
-          <p><%= @post.user.nickname %></p>
+          <p class="font-weight-bold offset-2"><%= @post.user.nickname %></p>
         </div>
         <div class="form-group">
           <% if @user.id == current_user.id %>
