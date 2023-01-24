@@ -27,9 +27,9 @@
           <tr>
             <td>
               <%= link_to user_path(user.id) do %>
-                <%= image_tag user.get_profile_image(100,100), class: "rounded-circl" %></br>
+                <%= image_tag user.get_profile_image(100,100), class: "image_circle_public" %></br>
               <% end %>
-              <%= user.nickname %>
+              <p class="text-center"><%= user.nickname %></p>
             </td>
             <% user.posts.where(post_type: 0).published.recent.each do |post| %>
             <td>
