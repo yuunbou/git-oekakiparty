@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   has_many :posts, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  #favorite_postsというないモデルを作成しfavoritesの先にあるpostをとってくる記述（ページネーションを反映させるため）
+  has_many :favorite_posts, through: :favorites, :source => :post
   has_many :comments, dependent: :destroy
   has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
