@@ -1,23 +1,46 @@
 <script>
-  function loadImage(obj)
+  function loadImage()
   {
-   
-    var allPreview = document.getElementById('post_images');
-    var newPreview = document.createElement("p");
-    //allPreview.querySelector("p").remove();
-    newPreview.setAttribute("id","preview");
-    allPreview.insertBefore(newPreview, allPreview.firstChild);
-    document.getElementById("post_images").style.display = "";
-    for (i = 0; i < obj.files.length; i++) {
-        
-        var fileReader = new FileReader();
-        fileReader.onload = (function (e) {
-            var img = new Image();
-            img.src = e.target.result;
-            // 下記がおそらく原因かもしれない
-            document.getElementById('preview').appendChild(img);
-        });
-      fileReader.readAsDataURL(obj.files[i]);
+    const preview = document.querySelector('#preview');
+    const files = document.querySelector('#post_images').files;
+    
+    function readAndPreview(file) {
+      const reader = new FileReader();
+      
+      reader.addEventListener("load", () => {
+        const image = new Image();
+        image.height = 200;
+        image.title = file.name;
+        console.log(reader.result);
+        image.src = reader.result;
+        preview.appendChild(image); 
+      }, false);
+      
+      reader.readAsDataURL(file);
     }
+    
+    if(files) {
+      Array.prototype.forEach.call(files, readAndPreview)
+    }
+    
+    // var allPreview = document.getElementById('post_images');
+    // var newPreview = document.createElement("p");
+    //allPreview.querySelector("p").remove();
+    // newPreview.setAttribute("id","preview");
+    // allPreview.insertBefore(newPreview, allPreview.firstChild);
+    // document.getElementById("post_images").style.display = "";
+    // for (i = 0; i < obj.files.length; i++) {
+        // var fileReader = new FileReader();
+        // fileReader.onload = (function (e) {
+            // var img = new Image();
+            // img.src = e.target.result;
+            // console.log(img.src)
+            // newPreview.appendChild(img);
+            // 下記がおそらく原因かもしれない
+            // document.getElementById('preview').appendChild(img);
+        // });
+      // fileReader.readAsDataURL(obj.files[i]);
+      // console.log(obj.files[i]);
+    // }
   }
 </script>
