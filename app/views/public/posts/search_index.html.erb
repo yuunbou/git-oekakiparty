@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="mx-auto m-2">
-      <!-- 検索フォーム -->
+      <% #NOTE: 検索フォーム %>
       <%= form_with url: search_index_posts_path, local: true, method: :get do |form| %>
         <div class="input-group">
           <%= form.text_field :word, placeholder: "キーワード", class:'form-control  input-group-prepend' %>
