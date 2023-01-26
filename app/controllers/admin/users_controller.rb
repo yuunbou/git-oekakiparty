@@ -25,6 +25,22 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_user_path(user.id)
   end
   
+  def posts
+    @user = User.find(params[:id])
+    #pluck = 指定したカラム(この場合post_id)のレコードの配列を取得
+    @posts = Post.where(user_id: @user.id).pluck(:post_id)
+    #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
+    @posts = @user.posts.where(post_type: 0).page(params[:page])
+  end
+  
+  def groups
+    @user = User.find(params[:id])
+    #@groups= GroupUser.where(user_id: @user.id).page(params[:page]).pluck(:group_id)
+    #アソシエーションでgroupは持っているためwhereを使わずとも下記の定義でとってこれる
+    @groups = @user.groups.page(params[:page])#Group.find(groups)
+  end
+  
+  
   private
   
   def user_params
