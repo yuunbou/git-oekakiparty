@@ -28,7 +28,6 @@ Rails.application.routes.draw do
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
-    #resources :group_users, only:[:create, :destroy]
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
       get '/join' => "groups#join", as: "join"
@@ -44,13 +43,24 @@ Rails.application.routes.draw do
   }
   
   namespace :admin do
-    resources :users, only:[:index, :show, :edit, :update]
+    resources :users, only:[:index, :show, :edit, :update] do
+      member do
+        get :posts
+        get :groups
+      end
+    end
+    
     resources :posts, only:[:index, :show, :destroy] do
       resources :comments, only:[:destroy]
     end
     resources :comments, only:[:index]
-    resources :groups, only:[:index, :show]
+    resources :groups, only:[:index, :show] do
+      get '/post_index' => "groups#post_index" , as: "post_index"
+    end
+    
+    
   end
+  
   
   
 
