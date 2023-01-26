@@ -55,6 +55,7 @@ class Post < ApplicationRecord
       self.tags << new_post_tag
     end
   end
+  
   #検索の条件分岐　タグは部分一致と完全一致で検索　キーワードはタイトルとキャプションでのキーワード検索にしたい
   def self.search(method,word,page)
     #byebug
@@ -84,7 +85,6 @@ class Post < ApplicationRecord
         posts = posts.concat(Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").ids)
         #concat.. 配列同士を結合するメソッド
       end
-      #{word}の部分を別の変数名に変更
       @posts = Post.where(id: posts.uniq).where(post_type: 0).published.page(page)
       #uniq..重複をなくすメソッド
     else
