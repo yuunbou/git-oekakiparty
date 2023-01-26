@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 m-3 p-0 d-flex flex-wrap">
+    <% @posts.each do |post| %>
+      <div class="card m-2 shadow-sm" style="width: 13rem;">
+        <div class="review-img card-img-top">
+        <%= link_to post_path(post.id) do %>
+          <%= image_tag post.images[0].variant(resize: '200x200') %>
+        <% end %>
+        </div>
+        <div class="card-body" style="border-top:solid">
+          <% #NOTE:　引数には投稿したユーザーに遷移したいので（post.user）と　%>
+          <%= link_to user_path(post.user) do %>
+            <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
+          <% end %>
+          <h5 class="card-title"><%= post.title %></h5>
+          <% post.tags.each do |tag| %>
+            <%= link_to tag.tag_name, search_index_posts_path(tag_id: tag.id) %>
+          <% end %>
+          <% if post.is_status == true %>
+            <p class="text-success font-width-bold">公開</p>
+          <% else %>
+            <p class="text-secondary font-width-bold">非公開</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+    <div class="mx-auto">
+      <%= paginate @posts %>
+    </div>
+  </div>
+</div>
