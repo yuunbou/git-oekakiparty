@@ -47,9 +47,6 @@
               <p class="mt-4 pl-2"><%= @post.user.nickname %></p>
             </div>
             <h5 class="card-title"><%= post.title %></h5>
-            <% post.tags.each do |tag| %>
-              <%= tag.tag_name %>
-            <% end %>
             <% if post.is_status == true %>
               <p class="text-success font-width-bold">公開</p>
             <% else %>
