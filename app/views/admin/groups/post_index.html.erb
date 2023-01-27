@@ -17,7 +17,7 @@
               <%= link_to admin_user_path(post.user) do %>
                 <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
               <% end %>
-              <p class="mt-4 pl-2"><%= @post.user.nickname %></p>
+              <p class="mt-4 pl-2"><%= post.user.nickname %></p>
             </div>
             <h5 class="card-title"><%= post.title %></h5>
             <% if post.is_status == true %>
