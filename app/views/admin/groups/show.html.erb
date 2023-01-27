@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3><%= @group.name %></h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>メンバー</th>
+            <th>グループ内容</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= image_tag @group.get_group_image(200,200) %></td>
+            <td>
+              <% @group.users.each do |user| %>
+                <%= user.nickname %><br>
+              <% end %>
+            </td>
+            <td class="col-sm-5"><%= @group.content %></td>
+            <td>
+                <%= link_to "グループ作品集", admin_group_post_index_path(@group.id), class:'btn btn-dark' %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
