@@ -13,7 +13,7 @@ class Public::UsersController < ApplicationController
     # where→条件に一致したカラムをすべて取得
     # find→条件に一致したカラムを1件だけ取得
     #whereで絞り込んだデータからpluckでpost_idの配列を作る
-    #where→order→pluckの
+    #where→order→pluckの順で記述
     favorites = Favorite.where(user_id: @user.id).order(id: :desc).limit(5).pluck(:post_id)
     @favorite_posts = Post.find(favorites)
 
