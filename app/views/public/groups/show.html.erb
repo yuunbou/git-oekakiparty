@@ -25,6 +25,7 @@
               <% if @group.owner_id == current_user.id %>
                 <%= link_to '編集', edit_group_path(@group), class: "btn btn-sm btn-success mb-2" %></br>
                 <%= link_to 'グループ削除', group_all_destroy_path(@group), class: "btn btn-sm btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' } %> 
+                <%= link_to 'メンバーを追加', group_join_group_path(@group), class: "btn btn-sm btn-primary mt-2" %>
               <% elsif @group.users.include?(current_user) %>
                 <%= link_to 'グループから抜ける', group_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
               <% else %>

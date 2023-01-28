@@ -32,6 +32,9 @@ Rails.application.routes.draw do
       get '/post_index' => "groups#post_index" , as: "post_index"
       #join = 加入
       get '/join' => "groups#join", as: "join"
+      get '/join_group' => "groups#join_group", as: "join_group"
+      post '/join_user' => "groups#join_user", as: "join_user"
+      # 新たにグループを抜けるアクションを作らなくてはならない
       delete "all_destroy" => 'groups#all_destroy'
     end
 

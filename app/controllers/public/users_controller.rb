@@ -6,6 +6,7 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    
     #ゲストログインはマイページへ遷移できない
     if @user.email == "guest@example.com" 
       redirect_to root_path
@@ -73,7 +74,14 @@ class Public::UsersController < ApplicationController
     #アソシエーションでgroupは持っているためwhereを使わずとも下記の定義でとってこれる
     @groups = @user.groups.page(params[:page])#Group.find(groups)
   end
-
+  
+  def join 
+    @group = Group.find(params[:group_id])
+    @group.users << user_id
+    redirect_to  group_path(@group.id)
+  end
+  
+  
   def index
     if params[:search].present? && params[:word].present?
       #Userモデルファイルにsearchとwordを定義

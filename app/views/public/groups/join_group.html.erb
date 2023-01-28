@@ -1,0 +1,8 @@
+<%= @group.name %><br />
+<% User.where.not(id: @user.id).each do |user| %>
+    <% if user.email == "guest@example.com" %>
+    <% next %>
+    <% end %>
+    <%= user.nickname %>
+    <%= link_to 'メンバー追加', group_join_user_path(@group, user_id: user.id), class: "btn btn-sm btn-success", method: :post %><br />
+<% end %>

@@ -25,13 +25,25 @@ class Public::GroupsController < ApplicationController
     end
   end
   
-  #加入追記
+  #グループにユーザー追加
   def join 
     @group = Group.find(params[:group_id])
     @group.users << current_user
     redirect_to  group_path(@group.id)
   end
   
+  def join_group
+     @group = Group.find(params[:group_id])
+     @user = current_user
+  end
+  
+  def join_user
+    @group = Group.find(params[:group_id])
+    @group.users << User.find(params[:user_id])
+    # @group.users << params[:user_id] # ここを変える.追加したいユーザーのデータを取得する → userのidが必要
+    # 上記のコードではダメです. params[:user_id] を使ってユーザーのデータを取得する必要があリマス
+    redirect_to group_join_group_path(@group)
+  end
 
   #グループ内の詳細（投稿したものなど）
   def show
