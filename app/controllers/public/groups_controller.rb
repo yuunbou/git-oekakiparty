@@ -69,6 +69,13 @@ class Public::GroupsController < ApplicationController
     @group.users.delete(current_user)
     redirect_to user_path(current_user.id)
   end
+  
+  def all_destroy
+    @group = Group.find(params[:group_id])
+    if @group.destroy
+      redirect_to groups_user_path(current_user)
+    end
+  end
 
 
   private
