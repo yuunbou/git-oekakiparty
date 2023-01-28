@@ -30,8 +30,9 @@ Rails.application.routes.draw do
     end
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
-      get '/join' => "groups#join", as: "join"
       #join = 加入
+      get '/join' => "groups#join", as: "join"
+      delete "all_destroy" => 'groups#all_destroy'
     end
 
   end

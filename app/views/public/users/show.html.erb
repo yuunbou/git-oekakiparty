@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="row">
-    <div class="col-2 m-4">
-      <%= image_tag @user.get_profile_image(200,200), class:"rounded-circle" %>
+  <div class="row m-4">
+    <div class="col-sm-3">
+      <%= image_tag @user.get_profile_image(200,200), class:"rounded image_mypage" %>
       <% #NOTE: ユーザプロフィール画像 %>
     </div>
     <div class="col-sm-6 m-4">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-sm-12">
-      <div class="d-flex">
+      <div class="d-flex mt-4">
         <h2 class="title flex-row">作品一覧</h2>
         <div class="button offset-1 mt-2">
           <%= link_to "作品一覧", posts_user_path(@user), class: "btn btn-info btn-sm" %>

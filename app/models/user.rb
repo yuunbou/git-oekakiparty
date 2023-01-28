@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :favorite_posts, through: :favorites, :source => :post
   has_many :comments, dependent: :destroy
   has_many :group_users, dependent: :destroy
-  has_many :groups, through: :group_users
+  has_many :groups, through: :group_users, dependent: :destroy
 
   validates :nickname, presence: true, length: { in: 2..20 }
   validates :introduction, length: {maximum: 300 }

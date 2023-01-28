@@ -1,6 +1,6 @@
 class Group < ApplicationRecord
   has_many :group_users, dependent: :destroy
-  has_many :users, through: :group_users
+  has_many :users, through: :group_users, dependent: :destroy
   has_one_attached :group_image
   has_many :posts
 
@@ -8,7 +8,7 @@ class Group < ApplicationRecord
   validates :content, presence: true
   validates :owner_id, presence: true
 
-  #グループイメージの
+  #グループイメージの画像
   def get_group_image(width, height)
     unless group_image.attached?
       file_path = Rails.root.join('app/assets/images/no_group_image.jpg')

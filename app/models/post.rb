@@ -16,7 +16,6 @@ class Post < ApplicationRecord
 
   validates :images, presence: true
   validates :title, presence: true
-  #タイトルのバリデーション
   #validates :is_status, presence: true
 
   # 公開・非公開の設定
