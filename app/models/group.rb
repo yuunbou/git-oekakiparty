@@ -17,10 +17,8 @@ class Group < ApplicationRecord
     group_image.variant(resize_to_limit:[width, height]).processed
   end
 
-  def me?(user_id)
-    id == user_id
-  end
+  #def me?(user_id)
+    #id == user_id
+  #end
   
-  
-
 end

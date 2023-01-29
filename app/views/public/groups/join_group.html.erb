@@ -1,8 +1,56 @@
-<%= @group.name %><br />
-<% User.where.not(id: @user.id).each do |user| %>
-    <% if user.email == "guest@example.com" %>
-    <% next %>
-    <% end %>
-    <%= user.nickname %>
-    <%= link_to 'メンバー追加', group_join_user_path(@group, user_id: user.id), class: "btn btn-sm btn-success", method: :post %><br />
-<% end %>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <h3 class="font-weight-bold m-3"><%= @group.name %></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-xs-12">
+            <h4 class="clo-xs-6">ユーザーリスト</h4>
+            <div class="mx-auto m-2">
+              <% #NOTE: 検索フォーム %>
+              <%= form_with url: group_join_group_path(@group), local: true, method: :get do |form| %>
+                <div class="input-group">
+                  <%= form.text_field :word, placeholder: "キーワード", class:'form-control  input-group-prepend' %>
+                  <%= form.select :search, options_for_select([["部分一致","partial_match"], ["完全一致","perfect_match"]]) %>
+                  <span class="input-group-btn input-group-append">
+                    <%= form.submit "検索", class:'btn btn-primary' %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+            <table class="table">
+                <tbody>
+                    <% #NOTE: where.not...条件に一致しないものをとってくる %>
+                    <%# User.where.not(id: @user.id).each do |user| %>
+                    <% @users.each do |user| %>
+                        <% if user.email == "guest@example.com" %>
+                        <% next %>
+                        <% end %>
+                    <tr>
+                        <td class="col-xs-2"><%= image_tag user.get_profile_image(100,100), class: "rounded user_image" %></td>
+                        <td class="col-xs-4"><%= user.nickname %></td>
+                        <% #NOTE: @groupの中にユーザーが入っているか？ %>
+                        <% if @group.users.include?(user) %>
+                            <td><%= link_to 'メンバーから外す', group_join_destroy_path(@group, user_id: user.id), method: :delete, class: "btn btn-sm btn-danger" %></td>
+                        <% else %>
+                            <td><%= link_to 'メンバー追加', group_join_user_path(@group, user_id: user.id), class: "btn btn-sm btn-success", method: :post %></td>
+                        <% end %>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="mx-auto">
+        <%= paginate @users %>
+    </div>
+    <div class="row">
+        <div class="mx-auto">
+            <%= link_to '戻る', group_path(@group.id), class: 'btn btn-primary' %>
+        </div>
+    </div>
+</div>
+
+
+

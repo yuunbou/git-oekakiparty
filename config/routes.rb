@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get '/join_group' => "groups#join_group", as: "join_group"
       post '/join_user' => "groups#join_user", as: "join_user"
       # 新たにグループを抜けるアクションを作らなくてはならない
+      delete '/join_destroy' => "groups#join_destroy", as: "join_destroy"
       delete "all_destroy" => 'groups#all_destroy'
     end
 
