@@ -1,46 +1,41 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
+  <div class="row m-2">
+    <div class="col-xs-12">
       <h3><%= @group.name %></h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>メンバー</th>
-            <th>グループ内容</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= image_tag @group.get_group_image(200,200) %></td>
-            <td>
-              <% @group.users.each do |user| %>
-                <%= user.nickname %><br>
-              <% end %>
-            </td>
-            <td class="col-sm-5"><%= @group.content %></td>
-            <td>
-              <% if @group.owner_id == current_user.id %>
-                <%= link_to '編集', edit_group_path(@group), class: "btn btn-sm btn-success mb-2" %></br>
-                <%= link_to 'グループ削除', group_all_destroy_path(@group), class: "btn btn-sm btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' } %> 
-                <%= link_to 'メンバーを追加', group_join_group_path(@group), class: "btn btn-sm btn-primary mt-2" %>
-              <% elsif @group.users.include?(current_user) %>
-                <%= link_to 'グループから抜ける', group_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
-              <% else %>
-                <%= link_to 'メンバーに入る', group_join_path(@group), class: "btn btn-sm btn-success" %>
-              <% end %>
-            </td>
-            <td>
-              <% #NOTE: include?.. 配列の中に引数が含まれているか %>
-              <% if @group.users.ids.include?(current_user.id) %>
-                <%= link_to "グループ作品集", group_post_index_path(@group.id), class:'btn btn-picture' %>
-              <% end %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    </div>
+  </div>
+  <div class="row m-3">
+    <div class="form-group col-xs-3">
+      <%= image_tag @group.get_group_image(200,200) %>
+    </div>
+    <div class="form-group col-xs-5">
+      <h5 class="font-weight-bold">メンバー</h5>
+      <% @group.users.each do |user| %>
+        <p><%= user.nickname %></p>
+      <% end %>
+    </div>
+    <div class="form=group col-xs-8 ml-3">
+      <h4 class="border-bottom">グループ内容</h4>
+      <div><%= @group.content %></div>
+    </div>
+  </div>
+  <div class="row m-3">
+    <div class="col-xs-12">
+      <div class="form-group col-xs-8 m-1 d-flex flex-row">
+        <% if @group.owner_id == current_user.id %>
+          <p class="col-xs-3"><%= link_to '編集', edit_group_path(@group), class: "btn btn-sm btn-success" %></p>
+          <p class="col-xs-4"><%= link_to 'グループ削除', group_all_destroy_path(@group), class: "btn btn-sm btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' } %></p>
+          <p class="col-xs-4"><%= link_to 'メンバーを追加', group_join_group_path(@group), class: "btn btn-sm btn-primary" %></p>
+        <% elsif @group.users.include?(current_user) %>
+          <%= link_to 'グループから抜ける', group_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
+        <% end %>
+      </div>
+      <div class="form-group col-xs-8 m-1">
+        <% #NOTE: include?.. 配列の中に引数が含まれているか %>
+        <% if @group.users.ids.include?(current_user.id) %>
+          <%= link_to "グループ作品集", group_post_index_path(@group.id), class:'btn btn-picture' %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

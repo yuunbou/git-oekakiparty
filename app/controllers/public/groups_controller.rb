@@ -32,16 +32,33 @@ class Public::GroupsController < ApplicationController
     redirect_to  group_path(@group.id)
   end
   
+  #ユーザーリスト
   def join_group
-     @group = Group.find(params[:group_id])
-     @user = current_user
+    @group = Group.find(params[:group_id])
+    @user = current_user
+     #検索フォーム
+    if params[:search].present? && params[:word].present?
+      #Userモデルファイルにsearchとwordを定義
+      @users = User.search(params[:search], params[:word]).where.not(id: @group.owner_id).page(params[:page]).per(2)
+    else
+      @users = User.where.not(id: @group.owner_id).page(params[:page]).per(2)
+    end
   end
   
+  #ユーザー追加
   def join_user
     @group = Group.find(params[:group_id])
     @group.users << User.find(params[:user_id])
     # @group.users << params[:user_id] # ここを変える.追加したいユーザーのデータを取得する → userのidが必要
-    # 上記のコードではダメです. params[:user_id] を使ってユーザーのデータを取得する必要があリマス
+    # 上記のコードではダメです. params[:user_id] を使ってユーザーのデータを取得する必要があります
+    redirect_to group_join_group_path(@group)
+  end
+  
+  #ユーザーをグループから
+  def join_destroy
+    @group = Group.find(params[:group_id])
+    #()の中にuserの引数を入れる
+    @group.users.delete(params[:user_id])
     redirect_to group_join_group_path(@group)
   end
 

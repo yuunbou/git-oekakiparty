@@ -85,9 +85,10 @@ class Public::UsersController < ApplicationController
   def index
     if params[:search].present? && params[:word].present?
       #Userモデルファイルにsearchとwordを定義
-      @users = User.search(params[:search], params[:word], params[:page])
+      #ページネーション。。。per()で個別にページネーションを指定できる
+      @users = User.search(params[:search], params[:word]).page(params[:page]).per(10)
     else
-      @users = User.page(params[:page])
+      @users = User.page(params[:page]).per(10)
     end
   end
 

@@ -1,62 +1,60 @@
 <!-- ヘッダー -->
 <header>
   <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <a class="navbar-brand text-light"><%= link_to "お絵描きparty", root_path, class:'font-weight-bold h3 text-light' %></a> <!-- 余力があればlogoのimage -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto">
-        <% if user_signed_in? %> <!-- ユーザーのヘッダー -->
-          <% if current_user.email != "guest@example.com"  %>
-            <li class="nav-item m-2">
-              <%= link_to "作品を投稿する", new_post_path, class:'btn btn-info' %>
-            </li>
-            <li class="nav-item m-2">
-              <%= link_to "マイページ", user_path(current_user.id), class: 'btn btn-info' %>
-            </li>
-          <% end %>
+    <a class="navbar-brand text-light"><%= link_to "お絵描きparty", root_path, class:'font-weight-bold h3 text-light offset-1' %></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                  aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+      <% if user_signed_in? %> <!-- ユーザーのヘッダー -->
+        <% if current_user.email != "guest@example.com"  %>
           <li class="nav-item m-2">
-            <%= link_to "検索", search_index_posts_path, class: 'btn btn-info' %>
+            <%= link_to "作品を投稿する", new_post_path, class:'btn btn-info' %>
           </li>
           <li class="nav-item m-2">
-            <%= link_to "ユーザー一覧", users_path, class: 'btn btn-info' %>
-          </li>
-          <li class="nav-item m-2">
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'btn btn-secondary' %>
-          </li>
-        <% elsif admin_signed_in? %> <!-- 管理者のヘッダー -->
-          <li class="nav-item m-2">
-            <%= link_to "コメント一覧", admin_comments_path, class: 'btn btn-warning' %>
-          </li>
-          <li class="nav-item m-2">
-            <%= link_to "投稿一覧", admin_posts_path, class: 'btn btn-success' %>
-          </li>
-          <li class="nav-item m-2">
-            <%= link_to "ユーザ一覧", admin_users_path, class: 'btn btn-success' %>
-          </li>
-          <li class="nav-item m-2">
-            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'btn btn-secondary' %>
-          </li>
-          
-          <% else %>
-          <li class="nav-item m-2">
-            <%= link_to "About", about_path, class:'btn btn-Wstning-about' %>
-          </li>
-          <li class="nav-item m-2">
-            <%= link_to "新規登録", new_user_registration_path, class:'btn btn-Wstning-registration' %>
-          </li>
-          <li class="nav-item m-2">
-            <%= link_to "ログイン", new_user_session_path, class:'btn btn-info-login' %>
-          </li>
-          <li class="nav-item m-2">
-            <%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class:'btn btn-dark' %>
+            <%= link_to "マイページ", user_path(current_user.id), class: 'btn btn-info' %>
           </li>
         <% end %>
-        </ul>
-      </div>
+        <li class="nav-item m-2">
+          <%= link_to "検索", search_index_posts_path, class: 'btn btn-info' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "ユーザー一覧", users_path, class: 'btn btn-info' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'btn btn-secondary' %>
+        </li>
+      <% elsif admin_signed_in? %> <!-- 管理者のヘッダー -->
+        <li class="nav-item m-2">
+          <%= link_to "コメント一覧", admin_comments_path, class: 'btn btn-warning' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "投稿一覧", admin_posts_path, class: 'btn btn-success' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "ユーザ一覧", admin_users_path, class: 'btn btn-success' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'btn btn-secondary' %>
+        </li>
+        
+        <% else %>
+        <li class="nav-item m-2">
+          <%= link_to "About", about_path, class:'btn btn-Wstning-about' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "新規登録", new_user_registration_path, class:'btn btn-Wstning-registration' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "ログイン", new_user_session_path, class:'btn btn-info-login' %>
+        </li>
+        <li class="nav-item m-2">
+          <%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class:'btn btn-dark' %>
+        </li>
+      <% end %>
+      </ul>
     </div>
   </nav>
 </header>

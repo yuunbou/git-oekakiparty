@@ -1,29 +1,15 @@
 <div class="container">
-  <div class="row">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th></th>
-          <th>グループ名</th>
-          <th>内容</th>
-          <th>メンバー人数</th>
-          <th></th>
-        </tr>
-      </thead>
+  <div class="row m-3">
+    <div class="col-xs-12">
       <% @groups.each do |group| %>
-      <tbody>
-        <tr>
-          <td><%= image_tag group.get_group_image(100,100), class: "rounded-circle" %></td>
-          <td><%= group.name %></td>
-          <% #NOTE: truncate(30)..表示文字数の制限　%>
-          <td><%= group.content.truncate(30) %></td>
-          <td><%= group.users.count %></td>
-          <% #NOTE:　グループのメンバーのみボタンを表示　%>
-          <td><%= link_to "入室", group_path(group.id), class:'btn btn-success' %></td>
-        </tr>
-      </tbody>
+      <div class="form-group">
+        <div class="col-xs-3"><%= image_tag group.get_group_image(100,100), class: "rounded-circle" %></div>
+        <h4 class="col-xs-4 border-top"><%= group.name %></h4>
+        <p class-"col-xs-6"><%= group.content.truncate(30) %></p>
+        <div class="col-xs-3 border-bottom"><%= link_to "入室", group_path(group.id), class:'btn btn-success' %></div>
+      </div>
       <% end %>
-    </table>
+    </div>
     <div class="mx-auto">
       <% #TODO: ページネーション　%>
       <%= paginate @groups %>

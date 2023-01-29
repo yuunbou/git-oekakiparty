@@ -73,10 +73,10 @@ class Public::PostsController < ApplicationController
       #order＝並び順　:descだったら大きい順　:ascで小さい順
     #＆＆を使うことでxx かつという意味になる
     elsif params[:search].present? && params[:word].present?
-      @posts = Post.search(params[:search], params[:word],params[:page])
+      @posts = Post.search(params[:search], params[:word]).page(params[:page])
 
     else
-      @posts = Post.page(params[:page]).where(post_type: 0).published
+      @posts = Post.where(post_type: 0).published.page(params[:page])
     end
 
   end

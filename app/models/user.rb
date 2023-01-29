@@ -42,15 +42,18 @@ class User < ApplicationRecord
     id == user_id
   end
 
+  #検索フォーム
   #検索の条件分岐　部分一致と完全一致で検索
-  def self.search(method,word,page)
+  
+  
+  def self.search(method,word)
     #byebug
     if method == "partial_match"
-      @users = User.where("nickname LIKE ?", "%#{word}%").page(page)
+      @users = User.where("nickname LIKE ?", "%#{word}%")
     elsif method == "perfect_match"
-      @users = User.where(nickname: word).page(page)
+      @users = User.where(nickname: word)
     else
-      @users = User.page(page)
+      @users = User.all
     end
   end
 

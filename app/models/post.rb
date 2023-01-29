@@ -56,7 +56,7 @@ class Post < ApplicationRecord
   end
   
   #検索の条件分岐　タグは部分一致と完全一致で検索　キーワードはタイトルとキャプションでのキーワード検索にしたい
-  def self.search(method,word,page)
+  def self.search(method,word)
     #byebug
     if method == "partial_match"
       @words = word.split(/[[:blank:]]+/)
@@ -70,13 +70,13 @@ class Post < ApplicationRecord
         #+(プラス)...concatと同じ意味
       end
       
-      @posts = Post.where(id: posts.uniq).where(post_type: 0).published.page(page)
+      @posts = Post.where(id: posts.uniq).where(post_type: 0).published
 
     elsif method == "perfect_match"
       #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
     　#@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
       #@posts = Post.joins(:tags).merge(Tag.where("tag_name LIKE ?", "%#{word}%")).merge(Post.where(post_type: 0)).published
-      @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).published.page(page)
+      @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).published
     elsif method == "keyword"
       @words = word.split(/[[:blank:]]+/)
       posts = []
@@ -84,10 +84,10 @@ class Post < ApplicationRecord
         posts = posts.concat(Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").ids)
         #concat.. 配列同士を結合するメソッド
       end
-      @posts = Post.where(id: posts.uniq).where(post_type: 0).published.page(page)
+      @posts = Post.where(id: posts.uniq).where(post_type: 0).published
       #uniq..重複をなくすメソッド
     else
-      @posts = Post.where(post_type: 0).published.page(page)
+      @posts = Post.where(post_type: 0).published
     end
   end
 
