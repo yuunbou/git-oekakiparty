@@ -43,7 +43,21 @@ class Public::UsersController < ApplicationController
       render :edit
     end
   end
-
+  
+  #退会画面
+  def confirm
+    @user = User.find(params[:id])
+  end
+  
+  #退会処理
+  def withdraw
+    user = User.find(params[:id])
+    user.update(is_active: false)
+    reset_session
+    redirect_to root_path
+  end
+  
+  #いいね一覧
   def favorites
     @user = User.find(params[:id])
 #    @favorites = Favorite.where(user_id: @user.id).page(params[:page]).pluck(:post_id)
@@ -68,6 +82,7 @@ class Public::UsersController < ApplicationController
     end
   end
 
+  #グループ一覧
   def groups
     @user = User.find(params[:id])
     #@groups= GroupUser.where(user_id: @user.id).page(params[:page]).pluck(:group_id)
@@ -75,13 +90,7 @@ class Public::UsersController < ApplicationController
     @groups = @user.groups.page(params[:page])#Group.find(groups)
   end
   
-  def join 
-    @group = Group.find(params[:group_id])
-    @group.users << user_id
-    redirect_to  group_path(@group.id)
-  end
-  
-  
+  #ユーザー一覧
   def index
     if params[:search].present? && params[:word].present?
       #Userモデルファイルにsearchとwordを定義
