@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+
+  #会員側
   devise_for :users, controllers:{
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -14,6 +16,8 @@ Rails.application.routes.draw do
     get "/about" => "homes#about", as: "about"
     
     resources :users, only:[:index, :show, :edit, :update] do
+      get "/users/confirm" => "users#confirm"
+      patch "/users/withdraw" => "users#withdraw", as: "withdraw"
       member do
         get :favorites
         get :posts
@@ -41,7 +45,7 @@ Rails.application.routes.draw do
 
   end
 
- #管理者
+ #管理者側
   devise_for :admin, controllers: {
     registrations: "admin/registrations",
     sessions: "admin/sessions"
