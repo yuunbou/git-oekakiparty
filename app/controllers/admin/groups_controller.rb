@@ -10,9 +10,15 @@ class Admin::GroupsController < ApplicationController
   def post_index
     @group = Group.find(params[:group_id])
     @posts = @group.posts
-    #Postモデルwhereで検索してgroup_idを元にして取り出す
-
   end
+  
+  def all_destroy
+    @group = Group.find(params[:group_id])
+    if @group.destroy
+      redirect_to groups_admin_user_path(user.id)
+    end
+  end
+  
   
   
   private

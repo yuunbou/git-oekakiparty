@@ -16,12 +16,14 @@ Rails.application.routes.draw do
     get "/about" => "homes#about", as: "about"
     
     resources :users, only:[:index, :show, :edit, :update] do
-      get "/users/confirm" => "users#confirm"
-      patch "/users/withdraw" => "users#withdraw", as: "withdraw"
+      #get "/users/confirm" => "users#confirm", as: "confirm"
+      #patch "/users/withdraw" => "users#withdraw", as: "withdraw"
       member do
         get :favorites
         get :posts
         get :groups
+        get :confirm
+        patch :withdraw
       end
     end
     resources :posts do
@@ -36,10 +38,13 @@ Rails.application.routes.draw do
       get '/post_index' => "groups#post_index" , as: "post_index"
       #join = 加入
       get '/join' => "groups#join", as: "join"
+      #グループのユーザーリスト
       get '/join_group' => "groups#join_group", as: "join_group"
+      #グループのメンバーの追加
       post '/join_user' => "groups#join_user", as: "join_user"
-      # 新たにグループを抜けるアクションを作らなくてはならない
+      #グループのメンバーの削除
       delete '/join_destroy' => "groups#join_destroy", as: "join_destroy"
+      #グループの削除
       delete "all_destroy" => 'groups#all_destroy'
     end
 
@@ -65,6 +70,7 @@ Rails.application.routes.draw do
     resources :comments, only:[:index]
     resources :groups, only:[:index, :show] do
       get '/post_index' => "groups#post_index" , as: "post_index"
+      delete "all_destroy" => 'groups#all_destroy'
     end
     
     
