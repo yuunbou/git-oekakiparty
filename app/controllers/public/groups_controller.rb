@@ -86,7 +86,7 @@ class Public::GroupsController < ApplicationController
   def post_index
     @group = Group.find(params[:group_id])
     @post = current_user.posts.new
-    #共通化
+    #共通化部分
     in_group_status(@group)
     #作った人のowner_idとログインしているユーザーのidが同じだった場合
     #if @group.owner_id == current_user.id
@@ -130,6 +130,7 @@ class Public::GroupsController < ApplicationController
   end
   
   def in_group_status(group)
+    #作った人のowner_idとログインしているユーザーのidが同じだった場合
     if group.owner_id == current_user.id
       #全て表示
       @posts = @group.posts
