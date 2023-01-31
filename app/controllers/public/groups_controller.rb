@@ -86,16 +86,14 @@ class Public::GroupsController < ApplicationController
   def post_index
     @group = Group.find(params[:group_id])
     @post = current_user.posts.new
+    posts = @group.posts
+    # @posts = posts.filter { |post| post.user_id == current_user.id || post.is_status }
+    @posts = posts.filter do |post|
+      post.user_id == current_user.id || post.is_status
+    end
+
     #共通化部分
-    in_group_status(@group)
-    #作った人のowner_idとログインしているユーザーのidが同じだった場合
-    #if @group.owner_id == current_user.id
-      #全て表示
-     # @posts = @group.posts
-    #else
-      #publishedのみ表示
-      #@posts = @group.posts.published
-    #end
+    # in_group_status(@group)
 
   end
   
@@ -129,14 +127,14 @@ class Public::GroupsController < ApplicationController
     redirect_to(posts_path) unless @group.owner_id == current_user.id
   end
   
-  def in_group_status(group)
-    #作った人のowner_idとログインしているユーザーのidが同じだった場合
-    if group.owner_id == current_user.id
-      #全て表示
-      @posts = @group.posts
-    else
-      #publishedのみ表示
-      @posts = group.posts.published
-    end
-  end
+  #def in_group_status(group)
+    # #作った人のowner_idとログインしているユーザーのidが同じだった場合
+    # if group.owner_id == current_user.id
+    #   #全て表示
+    #   @posts = group.posts
+    # else
+    #   #publishedのみ表示
+    #   @posts = group.posts.published
+    # end
+  #end
 end
