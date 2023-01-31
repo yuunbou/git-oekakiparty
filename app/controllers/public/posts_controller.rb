@@ -8,8 +8,8 @@ class Public::PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
+    #postにgroup_idがあるかないか？
     if @post.group_id.nil?
-      #postにgroup_idがあるかないか？
       #投稿のタイプ（個人投稿）
       @post.post_type = "post_public"
       tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
@@ -68,7 +68,7 @@ class Public::PostsController < ApplicationController
     #タグのリンクを押した場合
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
-      @posts = @tag.posts
+      @posts = @tag.posts.page(prams[:page])
       #.order(created_at: :desc)
       #order＝並び順　:descだったら大きい順　:ascで小さい順
     #＆＆を使うことでxx かつという意味になる

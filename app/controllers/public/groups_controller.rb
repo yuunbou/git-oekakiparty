@@ -88,7 +88,14 @@ class Public::GroupsController < ApplicationController
   def post_index
     @group = Group.find(params[:group_id])
     @post = current_user.posts.new
-    @posts = @group.posts.published
+    #投稿したのが自分だったら？
+    #if 
+      #全て表示
+      #@posts = @group.posts
+    #else
+      #publishedのみ表示
+      @posts = @group.posts.published
+    #end
 
   end
   

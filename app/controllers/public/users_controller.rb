@@ -78,7 +78,6 @@ class Public::UsersController < ApplicationController
     else
      #公開中のもののみ他人に表示される 非公開は他人に表示されない
       @posts = @user.posts.where(post_type: 0).page(params[:page]).published
-
     end
   end
 

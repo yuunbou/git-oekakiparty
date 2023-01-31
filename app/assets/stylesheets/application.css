@@ -83,3 +83,8 @@
 .btn-picture {
   background-image: linear-gradient(to top, #9be15d 0%, #00e3ae 100%);
 }
+
+.btn-withdraw {
+  background: #C70044;
+  color: #fff;
+}

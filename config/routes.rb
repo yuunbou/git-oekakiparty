@@ -10,11 +10,12 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'users/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
-
+  
   scope module: :public do
     root to: 'homes#top'
     get "/about" => "homes#about", as: "about"
     
+    #ユーザー
     resources :users, only:[:index, :show, :edit, :update] do
       #get "/users/confirm" => "users#confirm", as: "confirm"
       #patch "/users/withdraw" => "users#withdraw", as: "withdraw"
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
         patch :withdraw
       end
     end
+    #投稿
     resources :posts do
       collection do
         get '/search_index' => "posts#search_index", as: "search_index"
@@ -34,6 +36,7 @@ Rails.application.routes.draw do
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
+    #グループ
     resources :groups do
       get '/post_index' => "groups#post_index" , as: "post_index"
       #join = 加入
@@ -63,11 +66,13 @@ Rails.application.routes.draw do
         get :groups
       end
     end
-    
-    resources :posts, only:[:index, :show, :destroy] do
+    #投稿
+    resources :posts, only:[:index, :show, :destroy, :edit, :update] do
       resources :comments, only:[:destroy]
     end
+    #コメント一覧
     resources :comments, only:[:index]
+    #グループ
     resources :groups, only:[:index, :show] do
       get '/post_index' => "groups#post_index" , as: "post_index"
       delete "all_destroy" => 'groups#all_destroy'
