@@ -38,9 +38,9 @@ class Public::GroupsController < ApplicationController
     if params[:search].present? && params[:word].present?
       #Userモデルファイルにsearchとwordを定義
       #where.notを使ってその条件に当てはまるもの以外を全て取得
-      @users = User.search(params[:search], params[:word]).where.not(id: @group.owner_id).page(params[:page]).per(10)
+      @users = User.search(params[:search], params[:word]).where.not(id: @group.owner_id).where.not(is_active: false).page(params[:page]).per(10)
     else
-      @users = User.where.not(id: @group.owner_id).page(params[:page]).per(10)
+      @users = User.where.not(id: @group.owner_id).where.not(is_active: false).page(params[:page]).per(10)
     end
   end
   
