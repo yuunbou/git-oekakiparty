@@ -21,6 +21,7 @@
               <% end %>
             </td>
             <td class="col-sm-5"><%= @group.content %></td>
+            <td><%= link_to 'グループ削除', admin_group_all_destroy_path(@group), class: "btn btn-sm btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
             <td>
                 <%= link_to "グループ作品集", admin_group_post_index_path(@group.id), class:'btn btn-dark' %>
             </td>

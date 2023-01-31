@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="mx-auto m-2">
-      <!-- 検索フォーム -->
+      <% #NOTE: 検索フォーム %>
       <%= form_with url: admin_posts_path, local: true, method: :get do |form| %>
         <div class="input-group">
           <%= form.text_field :word, placeholder: "キーワード", class:'form-control  input-group-prepend' %>
@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 m-2 d-flex flex-wrap">
+    <div class="col-xs-12 m-2 d-flex flex-wrap">
     <% @posts.each do |post| %>
       <div class="card m-1 shadow-sm" style="width: 13rem;">
         <div class="review-img card-img-top">
@@ -24,12 +24,12 @@
         </div>
         <div class="card-body" style="border-top:solid">
           <% #NOTE:　引数には投稿したユーザーに遷移したいので（post.user）と記述する　%>
-          <%= link_to user_path(post.user) do %>
+          <%= link_to admin_user_path(post.user) do %>
             <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
           <% end %>
           <h5 class="card-title"><%= post.title %></h5>
           <% post.tags.each do |tag| %>
-            <%= link_to tag.tag_name, search_index_posts_path(tag_id: tag.id) %>
+            <%= link_to tag.tag_name, admin_posts_path(tag_id: tag.id) %>
           <% end %>
           <% if post.is_status == true %>
             <p class="text-success font-width-bold">公開</p>

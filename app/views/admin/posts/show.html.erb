@@ -9,24 +9,22 @@
             <% end %>
           <% end %>
         </div>
-          <!-- 投稿した画像 -->
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
         <div class="d-flex flex-row bd-highlight">
-          <%= link_to user_path(@user.id) do %>
+          <%= link_to admin_user_path(@user.id) do %>
             <%= image_tag @post.user.get_profile_image(100,100), class:"rounded-circle" %>
           <% end %>
           <p><%= @post.user.nickname %></p>
         </div>
         <div class="form-group">
-            <%= link_to "編集", edit_post_path(@post.id), class: "btn btn-success btn-sm" %>
-            <%= link_to "削除", post_path(@post.id), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "削除しますか？"} %>
+            <%= link_to "編集", edit_admin_post_path(@post.id), class: "btn btn-success btn-sm" %>
+            <%= link_to "削除", admin_post_path(@post.id), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "削除しますか？"} %>
         </div>
         <div class="form-group">
           <h4 class="font-weight-bold"><%= @post.title %></h4>
-          <!-- タイトル -->
         </div>
         <div class="form-group">
           <% @post.tags.each do |tag| %>
@@ -59,7 +57,7 @@
                 <%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
               </td>
               <td>
-                  <%= link_to "削除", post_comment_path(comment.post, comment), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "コメントを削除しますか？"} %>
+                  <%= link_to "削除", admin_post_comment_path(comment.post, comment), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "コメントを削除しますか？"} %>
               </td>
             </tr>
           <% end %>
