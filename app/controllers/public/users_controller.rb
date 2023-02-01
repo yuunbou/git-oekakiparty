@@ -80,6 +80,14 @@ class Public::UsersController < ApplicationController
       @posts = @user.posts.where(post_type: 0).page(params[:page]).published
     end
   end
+  
+  def group_post
+    @user = User.find(params[:id])
+    @posts = @user.posts.where(post_type: 1).page(params[:page])
+  end
+  
+  
+  
 
   #グループ一覧
   def groups

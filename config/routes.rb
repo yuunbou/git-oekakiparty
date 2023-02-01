@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       member do
         get :favorites
         get :posts
+        get :group_post
         get :groups
         get :confirm
         patch :withdraw
