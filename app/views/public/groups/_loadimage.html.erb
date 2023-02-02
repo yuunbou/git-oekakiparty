@@ -1,0 +1,42 @@
+<script>
+  // function..関数宣言
+  // loadImage().. 関数名(引数)←new.html.erbのfile_field内のイベントハンドラー名
+  function loadImage() {
+    const preview = document.querySelector('#preview');
+    const files = document.querySelector('#post_images').files;
+    // ID:post_imagesのDOMオブジェクトを取得
+    console.log(document.querySelector('#post_images'))
+    console.log(files)
+    if(files) {
+      
+      // ここでreadAndPreviewを呼び出している
+      Array.prototype.forEach.call(files, readAndPreview)
+    }
+  }
+    
+  function readAndPreview(file) {
+    const reader = new FileReader();
+    // basse64形式データを取得して,dom要素のsrcにbase64を挿入
+    // イベントリスナでファイルロードが成功した、成功コールバック関数を呼び出す
+    // ここでいう成功時のコールバック関数とは21~25行目のこと
+    reader.addEventListener("load", (file) => {
+      console.log(file)
+      // DOMオブジェクトにあったimageオブジェクトを作成したい
+      // Image()を検索する
+      const image = new Image();
+      // 画像の高さを入れる
+      image.height = 100;
+      // 画像名を入れる
+      image.title = file.name;
+      // base64を入れる
+      image.src = reader.result;
+      
+      // previewのdomオブジェクトに、コールバック関数で作成したimageオブジェクト入れる
+      preview.appendChild(image); 
+    }, false);
+    // URL..base64を作るための関数
+    reader.readAsDataURL(file);
+  }
+
+  
+</script>
