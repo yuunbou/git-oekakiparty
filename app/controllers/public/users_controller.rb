@@ -102,9 +102,9 @@ class Public::UsersController < ApplicationController
     if params[:search].present? && params[:word].present?
       #Userモデルファイルにsearchとwordを定義
       #ページネーション。。。per()で個別にページネーションを指定できる
-      @users = User.search(params[:search], params[:word]).page(params[:page]).per(10)
+      @users = User.search(params[:search], params[:word]).where(is_active:true).page(params[:page]).per(10)
     else
-      @users = User.page(params[:page]).per(10)
+      @users = User.page(params[:page]).where(is_active: true).per(10)
     end
   end
 
