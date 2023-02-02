@@ -13,13 +13,13 @@
       Array.prototype.forEach.call(files, readAndPreview)
     }
   }
-    
+  
   function readAndPreview(file) {
     const reader = new FileReader();
     // basse64形式データを取得して,dom要素のsrcにbase64を挿入
     // イベントリスナでファイルロードが成功した、成功コールバック関数を呼び出す
     // ここでいう成功時のコールバック関数とは21~25行目のこと
-    reader.addEventListener("load", function(file) => {
+    reader.addEventListener("load",　(file) => {
       console.log(file)
       // DOMオブジェクトにあったimageオブジェクトを作成したい
       // Image()を検索する
@@ -36,12 +36,5 @@
     }, false);
     // URL..base64を作るための関数
     reader.readAsDataURL(file);
-  }
-
-    
-    
-    
-    
-    
   }
 </script>
