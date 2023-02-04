@@ -39,9 +39,9 @@ Rails.application.routes.draw do
     resources :groups do
       #グループ内投稿画面
       get '/post_index' => "groups#post_index" , as: "post_index"
-      #グループのユーザーリスト
+      #グループ作成者がメンバーを追加するためのユーザーリスト
       get '/join_group' => "groups#join_group", as: "join_group"
-      #グループのメンバーの追加
+      #グループにメンバーの追加
       post '/join_user' => "groups#join_user", as: "join_user"
       #グループのメンバーの削除
       delete '/join_destroy' => "groups#join_destroy", as: "join_destroy"
