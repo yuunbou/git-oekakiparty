@@ -8,7 +8,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     user_path(current_user.id)
   end
-
+　#ゲストユーザー
   def ensure_normal_user
     if resource.email == 'guest@example.com'
       redirect_to root_path
