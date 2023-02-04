@@ -1,6 +1,8 @@
 class Public::GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only:[:edit, :update]
+  before_action :correct_user, only:[:edit, :update, :join_group]
+  #correct_user名前を変える
+  before_action :group_post, only:[:post_index]
   
   #グループの新規作成
   def new
@@ -58,12 +60,11 @@ class Public::GroupsController < ApplicationController
   #グループの編集
   def edit
     @group = Group.find(params[:id])
-    @group_users = GroupUser.where(user_id: @user.ids)
+    
   end
 
   #グループ内容の更新
   def update
-    @group_users = GroupUser.where(user_id: @user.ids)
     if @group.update(group_params)
       redirect_to groups_user_path(current_user)
     else
@@ -79,7 +80,6 @@ class Public::GroupsController < ApplicationController
     @posts = posts.filter do |post|
       post.user_id == current_user.id || post.is_status
     end
-
   end
   
   #ユーザーが自主的にグループから抜ける為のアクション
@@ -106,12 +106,15 @@ class Public::GroupsController < ApplicationController
   end
   
   def correct_user
-    @group = Group.find(params[:id])
+    @group = Group.find(params[:group_id] || params[:id])
     @user = @group.users
     redirect_to user_path(current_user.id) unless @group.owner_id == current_user.id
   end
   
-  #join_groupページにowner_idのみ入れるようにする
-  
+  def group_post
+    @group = Group.find(params[:group_id])
+    @user = @group.users
+    redirect_to user_path(current_user.id) unless  @group.users.ids == @user.ids
+  end
   
 end
