@@ -46,7 +46,7 @@ https://www.silhouette-ac.com/
 https://www.ac-illust.com/main/detail.php?id=498417&word=noimage%E7%94%BB%E5%83%8F%E3%80%80%E3%83%8E%E3%83%BC%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B81#goog_rewarded
 
 WebGradients
-https://webgradients.com/
+https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap
 
 
 - 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名とURLを明記してください。
