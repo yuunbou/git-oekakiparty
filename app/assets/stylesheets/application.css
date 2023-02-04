@@ -18,7 +18,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
 
 
-.signup_title,.signup-text, .signin_title, .btn-lg, .top-text, .btn-picture {
+.signup_title, .signin_title, .btn-lg, .top-text, .btn-picture {
     font-family: 'Zen Maru Gothic', sans-serif;
 }
 
@@ -37,7 +37,7 @@
   width: 200px;
 }
 
-.btn-Wstning-registration {
+.btn-Wstning-registration, .btn-registrations {
   background: #0075A9;
   color: #fff;
 }
