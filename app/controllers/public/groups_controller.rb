@@ -1,7 +1,6 @@
 class Public::GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_user, only:[:edit, :update]
-
   
   #グループの新規作成
   def new
@@ -23,20 +22,12 @@ class Public::GroupsController < ApplicationController
     end
   end
   
-  #ユーザーがグループに加入するアクション
-  def join 
-    @group = Group.find(params[:group_id])
-    @group.users << current_user
-    redirect_to  group_path(@group.id)
-  end
-  
   #ユーザーリスト
   def join_group
     @group = Group.find(params[:group_id])
     @user = current_user
-     #検索フォーム
+     #検索アクションはuserモデルに記載
     if params[:search].present? && params[:word].present?
-      #Userモデルファイルにsearchとwordを定義
       #where.notを使ってその条件に当てはまるもの以外を全て取得
       @users = User.search(params[:search], params[:word]).where.not(id: @group.owner_id).where.not(is_active: false).page(params[:page]).per(10)
     else
@@ -47,16 +38,14 @@ class Public::GroupsController < ApplicationController
   #グループ作成者がユーザーを追加するアクション
   def join_user
     @group = Group.find(params[:group_id])
+    # User.find(params[:user_id])で追加したいユーザーのデータを取得する
     @group.users << User.find(params[:user_id])
-    # @group.users << params[:user_id] # ここを変える.追加したいユーザーのデータを取得する → userのidが必要
-    # 上記のコードではダメです. params[:user_id] を使ってユーザーのデータを取得する必要があります
     redirect_to group_join_group_path(@group)
   end
   
   #グループ作成者がユーザーをグループから外すアクション
   def join_destroy
     @group = Group.find(params[:group_id])
-    #()の中にuserの引数を入れる
     @group.users.delete(params[:user_id])
     redirect_to group_join_group_path(@group)
   end
@@ -72,7 +61,7 @@ class Public::GroupsController < ApplicationController
     @group_users = GroupUser.where(user_id: @user.ids)
   end
 
-  #グループ編集の更新 ユーザーの追加
+  #グループ内容の更新
   def update
     @group_users = GroupUser.where(user_id: @user.ids)
     if @group.update(group_params)
@@ -87,13 +76,9 @@ class Public::GroupsController < ApplicationController
     @group = Group.find(params[:group_id])
     @post = current_user.posts.new
     posts = @group.posts
-    # @posts = posts.filter { |post| post.user_id == current_user.id || post.is_status }
     @posts = posts.filter do |post|
       post.user_id == current_user.id || post.is_status
     end
-
-    #共通化部分
-    # in_group_status(@group)
 
   end
   
@@ -105,14 +90,13 @@ class Public::GroupsController < ApplicationController
     redirect_to user_path(current_user.id)
   end
   
-  #グループ自体を消すアクション
+  #グループを消すアクション
   def all_destroy
     @group = Group.find(params[:group_id])
     if @group.destroy
       redirect_to groups_user_path(current_user)
     end
   end
-
 
   private
 
@@ -124,17 +108,10 @@ class Public::GroupsController < ApplicationController
   def correct_user
     @group = Group.find(params[:id])
     @user = @group.users
-    redirect_to(posts_path) unless @group.owner_id == current_user.id
+    redirect_to user_path(current_user.id) unless @group.owner_id == current_user.id
   end
   
-  #def in_group_status(group)
-    # #作った人のowner_idとログインしているユーザーのidが同じだった場合
-    # if group.owner_id == current_user.id
-    #   #全て表示
-    #   @posts = group.posts
-    # else
-    #   #publishedのみ表示
-    #   @posts = group.posts.published
-    # end
-  #end
+  #join_groupページにowner_idのみ入れるようにする
+  
+  
 end
