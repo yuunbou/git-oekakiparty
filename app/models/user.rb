@@ -21,12 +21,11 @@ class User < ApplicationRecord
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64
-      user.nickname = "ゲストユーザー"
       #  nickname を入力必須のため， user.nickname = "ゲスト"
+      user.nickname = "ゲストユーザー"
     end
     redirect_to root_path
   end
-
 
   #プロフィール画像設定
   def get_profile_image(width, height)
@@ -37,17 +36,14 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit:[width, height]).processed
   end
 
-  #マイページ（show）アクションで使用
+  #マイページ(show)(posts)アクションで使用
   def me?(user_id)
     id == user_id
   end
 
   #検索フォーム
   #検索の条件分岐　部分一致と完全一致で検索
-  
-  
   def self.search(method,word)
-    #byebug
     if method == "partial_match"
       @users = User.where("nickname LIKE ?", "%#{word}%").where(is_active: true)
     elsif method == "perfect_match"
