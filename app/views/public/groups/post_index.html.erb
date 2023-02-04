@@ -4,6 +4,9 @@
   </div>
   <div class="row">
     <div class="mx-auto m-2">
+      <p>
+        ※複数画像を投稿する場合は画像を一括でアップロードしてください</br>
+      </p>
      <%= form_with model: @post, url: posts_path, method: :post do |f| %>
       <%= f.hidden_field :group_id, value: @group.id %>
         <div class="form-group">
