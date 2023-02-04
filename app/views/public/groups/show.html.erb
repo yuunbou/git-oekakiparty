@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row m-3">
-    <div class="form-group col-xs-3">
+    <div class="form-group col-xs-3 m-2">
       <%= image_tag @group.get_group_image(200,200) %>
     </div>
     <div class="form-group col-xs-5">
@@ -20,12 +20,12 @@
     </div>
   </div>
   <div class="row m-3">
-    <div class="col-xs-12">
+    <div class="col-12">
       <div class="form-group col-xs-8 m-1 d-flex flex-row">
         <% if @group.owner_id == current_user.id %>
-          <p class="col-xs-3"><%= link_to '編集', edit_group_path(@group), class: "btn btn-sm btn-success" %></p>
-          <p class="col-xs-4"><%= link_to 'グループ削除', group_all_destroy_path(@group), class: "btn btn-sm btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' } %></p>
-          <p class="col-xs-4"><%= link_to 'メンバーを追加', group_join_group_path(@group), class: "btn btn-sm btn-primary" %></p>
+          <p class="mx-1"><%= link_to '編集', edit_group_path(@group), class: "btn btn-sm btn-success" %></p>
+          <p class="mx-1"><%= link_to 'グループ削除', group_all_destroy_path(@group), class: "btn btn-sm btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' } %></p>
+          <p><%= link_to 'メンバーを追加', group_join_group_path(@group), class: "btn btn-sm btn-primary" %></p>
         <% elsif @group.users.include?(current_user) %>
           <%= link_to 'グループから抜ける', group_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
         <% end %>

@@ -9,7 +9,7 @@
       <%= form_with model: @group, url: group_path, method: :patch do |f| %>
         <div class="form-group">
           <p>グループ画像</p>
-          <%= f.file_field :group_image, multiple: true, accept: "image/*", class: 'form-control-file' %>
+          <%= f.file_field :group_image, accept: "image/*", class: 'form-control-file' %>
         </div>
         <div class="form-group">
           <%= f.label :name, "グループ名" %>

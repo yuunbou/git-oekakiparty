@@ -59,29 +59,28 @@
           </div>
         <% end %>
       <% end %>
-      <div class="form-group col-xs-10">
-        <% #NOTE: ゲストログインなら表示させない %>
-        <% if current_user.email != "guest@example.com"  %>
-          <%= form_with model:[@post, @comment] do |f| %>
-            <%= f.text_area :comment, row: '5', placeholder: "コメントする", rows: "4", class:"form-control col-xs-7 mb-2" %>
-            <%= f.submit "送る", class:"btn btn-info" %>
-          <% end %>
+    </div>
+  </div>
+  <div class="row m-1">
+    <div class="form-group col-8 col-xs-10">
+      <% #NOTE: ゲストログインなら表示させない %>
+      <% if current_user.email != "guest@example.com"  %>
+        <%= form_with model:[@post, @comment] do |f| %>
+          <%= f.text_area :comment, row: '5', placeholder: "コメントする", rows: "4", class:"form-control col-xs-7 mb-2" %>
+          <%= f.submit "送る", class:"btn btn-info" %>
         <% end %>
+      <% end %>
+    </div>
+    <div class="col-11 col-xs-11">
+      <div class="form-group">
+        <h6 class="font-weight-bold">コメント<%= @post.comments.count %>件</h6>
       </div>
       <table class="table table-hover table-inverse">
-        <thead>
-          <tr>
-            <th>コメント<%= @post.comments.count %>件</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
         <tbody>
           <% @post.comments.each do |comment| %>
           <tr>
-            <td scope="col-sm-3">
-              <%= image_tag comment.user.get_profile_image(50,50) %>
+            <td>
+              <%= image_tag comment.user.get_profile_image(50,50) %></br>
               <%= comment.user.nickname %>
             </td>
             <td>

@@ -5,22 +5,20 @@
     </div>
   </div>
   <div class="row">
-    <div class="mx-auto">
+    <div class="col-8 mx-auto">
       <%= form_with model: @post, url: post_path, method: :patch do |f| %>
-        <div class="form-group">
-          <p>画像</p>
-          <%= f.file_field :images, multiple: true, accept: "image/*", class: 'form-control-file' %>
-        </div>
         <div class="form-group">
           <p>タイトル</p>
           <%= f.text_field :title, required: true, class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= f.text_area :caption, class: "form-control" %>
+          <p>キャプション</p>
+          <%= f.text_area :caption, rows: '5', class: "form-control" %>
         </div>
         <% #NOTE: post_typeがpost_publicだったら表示する %>
         <% if @post.post_type == "post_public" %>
           <div class="form-group">
+            <p>タグ</p>
             <%= f.text_field :tag_name, value: @tag_list, class: 'form-control' %>
           </div>
         <% end %>
