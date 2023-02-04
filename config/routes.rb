@@ -37,9 +37,8 @@ Rails.application.routes.draw do
     end
     #グループ
     resources :groups do
+      #グループ内投稿画面
       get '/post_index' => "groups#post_index" , as: "post_index"
-      #join = 加入
-      get '/join' => "groups#join", as: "join"
       #グループのユーザーリスト
       get '/join_group' => "groups#join_group", as: "join_group"
       #グループのメンバーの追加
