@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     post 'users/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
   
+  #会員側
   scope module: :public do
     root to: 'homes#top'
     get "/about" => "homes#about", as: "about"
@@ -33,7 +34,6 @@ Rails.application.routes.draw do
       collection do
         get '/search_index' => "posts#search_index", as: "search_index"
       end
-
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   }
   
   namespace :admin do
+    #ユーザー
     resources :users, only:[:index, :show, :edit, :update] do
       member do
         get :posts
@@ -69,13 +70,16 @@ Rails.application.routes.draw do
     end
     #投稿
     resources :posts, only:[:index, :show, :destroy, :edit, :update] do
+      #コメント
       resources :comments, only:[:destroy]
     end
     #コメント一覧
     resources :comments, only:[:index]
     #グループ
     resources :groups, only:[:index, :show] do
+      #グループ内投稿
       get '/post_index' => "groups#post_index" , as: "post_index"
+      #グループの削除
       delete "all_destroy" => 'groups#all_destroy'
     end
     
