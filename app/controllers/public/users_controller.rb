@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only:[:edit, :update]
+  before_action :correct_user, only:[:edit, :update, :group_post, :confirm, :withdraw]
   before_action :set_user, only: [:favorites]
 
 
@@ -11,21 +11,18 @@ class Public::UsersController < ApplicationController
     if @user.email == "guest@example.com" 
       redirect_to root_path
     end
-    # where→条件に一致したカラムをすべて取得
-    # find→条件に一致したカラムを1件だけ取得
     #whereで絞り込んだデータからpluckでpost_idの配列を作る
     #where→order→pluckの順で記述
     favorites = Favorite.where(user_id: @user.id).order(id: :desc).limit(5).pluck(:post_id)
     @favorite_posts = Post.find(favorites)
 
-    #今ログインしているのが自分か確認
+    #今ログインしているのが自分か確認　モデルに定義が記載
     if @user.me?(current_user.id)
       #whereを使ってpostモデルで設定したenumのpost_typeの0:個人投稿を検索し、自分だったら全て表示
       @posts = @user.posts.where(post_type: 0).recent
-      
     else
       #published = postモデルのscopeで定義した投稿のステータスがtrue(公開)
-      #公開中のもののみ他人に表示される 非公開は他のユーザーに表示されない
+      #公開中のもののみ他のユーザーに表示される 非公開は他のユーザーに表示されない
       @posts = @user.posts.where(post_type: 0).published.recent
     end
     
@@ -60,7 +57,6 @@ class Public::UsersController < ApplicationController
   #いいね一覧
   def favorites
     @user = User.find(params[:id])
-#    @favorites = Favorite.where(user_id: @user.id).page(params[:page]).pluck(:post_id)
     #＠favorites_posts..userモデルファイルで定義
     @favorite_posts = @user.favorite_posts.page(params[:page]) #Post.find(@favorites)
   end
@@ -72,22 +68,19 @@ class Public::UsersController < ApplicationController
     @posts = Post.where(user_id: @user.id).pluck(:post_id)
     #今ログインしているのが自分か確認
     if @user.me?(current_user.id)
-
       #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
-      @posts = @user.posts.where(post_type: 0).page(params[:page])
+      @posts = @user.posts.where(post_type: 0).order('id DESC').page(params[:page])
     else
      #公開中のもののみ他人に表示される 非公開は他人に表示されない
-      @posts = @user.posts.where(post_type: 0).page(params[:page]).published
+      @posts = @user.posts.where(post_type: 0).order('id DESC').page(params[:page]).published
     end
   end
   
+  #グループ内投稿一覧
   def group_post
     @user = User.find(params[:id])
-    @posts = @user.posts.where(post_type: 1).page(params[:page])
+    @posts = @user.posts.where(post_type: 1).order('id DESC').page(params[:page])
   end
-  
-  
-  
 
   #グループ一覧
   def groups
@@ -101,7 +94,7 @@ class Public::UsersController < ApplicationController
   def index
     if params[:search].present? && params[:word].present?
       #Userモデルファイルにsearchとwordを定義
-      #ページネーション。。。per()で個別にページネーションを指定できる
+      #ページネーション。。。per()で個別にページネーションを指定
       @users = User.search(params[:search], params[:word]).where(is_active:true).page(params[:page]).per(10)
     else
       @users = User.page(params[:page]).where(is_active: true).per(10)
@@ -124,7 +117,5 @@ class Public::UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
-  
-  
 
 end

@@ -8,26 +8,26 @@ class Public::PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    #postにgroup_idがあるかないか？
+    #postにgroup_idがあるかないか？確認
     if @post.group_id.nil?
       #投稿のタイプ（個人投稿）
       @post.post_type = "post_public"
       tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
       if @post.save!
         @post.save_tag(tag_list)
-        redirect_to post_path(@post.id)
         #group_idが空の場合はpostのshowに移動
+        redirect_to post_path(@post.id)
       end
     else
-      #投稿タイプ（グループ内投稿）
+      #投稿タイプ = "グループ内投稿"
       @post.post_type = "post_private"
       @post.save!
-      redirect_to group_post_index_path(@post.group)
       #post_privateで投稿されたらgroup_post_index_pathに移動する
       #もしgroup_idが入っていたらgroup_post_indexに移動する
+      redirect_to group_post_index_path(@post.group)
     end
   end
-
+  
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new
@@ -60,23 +60,20 @@ class Public::PostsController < ApplicationController
   def destroy
     post = Post.find(params[:id])
     post.destroy
-    redirect_to posts_path
+    redirect_to posts_user_path(current_user.id)
   end
 
-  #検索アクション
+  #検索ページ
   def search_index
     #タグのリンクを押した場合
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
       @posts = @tag.posts.page(prams[:page])
-      #.order(created_at: :desc)
-      #order＝並び順　:descだったら大きい順　:ascで小さい順
     #＆＆を使うことでxx かつという意味になる
     elsif params[:search].present? && params[:word].present?
-      @posts = Post.search(params[:search], params[:word]).page(params[:page])
-
+      @posts = Post.search(params[:search], params[:word]).order('id DESC').page(params[:page])
     else
-      @posts = Post.where(post_type: 0).published.page(params[:page])
+      @posts = Post.where(post_type: 0).order('id DESC').page(params[:page]).published
     end
 
   end
@@ -92,8 +89,7 @@ class Public::PostsController < ApplicationController
   def correct_user
     @post = Post.find(params[:id])
     @user = @post.user
-    redirect_to(posts_path) unless @user == current_user
+    redirect_to user_path(current_user.id) unless @user == current_user
   end
-
 
 end
