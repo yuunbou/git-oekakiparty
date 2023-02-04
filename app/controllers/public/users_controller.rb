@@ -2,7 +2,7 @@ class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_user, only:[:edit, :update, :group_post, :confirm, :withdraw]
   before_action :set_user, only: [:favorites]
-
+  
 
   def show
     @user = User.find(params[:id])

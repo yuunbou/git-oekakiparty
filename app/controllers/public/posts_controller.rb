@@ -3,7 +3,8 @@ class Public::PostsController < ApplicationController
   before_action :correct_user, only:[:edit, :update]
 
   def new
-      @post = current_user.posts.new
+    @post = current_user.posts.new
+      
   end
 
   def create
