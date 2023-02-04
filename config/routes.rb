@@ -18,8 +18,6 @@ Rails.application.routes.draw do
     
     #ユーザー
     resources :users, only:[:index, :show, :edit, :update] do
-      #get "/users/confirm" => "users#confirm", as: "confirm"
-      #patch "/users/withdraw" => "users#withdraw", as: "withdraw"
       member do
         get :favorites
         get :posts
