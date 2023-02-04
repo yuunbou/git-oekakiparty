@@ -49,11 +49,11 @@ class User < ApplicationRecord
   def self.search(method,word)
     #byebug
     if method == "partial_match"
-      @users = User.where("nickname LIKE ?", "%#{word}%")
+      @users = User.where("nickname LIKE ?", "%#{word}%").where(is_active: true)
     elsif method == "perfect_match"
-      @users = User.where(nickname: word)
+      @users = User.where(nickname: word).where(is_active: true)
     else
-      @users = User.all
+      @users = User.where(is_active: true)
     end
   end
 
