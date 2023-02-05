@@ -6,6 +6,10 @@ class Public::GroupsController < ApplicationController
   #グループの新規作成
   def new
     @group = Group.new
+    #ゲストログインは作成画面に遷移できない
+    if current_user.email == "guest@example.com" 
+      redirect_to root_path
+    end
   end
 
   #グループ作成
@@ -115,7 +119,7 @@ class Public::GroupsController < ApplicationController
     @group_id = Group.find(params[:group_id]).id
     #current_userがグループのidを持っていたらpost_indexにアクセスできる
     unless current_user.group_users.find_by(group_id: @group_id)
-      redirect_to user_path(current_user.id), notice: 'グループに参加してください'
+      redirect_to user_path(current_user.id)
     end
   end
 end

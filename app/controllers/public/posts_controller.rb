@@ -4,6 +4,10 @@ class Public::PostsController < ApplicationController
 
   def new
     @post = current_user.posts.new
+    #ゲストログインは投稿画面に遷移できない
+    if current_user.email == "guest@example.com" 
+      redirect_to root_path
+    end
   end
 
   def create
