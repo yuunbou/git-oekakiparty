@@ -1,10 +1,12 @@
 <div class="container">
-  <div class="row">
+  <div class="row mx-1">
     <div class="mx-auto">
       <div class="form-group mt-3">
         <% if @post.images.attached? %>
           <% @post.images.each do |image| %>
-            <%= image_tag image.variant(resize: '300x300') %>
+            <%= link_to image, "data-lightbox": image do %>
+              <%= image_tag image.variant(resize: '300x300') %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
