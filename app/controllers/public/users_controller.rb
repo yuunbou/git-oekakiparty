@@ -44,6 +44,9 @@ class Public::UsersController < ApplicationController
   #退会画面
   def confirm
     @user = User.find(params[:id])
+    if @user.email == "guest@example.com" 
+      redirect_to root_path
+    end
   end
   
   #退会処理
@@ -87,7 +90,7 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
     #@groups= GroupUser.where(user_id: @user.id).page(params[:page]).pluck(:group_id)
     #アソシエーションでgroupは持っているためwhereを使わずとも下記の定義でとってこれる
-    @groups = @user.groups.page(params[:page])#Group.find(groups)
+    @groups = @user.groups.order('id DESC').page(params[:page])#Group.find(groups)
   end
   
   #ユーザー一覧

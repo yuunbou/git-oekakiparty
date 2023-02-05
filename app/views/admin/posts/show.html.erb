@@ -15,11 +15,11 @@
       <div class="col-sm-12">
         <div class="d-flex flex-row bd-highlight">
           <%= link_to admin_user_path(@user.id) do %>
-            <%= image_tag @post.user.get_profile_image(100,100), class:"rounded-circle" %>
+            <%= image_tag @post.user.get_profile_image(100,100), class:"rounded m-1" %>
           <% end %>
-          <p><%= @post.user.nickname %></p>
+          <p class="font-weight-bold"><%= @post.user.nickname %></p>
         </div>
-        <div class="form-group">
+        <div class="form-group m-1">
             <%= link_to "編集", edit_admin_post_path(@post.id), class: "btn btn-success btn-sm" %>
             <%= link_to "削除", admin_post_path(@post.id), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "削除しますか？"} %>
         </div>

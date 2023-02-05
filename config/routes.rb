@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       member do
         get :posts
         get :groups
+        get :group_post
       end
     end
     #投稿

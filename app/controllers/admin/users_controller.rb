@@ -4,7 +4,7 @@ class Admin::UsersController < ApplicationController
   def index
     if params[:search].present? && params[:word].present?
       #Userモデルファイルにsearchとwordを定義
-      @users = User.search(params[:search], params[:word], params[:page])
+      @users = User.search(params[:search], params[:word]).page(params[:page]).per(10)
     else
       @users = User.page(params[:page])
     end
@@ -40,6 +40,10 @@ class Admin::UsersController < ApplicationController
     @groups = @user.groups.page(params[:page])#Group.find(groups)
   end
   
+  def group_post
+    @user = User.find(params[:id])
+    @posts = @user.posts.where(post_type: 1).order('id DESC').page(params[:page])
+  end
   
   private
   

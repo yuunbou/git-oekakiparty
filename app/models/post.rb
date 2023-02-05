@@ -73,9 +73,6 @@ class Post < ApplicationRecord
       @posts = Post.where(id: posts.uniq).where(post_type: 0).published
 
     elsif method == "perfect_match"
-      #joinsでpostとtagを結合させ、mergeでテーブルの検索の条件をつける
-    　#@モデルs = モデル名.joins(:結合させるモデル名s).merge(モデル名.where(カラム名 検索の条件)).merge(検索条件を増やしたい場合mergeで増やしていく)
-      #@posts = Post.joins(:tags).merge(Tag.where("tag_name LIKE ?", "%#{word}%")).merge(Post.where(post_type: 0)).published
       @posts = Post.joins(:tags).merge(Tag.where(tag_name: word)).merge(Post.where(post_type: 0)).published
     elsif method == "keyword"
       @words = word.split(/[[:blank:]]+/)

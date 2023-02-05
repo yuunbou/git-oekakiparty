@@ -7,7 +7,7 @@
       <% @posts.each do |post| %>
         <div class="card m-1 shadow-sm" style="width: 13rem;">
           <div class="review-img card-img-top">
-          <%= link_to post_path(post.id) do %>
+          <%= link_to admin_post_path(post.id) do %>
             <%= image_tag post.images[0].variant(resize: '200x200') %>
           <% end %>
           </div>
