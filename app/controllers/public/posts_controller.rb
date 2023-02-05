@@ -4,7 +4,6 @@ class Public::PostsController < ApplicationController
 
   def new
     @post = current_user.posts.new
-      
   end
 
   def create
@@ -69,7 +68,7 @@ class Public::PostsController < ApplicationController
     #タグのリンクを押した場合
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
-      @posts = @tag.posts.page(prams[:page])
+      @posts = @tag.posts.page(params[:page])
     #＆＆を使うことでxx かつという意味になる
     elsif params[:search].present? && params[:word].present?
       @posts = Post.search(params[:search], params[:word]).order('id DESC').page(params[:page])
