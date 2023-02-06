@@ -18,7 +18,7 @@
         <%= link_to user_path(@user.id) do %>
           <%= image_tag @post.user.get_profile_image(100,100), class:"rounded" %>
         <% end %>
-        <p class="font-weight-bold offset-1"><%= @post.user.nickname %></p>
+        <p class="font-weight-bold"><%= @post.user.nickname %></p>
       </div>
       <div class="form-group">
         <% if @user.id == current_user.id %>
