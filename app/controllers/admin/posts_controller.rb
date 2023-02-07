@@ -9,11 +9,11 @@ class Admin::PostsController < ApplicationController
       #order＝並び順　:descだったら大きい順　:ascで小さい順
     #＆＆を使うことでxx かつという意味になる
     elsif params[:search].present? && params[:word].present?
-      @posts = Post.search(params[:search], params[:word]).page(params[:page])
+      @posts = Post.search(params[:search], params[:word]).order('id DESC').page(params[:page])
 
     else
       #何も入力せず検索を押した場合
-      @posts = Post.where(post_type: 0).page(params[:page])
+      @posts = Post.where(post_type: 0).order('id DESC').page(params[:page])
     end
 
   end

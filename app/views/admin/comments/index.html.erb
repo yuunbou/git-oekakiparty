@@ -1,11 +1,10 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-xs-12">
             <h3 class="bg-light">ユーザー一覧</h3>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12 mx-auto">
             <table class="table">
                 <thead>
                     <tr class="bg-light">
@@ -19,17 +18,18 @@
                 <% @comments.each do |comment| %>
                     <tbody>
                         <tr>
-                            <td><%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
-                            <td>
+                            <td class="col-2"><%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+                            <td class="col-2">
                                 <%= comment.post.title %>
                                 (<%= comment.post.id %>)
                             </td>
-                            <td><%= comment.comment %></td>
-                            <td>
+                            <td class="col-6"><%= comment.comment %></td>
+                            <td class="col-2">
+                                <%= image_tag comment.user.get_profile_image(50,50), class:"rounded" %>
                                 <%= comment.user.nickname %>
                                 (<%= comment.user.id %>)
                             </td>
-                            <td>
+                            <td class="col-3">
                                 <%= link_to "削除", admin_post_comment_path(comment.post, comment), class: "btn btn-danger btn-sm", method: :delete, data: {confirm: "コメントを削除しますか？"} %>
                             </td>
                         </tr>

@@ -2,7 +2,7 @@ class Group < ApplicationRecord
   has_one_attached :group_image
   has_many :group_users, dependent: :destroy
   has_many :users, through: :group_users, dependent: :destroy
-  has_many :posts
+  has_many :posts, dependent: :destroy
 
   validates :name, presence: true
   validates :content, presence: true

@@ -40,6 +40,7 @@
     </div>
      <div class="col-sm-12 m-2 d-flex flex-wrap">
       <% @posts.each do |post| %>
+      <% if post.user.is_active == true %>
         <div class="card m-1 shadow-sm" style="width: 13rem;">
           <div class="review-img card-img-top">
           <%= link_to post_path(post.id) do %>
@@ -48,12 +49,10 @@
           </div>
           <div class="card-body" style="border-top:solid">
             <% #NOTE:　引数には投稿したユーザーに遷移したいので（post.user）と　%>
-            <div class="d-flex">
               <%= link_to user_path(post.user) do %>
                 <%= image_tag post.user.get_profile_image(50,50), class:"rounded post_user" %>
               <% end %>
-              <p class="mt-4 pl-2"><%= post.user.nickname %></p>
-            </div>
+            <p class="font-weight-bold"><%= post.user.nickname %></p>
             <h5 class="card-title"><%= post.title %></h5>
             <% if post.is_status == true %>
               <p class="text-success font-width-bold">公開</p>
@@ -62,6 +61,7 @@
             <% end %>
           </div>
         </div>
+      <% end %>
       <% end %>
     </div>
   </div>
