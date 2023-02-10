@@ -4,21 +4,12 @@ class Admin::GroupsController < ApplicationController
     
   def show
     @group = Group.find(params[:id])
-    #@group.owner_id = current_user.id
   end
   
   def post_index
     @group = Group.find(params[:group_id])
     @posts = @group.posts
   end
-  
-  def all_destroy
-    @group = Group.find(params[:group_id])
-    if @group.destroy
-      redirect_to groups_admin_user_path(user.id)
-    end
-  end
-  
   
   
   private
