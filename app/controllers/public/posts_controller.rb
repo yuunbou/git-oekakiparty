@@ -52,12 +52,22 @@ class Public::PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
-    if @post.update(post_params)
-      @post.save_tag(tag_list)
-      redirect_to post_path(@post.id)
-    else
+    if @post.group_id.nil?
+      @post.post_type = "post_public"
+      tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
+      if @post.update(post_params)
+        @post.save_tag(tag_list)
+        redirect_to post_path(@post.id)
+      else
         render :edit
+      end
+    else
+      @post.post_type = "post_private"
+      if @post.update(post_params)
+        redirect_to group_post_index_path(@post.group)
+      else
+        render :edit
+      end
     end
   end
 
