@@ -14,6 +14,7 @@
             <%= image_tag post.user.get_profile_image(50,50), class:"rounded" %>
           <% end %>
           <h5 class="card-title"><%= post.title %></h5>
+          <p><%= post.caption.truncate(10) %></p>
           <% if post.is_status == true && @user.id == current_user.id %>
             <p class="text-success font-width-bold"></p>
           <% else %>
