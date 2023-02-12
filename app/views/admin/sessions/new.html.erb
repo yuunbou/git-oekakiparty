@@ -11,12 +11,6 @@
          <div class="form-group">
           <%= f.password_field :password, placeholder: "パスワード", autocomplete: "current-password", class: "form-control" %>
         </div>
-        <% if devise_mapping.rememberable? %>
-          <div class="form-group">
-            <%= f.check_box :remember_me, class: "form-check-input" %>
-            <%= f.label :remember_me, class: "form-check-label" %>
-          </div>
-        <% end %>
 
         <div class="form-group text-center">
           <%= f.submit "ログイン", class: "btn btn-info-login" %>
