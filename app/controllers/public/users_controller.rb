@@ -68,7 +68,7 @@ class Public::UsersController < ApplicationController
   def posts
     @user = User.find(params[:id])
     #pluck = 指定したカラム(この場合post_id)のレコードの配列を取得
-    @posts = Post.where(user_id: @user.id).pluck(:post_id)
+    @posts = Post.where(user_id: @user.id).pluck(:id)
     #今ログインしているのが自分か確認
     if @user.me?(current_user.id)
       #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
