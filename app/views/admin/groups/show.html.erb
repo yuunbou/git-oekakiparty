@@ -14,7 +14,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= image_tag @group.get_group_image(200,200) %></td>
+            <td><%= image_tag @group.get_group_image(200,200), class: "rounded image_group" %></td>
             <td>
               <% @group.users.each do |user| %>
                 <%= user.nickname %><br>
@@ -22,7 +22,7 @@
             </td>
             <td class="col-sm-5"><%= @group.content %></td>
             <td>
-                <%= link_to "グループ作品集", admin_group_post_index_path(@group.id), class:'btn btn-dark' %>
+                <%= link_to "グループ作品集", admin_group_post_index_path(@group.id), class:'btn btn-picture' %>
             </td>
           </tr>
         </tbody>

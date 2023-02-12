@@ -35,7 +35,7 @@
                         <tr>
                             <td><%= user.id %></td>
                             <td>
-                                <%= image_tag user.get_profile_image(50,50), class: "image_circle_admin" %>
+                                <%= image_tag user.get_profile_image(50,50), class: "rounded image_circle_admin" %>
                                 <%= link_to admin_user_path(user.id) do %>
                                     <%= user.nickname %>
                                 <% end %>

@@ -15,7 +15,7 @@
             <% #NOTE:　引数には投稿したユーザーに遷移したいので（post.user）と　%>
             <div class="d-flex">
               <%= link_to admin_user_path(post.user) do %>
-                <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
+                <%= image_tag post.user.get_profile_image(50,50), class:"rounded" %>
               <% end %>
               <p class="mt-4 pl-2"><%= post.user.nickname %></p>
             </div>

@@ -56,12 +56,11 @@
 .image_circle_admin {
   width:50px;
   height:50px;
-  border-radius:50%;
   background-position: center;
 }
 
-/* ユーザー一覧のプロフィール画像*/
-.user_image {
+/* ユーザー一覧のプロフィール画像 グループイメージ画像 */
+.user_image, .image_group {
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -74,7 +73,7 @@
 }
 
 /*マイページプロフィール画像　*/
-.image_mypage {
+.image_mypage, .group_image {
   width: 200px;
   height: 200px;
   object-fit: cover;

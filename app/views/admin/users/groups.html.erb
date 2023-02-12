@@ -13,7 +13,7 @@
       <% @groups.each do |group| %>
       <tbody>
         <tr>
-          <td><%= image_tag group.get_group_image(100,100), class: "rounded-circle" %></td>
+          <td><%= image_tag group.get_group_image(100,100), class: "rounded image_group" %></td>
           <td><%= group.name %></td>
           <% #NOTE: truncate(30)..表示文字数の制限　%>
           <td><%= group.content.truncate(30) %></td>

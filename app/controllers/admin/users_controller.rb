@@ -34,7 +34,7 @@ class Admin::UsersController < ApplicationController
   def posts
     @user = User.find(params[:id])
     #pluck = 指定したカラム(この場合post_id)のレコードの配列を取得
-    @posts = Post.where(user_id: @user.id).pluck(:post_id)
+    @posts = Post.where(user_id: @user.id).pluck(:id)
     #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
     @posts = @user.posts.where(post_type: 0).page(params[:page])
   end
