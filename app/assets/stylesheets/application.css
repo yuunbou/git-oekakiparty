@@ -87,3 +87,14 @@
   background: #C70044;
   color: #fff;
 }
+
+/* About画面フォント */
+.font-note {
+  color: #B6003D;
+  border-bottom: 3px solid #B6003D;
+}
+
+.font-about {
+  color: #006660;
+}
+
