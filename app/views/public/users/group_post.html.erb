@@ -11,11 +11,11 @@
         <div class="card-body" style="border-top:solid">
           <% #NOTE:　引数には投稿したユーザーに遷移したいので（post.user）と　%>
           <%= link_to user_path(post.user) do %>
-            <%= image_tag post.user.get_profile_image(50,50), class:"rounded-circle" %>
+            <%= image_tag post.user.get_profile_image(50,50), class:"rounded" %>
           <% end %>
           <h5 class="card-title"><%= post.title %></h5>
           <% if post.is_status == true && @user.id == current_user.id %>
-            <p class="text-success font-width-bold">公開</p>
+            <p class="text-success font-width-bold"></p>
           <% else %>
             <p class="text-secondary font-width-bold">非公開</p>
           <% end %>
