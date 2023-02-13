@@ -47,7 +47,9 @@
                                 <td class="text-secondary font-width-bold">退会</td>
                             <% end %>
                             <td>
-                                <%= link_to "削除", admin_user_path(user), class:'btn btn-sm btn-danger', method: :delete, data: {confirm: "削除しますか？"} %>
+                                <% if user.email != "guest@example.com"  %>
+                                    <%= link_to "削除", admin_user_path(user), class:'btn btn-sm btn-danger', method: :delete, data: {confirm: "削除しますか？"} %>
+                                <% end %>
                             </td>
                         </tr>
                     </tbody>
