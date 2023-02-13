@@ -22,7 +22,7 @@
     font-family: 'Zen Maru Gothic', sans-serif;
 }
 
-
+/* ログインボタン */
 .btn-info-login {
   background: #589DA4;
   color: #fff;
@@ -32,31 +32,28 @@
   background-image: linear-gradient(to top, #37ecba 0%, #72afd3 100%);
 }
 
+/* 投稿一覧のcardサイズ */
 .card-img-top {
   height: 200px;
   width: 200px;
 }
 
+/* 新規登録のボタン */
 .btn-Wstning-registration, .btn-registrations {
   background: #0075A9;
   color: #fff;
 }
 
+/* Aboutボタン */
 .btn-Wstning-about {
   background: #009E96;
   color: #fff;
 }
 
-.btn-light-list {
+/* ゲストログインボタン */
+.btn-gest {
   background: #003856;
   color: #fff;
-}
-
-
-.image_circle_admin {
-  width:50px;
-  height:50px;
-  background-position: center;
 }
 
 /* ユーザー一覧のプロフィール画像 グループイメージ画像 */
@@ -66,35 +63,10 @@
   object-fit: cover;
 }
 
-.post_user {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-
 /*マイページプロフィール画像　*/
 .image_mypage, .group_image {
   width: 200px;
   height: 200px;
   object-fit: cover;
-}
-
-.btn-picture {
-  background-image: linear-gradient(to top, #9be15d 0%, #00e3ae 100%);
-}
-
-.btn-withdraw {
-  background: #C70044;
-  color: #fff;
-}
-
-/* About画面フォント */
-.font-note {
-  color: #B6003D;
-  border-bottom: 3px solid #B6003D;
-}
-
-.font-about {
-  color: #006660;
 }
 

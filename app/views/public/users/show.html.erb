@@ -16,7 +16,7 @@
           <% #NOTE: ()内に変数を渡すことでそのviewに飛べる %>
           <%= link_to "プロフィール編集", edit_user_path(@user), class:'btn btn-success btn-sm mx-1' %>
           <%= link_to "グループ内投稿一覧", group_post_user_path(@user), class:'btn btn-info btn-sm mx-1' %>
-          <%= link_to "グループを作る", new_group_path, class:'btn btn-dark btn-sm mx-1' %>
+          <%= link_to "グループを作る", new_group_path, class:'btn btn-group btn-sm mx-1' %>
         <% end %>
         <% if current_user.email != "guest@example.com" %>
           <%= link_to "グループ一覧", groups_user_path(@user), class:'btn btn-dark btn-sm mx-1' %>

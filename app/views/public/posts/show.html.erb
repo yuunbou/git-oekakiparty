@@ -82,12 +82,12 @@
           <% @post.comments.each do |comment| %>
           <tr>
             <td>
-              <%= image_tag comment.user.get_profile_image(50,50) %></br>
-              <%= comment.user.nickname %>
+              <%= image_tag comment.user.get_profile_image(50,50), class:"rounded" %></br>
+              <p class="font-weight-bold"><%= comment.user.nickname %></p>
             </td>
             <td>
-              <%= comment.comment %></br>
-              <%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+              <p><%= comment.comment %></p>
+              <p class="comment_date"><%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></p>
             </td>
             <td>
               <% if comment.user == current_user || @post.user_id == current_user.id %>
