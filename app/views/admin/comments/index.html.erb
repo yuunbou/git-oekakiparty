@@ -23,8 +23,8 @@
                                 <%= comment.post.title %>
                                 (<%= comment.post.id %>)
                             </td>
-                            <td class="col-6"><%= comment.comment %></td>
-                            <td class="col-2">
+                            <td class="col-5"><%= comment.comment %></td>
+                            <td class="col-3">
                                 <%= image_tag comment.user.get_profile_image(50,50), class:"rounded" %>
                                 <%= comment.user.nickname %>
                                 (<%= comment.user.id %>)
