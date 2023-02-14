@@ -16,7 +16,7 @@ class Public::GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     #グループ作成者もメンバーに含ませるための記述
-    @group.owner_id = current_user.id
+    @group.owner = current_user
     #@group.usersに、current_userを追加
     #グループにメンバーを追加するため
     @group.users << current_user

@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2023_01_09_160709) do
     t.integer "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
   create_table "post_tags", force: :cascade do |t|
@@ -124,4 +125,5 @@ ActiveRecord::Schema.define(version: 2023_01_09_160709) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "groups", "users", column: "owner_id"
 end

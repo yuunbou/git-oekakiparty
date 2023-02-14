@@ -11,7 +11,10 @@ class User < ApplicationRecord
   has_many :favorite_posts, through: :favorites, :source => :post
   has_many :comments, dependent: :destroy
   has_many :group_users, dependent: :destroy
-  has_many :groups, through: :group_users, dependent: :destroy
+  #所属しているグループのアソシエーション
+  has_many :my_groups, through: :group_users, dependent: :destroy
+  #グループの作成者がownerにするための外部キー
+  has_many :groups, foreign_key: :owner_id
 
   validates :nickname, presence: true, length: { in: 2..20 }
   validates :introduction, length: {maximum: 300 }
