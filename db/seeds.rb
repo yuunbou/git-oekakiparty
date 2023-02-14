@@ -26,8 +26,7 @@ User.create!(
     is_active: "true"
 )
 
-# ポストにはタイトル・キャプション・画像・タグ・post_type（個人投稿）のデータを入れる
-# タグのテストデータの作成方法
+# postデータの作成
 post1 = user.posts.create!(
     title: "test投稿",
     post_type: 0,
@@ -36,6 +35,7 @@ post1 = user.posts.create!(
     caption: "サンプルキャプション"
 )
 
+# タグデータの作成
 post1.tags.create!(
     tag_name:"sample"
 )
