@@ -40,20 +40,4 @@ post1.tags.create!(
     tag_name:"sample"
 )
 
-# グループの作成
-user.groups.create!(
-    name: "testグループ",
-    content: "サンプルグループ内容",
-    owner_id: 1
-)
-    
-# グループ内投稿の作成
-user.posts.create!(
-    title: "test投稿",
-    post_type: 1,
-    images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"),
-    filename: "no_group_image.jpg"),
-    group_id: 1
-)
-
 
