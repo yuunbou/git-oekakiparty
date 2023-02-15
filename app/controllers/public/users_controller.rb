@@ -61,7 +61,7 @@ class Public::UsersController < ApplicationController
   def favorites
     @user = User.find(params[:id])
     #＠favorites_posts..userモデルファイルで定義
-    @favorite_posts = @user.favorite_posts.page(params[:page]) #Post.find(@favorites)
+    @favorite_posts = @user.favorite_posts.page(params[:page])
   end
 
   #ユーザーの投稿一覧
@@ -88,9 +88,10 @@ class Public::UsersController < ApplicationController
   #グループ一覧
   def groups
     @user = User.find(params[:id])
-    #@groups= GroupUser.where(user_id: @user.id).page(params[:page]).pluck(:group_id)
+    #@group_users = @user.group_users.where(user_id: @user.id).pluck(:group_id)
     #アソシエーションでgroupは持っているためwhereを使わずとも下記の定義でとってこれる
-    @groups = @user.groups.order('id DESC').page(params[:page])#Group.find(groups)
+    @groups = @user.groups.order('id DESC').page(params[:page]).per(10)
+    @group_members = @user.group_members.where.not(owner_id: current_user.id).order('id DESC').page(params[:page]).per(10)
   end
   
   #ユーザー一覧

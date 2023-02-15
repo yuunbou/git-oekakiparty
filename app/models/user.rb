@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :favorite_posts, through: :favorites, :source => :post
   has_many :comments, dependent: :destroy
   has_many :group_users, dependent: :destroy
+  # 所属しているグループをとってくる
+  has_many :group_members, through: :group_users, :source => :group
   #所属しているグループのアソシエーション
   has_many :my_groups, through: :group_users, dependent: :destroy
   #グループの作成者がownerにするための外部キー
