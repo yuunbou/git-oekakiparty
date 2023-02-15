@@ -26,7 +26,7 @@ User.create!(
     is_active: "true"
 )
 
-# postデータの作成
+# 個人投稿のpostを作成
 post1 = user.posts.create!(
     title: "test投稿",
     post_type: 0,
@@ -35,9 +35,25 @@ post1 = user.posts.create!(
     caption: "サンプルキャプション"
 )
 
-# タグデータの作成
+# postタグの作成
 post1.tags.create!(
     tag_name:"sample"
+)
+
+# グループの作成
+user.groups.create!(
+    name: "testグループ",
+    content: "サンプルグループ内容"
+)
+    
+# グループ内投稿の作成
+user.posts.create!(
+    title: "grouptest投稿",
+    post_type: 1,
+    images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"),
+    filename: "no_group_image.jpg"),
+    caption: "グループ内投稿サンプルキャプション",
+    group_id: 1
 )
 
 
