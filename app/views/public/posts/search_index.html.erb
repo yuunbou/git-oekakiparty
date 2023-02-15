@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12 m-2 d-flex flex-wrap">
+    <div class="col-xs-12 m-2 d-flex flex-wrap">
     <% @posts.each do |post| %>
       <% if post.user.is_active == true %>
       <div class="card m-1 shadow-sm" style="width: 13rem;">
@@ -38,14 +38,16 @@
       <% end %>
     <% end %>
     </div>
-    <% #NOTE: size..数　@postsの数が０の場合メッセージを表示する　%>
-    <div class="col-sm-12">
-      <% if @posts.size == 0 %>
-        <p class="text-center">検索結果がありませんでした</p>
-      <% end %>
-    </div>
     <div class="mx-auto">
       <%= paginate @posts %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 mx-auto">
+      <% #NOTE: size..数　@postsの数が０の場合メッセージを表示する　%>
+      <% if @posts.size == 0 %>
+        <p class="text-center font-weight-bold">検索結果がありませんでした</p>
+      <% end %>
     </div>
   </div>
 </div>

@@ -28,4 +28,11 @@
       <%= paginate @posts %>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-12 mx-auto">
+      <% if @posts.size == 0 %>
+        <p class="text-center font-weight-bold">投稿はありません</p>
+      <% end %>
+    </div>
+  </div>
 </div>
