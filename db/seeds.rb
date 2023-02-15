@@ -41,7 +41,7 @@ post1.tags.create!(
 )
 
 # グループの作成
-user.groups.create!(
+group1 = user.groups.create!(
     name: "testグループ",
     content: "サンプルグループ内容"
 )
@@ -56,4 +56,8 @@ user.posts.create!(
     group_id: 1
 )
 
+GroupUser.create!(
+    user_id: 1,
+    group_id: 1
+)
 
