@@ -1,6 +1,6 @@
 class Public::PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only:[:edit, :update]
+  before_action :correct_user, only:[:edit, :update, :destroy]
 
   def new
     @post = current_user.posts.new
@@ -72,7 +72,7 @@ class Public::PostsController < ApplicationController
   end
 
   def destroy
-    post = Post.find(params[:id])
+    post = current_user.posts.find(params[:id])
     post.destroy
     redirect_to posts_user_path(current_user.id)
   end
