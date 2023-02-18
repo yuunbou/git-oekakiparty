@@ -12,52 +12,80 @@ end
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # ユーザーの作成
-user = User.create!(
-    email: "test@example.com",
-    password: "testtest",
-    nickname: "test太郎",
-    is_active: "true"
-)
+user_attributes = (1..30).map do |n|
+    {
+      email: "test#{n}@example.com",
+      password: "testtest",
+      nickname: "test#{n}",
+      is_active: "true"
+    }
+end
 
-User.create!(
-    email: "sample@example.com",
-    password: "samplesample",
-    nickname: "sample花子",
-    is_active: "true"
-)
+user_attributes.each do |user_attribute|
+    User.find_or_create_by(email: user_attribute[:email]) do |user|
+        user.password = user_attribute[:password]
+        user.nickname = user_attribute[:nickname]
+        user.is_active = user_attribute[:is_active]
+    end
+end
+
+# user = User.create!(
+#     email: "test@example.com",
+#     password: "testtest",
+#     nickname: "test太郎",
+#     is_active: "true"
+# )
+
+# User.create!(
+#     email: "sample@example.com",
+#     password: "samplesample",
+#     nickname: "sample花子",
+#     is_active: "true"
+# )
 
 # 個人投稿のpostを作成
-post1 = user.posts.create!(
-    title: "test投稿",
+
+post_attributes = (1..5).map do |n|
+  {
+    title: "test#{n}投稿",
     post_type: 0,
-    images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"),
-    filename: "no_group_image.jpg"),
     caption: "サンプルキャプション"
-)
+  }
+end
+
+User.all.pluck(:id).flat_map do |user_id|
+    post_attributes.map { |post_attribute| post_attribute.merge(user_id: user_id) }
+end.each do |post_attribute|
+    Post.create(
+      post_attribute.merge(
+          images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"), filename: "no_group_image.jpg")
+      )
+    )
+end
 
 # postタグの作成
-post1.tags.create!(
-    tag_name:"sample"
-)
+Post.all.each do |post|
+  (1..4).each do |n|
+    post.tags.create(tag_name:"タグサンプル#{n}")
+  end
+end
 
 # グループの作成
-group1 = user.groups.create!(
-    name: "testグループ",
-    content: "サンプルグループ内容"
-)
+# group1 = user.groups.create!(
+#     name: "testグループ",
+#     content: "サンプルグループ内容"
+# )
     
 # グループ内投稿の作成
-user.posts.create!(
-    title: "grouptest投稿",
-    post_type: 1,
-    images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"),
-    filename: "no_group_image.jpg"),
-    caption: "グループ内投稿サンプルキャプション",
-    group_id: 1
-)
+# user.posts.create!(
+#     title: "grouptest投稿",
+#     post_type: 1,
+#     caption: "グループ内投稿サンプルキャプション",
+#     group_id: 1
+# )
 
-GroupUser.create!(
-    user_id: 1,
-    group_id: 1
-)
+# GroupUser.create!(
+#     user_id: 1,
+#     group_id: 1
+# )
 
