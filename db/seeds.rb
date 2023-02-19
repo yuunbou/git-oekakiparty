@@ -12,7 +12,7 @@ end
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # ユーザーの作成
-user_attributes = (1..30).map do |n|
+user_attributes = (1..5).map do |n|
     {
       email: "test#{n}@example.com",
       password: "testtest",
@@ -45,7 +45,7 @@ end
 
 # 個人投稿のpostを作成
 
-post_attributes = (1..5).map do |n|
+post_attributes = (1..3).map do |n|
   {
     title: "test#{n}投稿",
     post_type: 0,
@@ -63,12 +63,52 @@ end.each do |post_attribute|
     )
 end
 
+
 # postタグの作成
 Post.all.each do |post|
   (1..4).each do |n|
-    post.tags.create(tag_name:"タグサンプル#{n}")
+    post.tags.create(tag_name:"タグ#{n}")
   end
 end
+
+group_attributes = (1..3).map do |n|
+    {
+      name:"testgroup#{n}",
+      content:"サンプル内容"
+    }
+end
+
+after_group_attributes = User.all.pluck(:id).flat_map do |user_id|
+    group_attributes.map { |group_attribute| group_attribute.merge(owner_id: user_id) }
+end
+
+after_group_attributes.each do |after_group_attribute|
+  Group.create(after_group_attribute)
+end
+
+post_attributes = (1..2).map do |n|
+  {
+    title: "test#{n}投稿",
+    post_type: 1,
+    caption: "サンプルキャプション",
+    images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"), filename: "no_group_image.jpg")
+  }
+end
+
+#user = User.all.pluck(:id).first
+
+after_post_attributes = Group.all.pluck(:id).flat_map do |group_id|
+    post_attributes.map { |post_attribute| post_attribute.merge(group_id: group_id) }
+end
+
+after_post_attributes = User.all.pluck(:id).flat_map do |user_id|
+    after_post_attributes.map { |post_attribute| post_attribute.merge(user_id: user_id) }
+end
+
+after_post_attributes.each do |after_post_attribute|
+  Post.create(after_post_attribute)
+end
+
 
 # グループの作成
 # group1 = user.groups.create!(
