@@ -27,10 +27,10 @@
               <% end %>
               <h5 class="card-title"><%= post.title %></h5>
               <% post.tags.each do |tag| %>
-                <%= tag.tag_name %>
+                <%= link_to tag.tag_name, admin_posts_path(tag_id: tag.id) %>
               <% end %>
               <% if post.is_status == true %>
-                <p class="text-success font-width-bold">公開</p>
+                <p class="text-success font-width-bold"></p>
               <% else %>
                 <p class="text-secondary font-width-bold">非公開</p>
               <% end %>
