@@ -7,8 +7,7 @@ class Group < ApplicationRecord
 
   validates :name, presence: true
   validates :content, presence: true
-  validates :owner_id, presence: true
-
+  
   #グループイメージの画像
   def get_group_image(width, height)
     unless group_image.attached?
