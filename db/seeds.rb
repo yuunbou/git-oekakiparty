@@ -63,7 +63,6 @@ end.each do |post_attribute|
     )
 end
 
-
 # postタグの作成
 Post.all.each do |post|
   (1..4).each do |n|
