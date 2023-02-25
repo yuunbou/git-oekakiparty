@@ -15,7 +15,9 @@ class Post < ApplicationRecord
   # 投稿タイプ(0=個人投稿　1=グループ投稿)
 
   validates :images, presence: true
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 50 }
+  #validates :caption, allow_blank: true, length: { minimum: 10, maximum: 2000 }
+  validates :caption, length: { maximum: 2000 }
   #validates :is_status, presence: true
 
   # 公開・非公開の設定

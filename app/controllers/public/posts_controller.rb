@@ -17,18 +17,28 @@ class Public::PostsController < ApplicationController
       # 投稿のタイプ（個人投稿）
       @post.post_type = "post_public"
       tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
-      if @post.save!
+      if @post.save
         @post.save_tag(tag_list)
         #group_idが空の場合はpostのshowに移動
-        redirect_to post_path(@post.id)
+        redirect_to post_path(@post.id), notice: "登録しました"
+      else
+        flash.now[:alert] = "失敗しました"
+        render 'public/posts/new'
       end
     else
       # 投稿タイプ = "グループ内投稿"
       @post.post_type = "post_private"
-      @post.save!
-      # post_privateで投稿されたらgroup_post_index_pathに移動する
-      # もしgroup_idが入っていたらgroup_post_indexに移動する
-      redirect_to group_post_index_path(@post.group)
+      if @post.save
+        # post_privateで投稿されたらgroup_post_index_pathに移動する
+        # もしgroup_idが入っていたらgroup_post_indexに移動する
+        #flash[:notice] = "登録しました"
+        redirect_to group_post_index_path(@post.group), notice: "登録しました"
+      else
+        @group = @post.group
+        @posts = @group.posts
+        flash.now[:alert] = "失敗しました"
+        render 'public/groups/post_index'
+      end
     end
   end
   

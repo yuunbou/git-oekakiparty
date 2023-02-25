@@ -8,6 +8,7 @@
         ※複数画像を投稿する場合は画像を一括でアップロードしてください</br>
       </p>
      <%= form_with model: @post, url: posts_path, method: :post do |f| %>
+     <%= render 'layouts/error_messages', resource: f.object %>
       <%= f.hidden_field :group_id, value: @group.id %>
         <div class="form-group">
           <%= f.file_field :images, multiple: true, accept: "images/*", onchange: "loadImage()", class: 'form-control-file text-center push' %>

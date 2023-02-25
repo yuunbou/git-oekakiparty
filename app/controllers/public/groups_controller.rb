@@ -20,7 +20,7 @@ class Public::GroupsController < ApplicationController
     # @group.usersに、current_userを追加
     # グループにメンバーを追加するため
     @group.users << current_user
-    if @group.save!
+    if @group.save
       redirect_to groups_user_path(current_user)
     else
       render 'new'

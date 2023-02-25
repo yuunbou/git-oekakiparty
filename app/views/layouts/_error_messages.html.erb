@@ -1,0 +1,10 @@
+<!-- エラー -->
+<% if resource.errors.any? %>
+  <div class="alert alert-warning">
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

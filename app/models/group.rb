@@ -5,8 +5,8 @@ class Group < ApplicationRecord
   has_many :posts, dependent: :destroy
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
 
-  validates :name, presence: true
-  validates :content, presence: true
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :content, presence: true, length: { maximum: 500 }
   
   #グループイメージの画像
   def get_group_image(width, height)
