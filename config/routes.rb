@@ -1,22 +1,22 @@
 Rails.application.routes.draw do
 
 
-  #会員側
+  # 会員側
   devise_for :users, controllers:{
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-  #ゲストログイン
+  # ゲストログイン
   devise_scope :user do
     post 'users/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
   
-  #会員側
+  # 会員側
   scope module: :public do
     root to: 'homes#top'
     get "/about" => "homes#about", as: "about"
     
-    #ユーザー
+    # ユーザー
     resources :users, only:[:index, :show, :edit, :update] do
       member do
         get :favorites
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
         patch :withdraw
       end
     end
-    #投稿
+    # 投稿
     resources :posts do
       collection do
         get '/search_index' => "posts#search_index", as: "search_index"
@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       resource :favorites, only:[:create, :destroy]
       resources :comments, only:[:create, :destroy]
     end
-    #グループ
+    # グループ
     resources :groups do
       #グループ内投稿画面
       get '/post_index' => "groups#post_index" , as: "post_index"
@@ -51,14 +51,14 @@ Rails.application.routes.draw do
 
   end
 
- #管理者側
+ # 管理者側
   devise_for :admin, controllers: {
     registrations: "admin/registrations",
     sessions: "admin/sessions"
   }
   
   namespace :admin do
-    #ユーザー
+    # ユーザー
     resources :users, only:[:index, :show, :edit, :update, :destroy] do
       member do
         get :posts
@@ -66,18 +66,18 @@ Rails.application.routes.draw do
         get :group_post
       end
     end
-    #投稿
+    # 投稿
     resources :posts, only:[:index, :show, :destroy, :edit, :update] do
-      #コメント
+      # コメント
       resources :comments, only:[:destroy]
     end
-    #コメント一覧
+    # コメント一覧
     resources :comments, only:[:index]
-    #グループ
+    # グループ
     resources :groups, only:[:index, :show] do
-      #グループ内投稿
+      # グループ内投稿
       get '/post_index' => "groups#post_index" , as: "post_index"
-      #グループの削除
+      # グループの削除
       delete "all_destroy" => 'groups#all_destroy'
     end
     

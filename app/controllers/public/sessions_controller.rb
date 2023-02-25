@@ -4,7 +4,7 @@ class Public::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   before_action :user_state, only: [:create]
 
-#ゲストユーザーログインアクション
+# ゲストユーザーログインアクション
   def guest_sign_in
     user = User.find_or_create_by!(email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64
@@ -31,7 +31,7 @@ class Public::SessionsController < Devise::SessionsController
 
   protected
   
-  #退会処理
+  # 退会処理
   def user_state
     @user = User.find_by(email: params[:user][:email])
     return if !@user

@@ -5,14 +5,14 @@ class Admin::PostsController < ApplicationController
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
       @posts = @tag.posts.page(params[:page])
-      #.order(created_at: :desc)
-      #order＝並び順　:descだったら大きい順　:ascで小さい順
-    #＆＆を使うことでxx かつという意味になる
+      # .order(created_at: :desc)
+      # order＝並び順　:descだったら大きい順　:ascで小さい順
+    # ＆＆を使うことでxx かつという意味になる
     elsif params[:search].present? && params[:word].present?
       @posts = Post.search(params[:search], params[:word]).order('id DESC').page(params[:page])
 
     else
-      #何も入力せず検索を押した場合
+      # 何も入力せず検索を押した場合
       @posts = Post.where(post_type: 0).order('id DESC').page(params[:page])
     end
 

@@ -14,7 +14,7 @@ class Admin::GroupsController < ApplicationController
   
   private
 
-  #フォームから渡す必要がないためowner_idはparamsに入れる必要がない
+  # フォームから渡す必要がないためowner_idはparamsに入れる必要がない
   def group_params
     params.require(:group).permit(:name, :content, :group_image)
   end

@@ -70,6 +70,7 @@ Post.all.each do |post|
   end
 end
 
+# グループのテストデータ
 group_attributes = (1..3).map do |n|
     {
       name:"testgroup#{n}",
@@ -85,6 +86,7 @@ after_group_attributes.each do |after_group_attribute|
   Group.create(after_group_attribute)
 end
 
+# グループのテスト投稿データ
 post_attributes = (1..2).map do |n|
   {
     title: "test#{n}投稿",

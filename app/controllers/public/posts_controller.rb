@@ -4,7 +4,7 @@ class Public::PostsController < ApplicationController
 
   def new
     @post = current_user.posts.new
-    #ゲストログインは投稿画面に遷移できない
+    # ゲストログインは投稿画面に遷移できない
     if current_user.email == "guest@example.com" 
       redirect_to root_path
     end
@@ -12,9 +12,9 @@ class Public::PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    #postにgroup_idがあるかないか？確認
+    # postにgroup_idがあるかないか？確認
     if @post.group_id.nil?
-      #投稿のタイプ（個人投稿）
+      # 投稿のタイプ（個人投稿）
       @post.post_type = "post_public"
       tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
       if @post.save!
@@ -23,11 +23,11 @@ class Public::PostsController < ApplicationController
         redirect_to post_path(@post.id)
       end
     else
-      #投稿タイプ = "グループ内投稿"
+      # 投稿タイプ = "グループ内投稿"
       @post.post_type = "post_private"
       @post.save!
-      #post_privateで投稿されたらgroup_post_index_pathに移動する
-      #もしgroup_idが入っていたらgroup_post_indexに移動する
+      # post_privateで投稿されたらgroup_post_index_pathに移動する
+      # もしgroup_idが入っていたらgroup_post_indexに移動する
       redirect_to group_post_index_path(@post.group)
     end
   end
@@ -77,9 +77,9 @@ class Public::PostsController < ApplicationController
     redirect_to posts_user_path(current_user.id)
   end
 
-  #検索ページ
+  # 検索ページ
   def search_index
-    #タグのリンクを押した場合
+    # タグのリンクを押した場合
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
       @posts = @tag.posts.page(params[:page]).published
@@ -98,8 +98,8 @@ class Public::PostsController < ApplicationController
     params.require(:post).permit(:group_id, :title, :caption, :is_status, :post_type, images: []).merge(user_id: current_user.id)
   end
 
-  #correct_userとは・・レコードを本当にログインユーザの所有しているものかを判別するメソッド
-  #レコードの編集、更新、削除など、持ち主しかやってはいけない機能を作るときによく使う
+  # correct_userとは・・レコードを本当にログインユーザの所有しているものかを判別するメソッド
+  # レコードの編集、更新、削除など、持ち主しかやってはいけない機能を作るときによく使う
   def correct_user
     @post = Post.find(params[:id])
     @user = @post.user

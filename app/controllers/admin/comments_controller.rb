@@ -1,7 +1,6 @@
 class Admin::CommentsController < ApplicationController
     before_action :authenticate_admin!
     
-    
     def index
         @comments = Comment.page(params[:page])
     end
@@ -16,6 +15,5 @@ class Admin::CommentsController < ApplicationController
     def comment_params
         params.require(:comment).permit(:comment)
     end
-    
     
 end
