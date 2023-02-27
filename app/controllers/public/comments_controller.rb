@@ -5,8 +5,15 @@ class Public::CommentsController < ApplicationController
     post = Post.find(params[:post_id])
     comment = current_user.comments.new(comment_params)
     comment.post_id = post.id
-    comment.save
-    redirect_to post_path(post)
+    if comment.save
+     redirect_to post_path(post)
+    else
+      @post = Post.find(params[:post_id])
+      @comment = Comment.new
+      @user = @post.user
+      flash.now[:alert] = "コメントは１０００文字以下で必須入力です"
+      render 'public/posts/show'
+    end
   end
 
   def destroy
