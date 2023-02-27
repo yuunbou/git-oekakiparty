@@ -14,7 +14,6 @@
         <div class="form-group">
           <%= f.file_field :images, multiple: true, accept: "images/*", onchange: "loadImage()", class: 'form-control-file text-center push'  %>
           <% #NOTE: 複数画像のアップロード  %>
-          <% #TODO: 画像のプレビュー　%>
           <% #NOTE: 下記のコードが選択した画像を表示するようにするもの　%>
           <p id="preview"></p>
           <% #NOTE: 部分テンプレートでプレビューを表示する　%>

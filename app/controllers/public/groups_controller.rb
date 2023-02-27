@@ -21,7 +21,7 @@ class Public::GroupsController < ApplicationController
     # グループにメンバーを追加するため
     @group.users << current_user
     if @group.save
-      redirect_to groups_user_path(current_user)
+      redirect_to groups_user_path(current_user), notice: "グループを作成しました"
     else
       render 'new'
     end
@@ -69,8 +69,9 @@ class Public::GroupsController < ApplicationController
   # グループ内容の更新
   def update
     if @group.update(group_params)
-      redirect_to groups_user_path(current_user)
+      redirect_to groups_user_path(current_user), notice: "グループを編集しました"
     else
+      flash.now[:alert] = "グループの編集が失敗しました"
       render "edit"
     end
   end

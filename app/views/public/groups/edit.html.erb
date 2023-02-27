@@ -7,16 +7,17 @@
   <div class="row">
     <div class="mx-auto">
       <%= form_with model: @group, url: group_path, method: :patch do |f| %>
+        <%= render 'layouts/error_messages', resource: f.object %>
         <div class="form-group">
           <p>グループ画像</p>
           <%= f.file_field :group_image, accept: "image/*", class: 'form-control-file' %>
         </div>
         <div class="form-group">
           <%= f.label :name, "グループ名" %>
-          <%= f.text_field :name, required: true, class: 'form-control p-1' %>
+          <%= f.text_field :name, class: 'form-control p-1' %>
         </div>
         <div class-"form-group">
-          <%= f.text_area :content, required: true, rows: "6", class: 'form-control p-1' %>
+          <%= f.text_area :content, rows: "6", class: 'form-control p-1' %>
         </div>
         <div class="form-group m-2 text-center">
           <%= f.submit "更新", class:'btn btn-success' %>

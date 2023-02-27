@@ -5,7 +5,8 @@ ja:
       post:
         images: 画像
       group:
-        name: グループ名
+        name: ５０文字以内でグループ名
+        content: ５００文字以内でグループ内容
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
