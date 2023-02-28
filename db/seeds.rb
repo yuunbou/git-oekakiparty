@@ -10,7 +10,12 @@ end
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+User.create!(
+    email: "test@example.com",
+    password: "testtest",
+    nickname: "ユーザー",
+    is_active: "true"
+  )
 
 (1..5).each do |n|
   user = User.create!(
@@ -26,6 +31,12 @@ end
       caption: "サンプルキャプション",
       images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"), filename: "no_group_image.jpg")
     )
+    (1..2).each do |nnnn|
+      post.comments.create!(
+        user_id: user.id - 1,
+        comment: "#{nnnn}投稿に対するコメント"
+      )
+    end
     rand(1..3).times do |nnn|
       post.tags.create!(
         tag_name: "タグ#{nnn + 1}"
