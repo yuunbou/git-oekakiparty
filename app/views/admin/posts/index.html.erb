@@ -45,4 +45,12 @@
       <%= paginate @posts %>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-12 mx-auto">
+      <% #NOTE: size..数　@postsの数が０の場合メッセージを表示する　%>
+      <% if @posts.size == 0 %>
+        <p class="text-center font-weight-bold">検索結果がありませんでした</p>
+      <% end %>
+    </div>
+  </div>
 </div>
