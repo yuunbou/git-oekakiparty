@@ -11,6 +11,48 @@ end
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
+(1..5).each do |n|
+  user = User.create!(
+    email: "test#{n}@example.com",
+    password: "testtest",
+    nickname: "ユーザー#{n}",
+    is_active: "true"
+  )
+  (1..3).each do |nn|
+    post = user.posts.create!(
+      title: "お絵描き#{nn}投稿",
+      post_type: 0,
+      caption: "サンプルキャプション",
+      images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"), filename: "no_group_image.jpg")
+    )
+    rand(1..3).times do |nnn|
+      post.tags.create!(
+        tag_name: "タグ#{nnn + 1}"
+      )
+    end
+  end
+  (1..3).each do |nn|
+    group = user.groups.create!(
+      name:"お絵描きグループ#{nn}",
+      content:"お絵描きグループ活動内容"
+    )
+    group.group_users.create!(
+        user_id: user.id
+      )
+    (1..2).each do |nnn|
+      user.posts.create!(
+        group_id: group.id,
+        title: "グループ内のお絵描き#{n}投稿",
+        post_type: 1,
+        caption: "サンプルキャプション",
+        images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"), filename: "no_group_image.jpg")
+      )
+      sleep(1)
+    end
+  end
+end
+
 # ユーザーの作成
 # user_attributes = (1..5).map do |n|
 #     {
@@ -29,46 +71,6 @@ end
 #     end
 # end
 
-(1..5).each do |n|
-  user = User.create!(
-    email: "test#{n}@example.com",
-    password: "testtest",
-    nickname: "test#{n}",
-    is_active: "true"
-  )
-  (1..3).each do |nn|
-    post = user.posts.create!(
-      title: "test#{nn}投稿",
-      post_type: 0,
-      caption: "サンプルキャプション",
-      images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"), filename: "no_group_image.jpg")
-    )
-    rand(1..3).times do |nnn|
-      post.tags.create!(
-        tag_name: "タグ#{nnn + 1}"
-      )
-    end
-  end
-  (1..3).each do |nn|
-    group = user.groups.create!(
-      name:"testgroup#{nn}",
-      content:"サンプル内容"
-    )
-    group.group_users.create!(
-        user_id: user.id
-      )
-    (1..2).each do |nnn|
-      user.posts.create!(
-        group_id: group.id,
-        title: "test#{n}投稿",
-        post_type: 1,
-        caption: "サンプルキャプション",
-        images: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/no_group_image.jpg"), filename: "no_group_image.jpg")
-      )
-      sleep(1)
-    end
-  end
-end
 # user = User.create!(
 #     email: "test@example.com",
 #     password: "testtest",
