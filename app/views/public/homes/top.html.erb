@@ -25,6 +25,7 @@
               <%= link_to user_path(post.user) do %>
                 <%= image_tag post.user.get_profile_image(50,50), class:"rounded" %>
               <% end %>
+              <p class="font-weight-bold"><%= post.user.nickname %></p>
               <h5 class="card-title"><%= post.title %></h5>
               <% post.tags.each do |tag| %>
                 <%= link_to tag.tag_name, admin_posts_path(tag_id: tag.id) %>
