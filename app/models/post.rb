@@ -57,9 +57,8 @@ class Post < ApplicationRecord
     end
   end
   
-  #検索の条件分岐　タグは部分一致と完全一致で検索　キーワードはタイトルとキャプションでのキーワード検索にしたい
+  #検索の条件分岐　タグは部分一致と完全一致で検索　キーワードはタイトルとキャプションでのキーワード検索
   def self.search(method,word)
-    #byebug
     if method == "partial_match"
       @words = word.split(/[[:blank:]]+/)
       
