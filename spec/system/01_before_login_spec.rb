@@ -101,6 +101,21 @@ describe '[STEP1] ユーザログイン前のテスト' do
         click_link root_link
         is_expected.to eq '/'
       end
+      it 'Aboutを押すと、アバウト画面に遷移する' do
+        about_link = find_all('a')[2].text
+        click_link about_link
+        is_expected.to eq '/about'
+      end
+      it '新規登録を押すと、新規登録画面に遷移する' do
+        signup_link = find_all('a')[3].text
+        click_link signup_link, match: :first
+        is_expected.to eq '/users/sign_up'
+      end
+      it 'ログインを押すと、ログイン画面に遷移する' do
+        login_link = find_all('a')[4].text
+        click_link login_link, match: :first
+        is_expected.to eq '/users/sign_in'
+      end
     end
   end
   
