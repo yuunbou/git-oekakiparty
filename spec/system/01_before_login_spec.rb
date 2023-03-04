@@ -116,6 +116,58 @@ describe '[STEP1] ユーザログイン前のテスト' do
         click_link login_link, match: :first
         is_expected.to eq '/users/sign_in'
       end
+      it 'ゲストログインを押すと、トップ画面に遷移する' do
+        guestlogin_link = find_all('a')[5].text
+        click_link guestlogin_link, match: :first
+        is_expected.to eq '/'
+      end
+    end
+  end
+  
+  describe 'ユーザ新規登録のテスト' do
+    before do
+      visit new_user_registration_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/sign_up'
+      end
+      it '「新規登録」と表示される' do
+        expect(page).to have_content '新規登録'
+      end
+      it 'ニックネームフォームが表示される' do
+        expect(page).to have_field 'user[nickname]'
+      end
+      it 'メールアドレスフォームが表示される' do
+        expect(page).to have_field 'user[email]'
+      end
+      it 'passwordフォームが表示される' do
+        expect(page).to have_field 'user[password]'
+      end
+      it 'password_confirmationフォームが表示される' do
+        expect(page).to have_field 'user[password_confirmation]'
+      end
+      it '登録するボタンが表示される' do
+        expect(page).to have_button '登録する'
+      end
+    end
+
+    context '新規登録成功のテスト' do
+      before do
+        fill_in 'user[nickname]', with: Faker::Lorem.characters(number: 10)
+        fill_in 'user[email]', with: Faker::Internet.email
+        fill_in 'user[password]', with: 'password'
+        fill_in 'user[password_confirmation]', with: 'password'
+      end
+
+      it '正しく新規登録される' do
+        expect { click_button '登録する' }.to change(User.all, :count).by(1)
+      end
+      it '新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている' do
+        click_button '登録する'
+        expect(current_path).to eq '/users/' + User.last.id.to_s
+      end
     end
   end
   
