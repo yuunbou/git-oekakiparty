@@ -170,5 +170,56 @@ describe '[STEP1] ユーザログイン前のテスト' do
       end
     end
   end
-  
+  describe 'ユーザログイン' do
+    let(:user) { create(:user) }
+
+    before do
+      visit new_user_session_path
+    end
+
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/sign_in'
+      end
+      it '「ログイン」と表示される' do
+        expect(page).to have_content 'ログイン'
+      end
+      it 'メールアドレスフォームが表示されている' do
+        expect(page).to have_field 'user[email]'
+      end
+      it 'パスワードフォームが表示される' do
+        expect(page).to have_field 'user[password]'
+      end
+      it 'ログインボタンが表示される' do
+        expect(page).to have_button 'ログイン'
+      end
+      it 'ニックネームフォームは表示されない' do
+        expect(page).not_to have_field 'user[nickname]'
+      end
+    end
+
+    context 'ログイン成功のテスト' do
+      before do
+        fill_in 'user[email]', with: user.email
+        fill_in 'user[password]', with: user.password
+        click_button 'ログイン'
+      end
+
+      it 'ログイン後のリダイレクト先が、トップ画面になっている' do
+        expect(current_path).to eq '/'
+      end
+    end
+
+    context 'ログイン失敗のテスト' do
+      before do
+        fill_in 'user[email]', with: ''
+        fill_in 'user[password]', with: ''
+        click_button 'ログイン'
+      end
+
+      it 'ログインに失敗し、ログイン画面にリダイレクトされる' do
+        expect(current_path).to eq '/users/sign_in'
+      end
+    end
+  end
 end
