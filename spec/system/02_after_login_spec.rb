@@ -5,7 +5,11 @@ describe '[STEP2] ユーザログイン後のテスト' do
   let!(:other_user) { create(:user) }
   let!(:post) { create(:post, user: user) }
   let!(:other_post) { create(:post, user: other_user) }
-
+  let!(:post_tag) { create(:post_tag, tag: tag, post: post) }
+  let!(:other_post_tag) { create(:post_tag, tag: other_tag, post: other_post) }
+  let!(:tag) { create(:tag) }
+  let!(:other_tag) { create(:tag) }
+  
   before do
     visit new_user_session_path
     fill_in 'user[email]', with: user.email
@@ -60,6 +64,14 @@ describe '[STEP2] ユーザログイン後のテスト' do
       it '自分と他人のニックネームが表示される' do
         expect(page).to have_content user.nickname
         expect(page).to have_content other_user.nickname
+      end
+      it '自分の投稿と他人の投稿のタイトルが表示される' do
+        expect(page).to have_content post.title
+        expect(page).to have_content other_post.title
+      end
+      it '自分の投稿と他人の投稿のタグが表示される' do
+        expect(page).to have_content tag.tag_name
+        expect(page).to have_content other_tag.tag_name
       end
     end
   end
