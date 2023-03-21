@@ -16,17 +16,18 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   #validates :caption, allow_blank: true, length: { minimum: 10, maximum: 2000 }
   validates :caption, length: { maximum: 2000 }
-  #validates :is_status, presence: true
+  
 
   # 公開・非公開の設定
+  # scope　：published　= 下記の内容をpublishedという一つのメソッドとして定義
+  # postのテーブルからwhereでis_statusカラムを検索し、true(公開)
   scope :published, -> {where(is_status: true)}
-  #scope　：published　= 下記の内容をpublishedという一つのメソッドとして定義
-  #postのテーブルからwhereでis_statusカラムを検索し、true(公開)
+  # postのテーブルからwhereでis_statusカラムを検索し、false(公開)
   scope :unpublished, -> {where(is_status: false)}
-  #postのテーブルからwhereでis_statusカラムを検索し、false(公開)
-
+  
+  # recent = マイページの投稿一覧の表示件数の定義
   scope :recent, -> { order(id: :desc).limit(5) }
-  #recent = マイページの投稿一覧の表示件数の定義
+  
 
   #今ログインしているのが本人か確認する
   def me?(user_id)
@@ -38,15 +39,14 @@ class Post < ApplicationRecord
     favorites.exists?(user_id: user.id)
   end
 
-  #紐付けながら保存
   def save_tag(sent_tags)
     current_tags = self.tags.pluck(:tag_name) unless self.tags.nil?
     old_tags = current_tags - sent_tags
     new_tags = sent_tags - current_tags
 
     old_tags.each do |old|
+      # self = postモデルのこと
       self.tags.delete Tag.find_by(tag_name: old)
-      #self = postモデルのこと
     end
 
     new_tags.each do |new|
