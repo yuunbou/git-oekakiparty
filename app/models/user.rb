@@ -41,7 +41,7 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit:[width, height]).processed
   end
 
-  #マイページ(show)(posts)アクションで使用
+  #マイページ(show)使用
   def me?(user_id)
     id == user_id
   end
