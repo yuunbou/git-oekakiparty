@@ -11,10 +11,8 @@ class Public::UsersController < ApplicationController
     if @user.email == "guest@example.com" 
       redirect_to root_path
     end
-    # whereで絞り込んだデータからpluckでpost_idの配列を作る
-    # where→order→pluckの順で記述
-    favorites = Favorite.where(user_id: @user.id).order(id: :desc).limit(5).pluck(:post_id)
-    @favorite_posts = Post.find(favorites)
+    # favorite_postsはuserモデルで定義
+    @favorite_posts = @user.favorite_posts.order(id: :desc).limit(5).published
 
     # 今ログインしているのが自分か確認　モデルに定義が記載
     if @user.me?(current_user.id)
@@ -61,7 +59,7 @@ class Public::UsersController < ApplicationController
   def favorites
     @user = User.find(params[:id])
     # ＠favorites_posts..userモデルファイルで定義
-    @favorite_posts = @user.favorite_posts.page(params[:page])
+    @favorite_posts = @user.favorite_posts.page(params[:page]).published
   end
 
   # ユーザーの投稿一覧
