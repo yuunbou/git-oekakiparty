@@ -95,7 +95,6 @@ class Public::PostsController < ApplicationController
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
       @posts = @tag.posts.page(params[:page]).published
-    #＆＆を使うことでxx かつという意味になる
     elsif params[:search].present? && params[:word].present?
       @posts = Post.search(params[:search], params[:word]).order('id DESC').page(params[:page])
     else
@@ -110,8 +109,6 @@ class Public::PostsController < ApplicationController
     params.require(:post).permit(:group_id, :title, :caption, :is_status, :post_type, images: []).merge(user_id: current_user.id)
   end
 
-  # correct_userとは・・レコードを本当にログインユーザの所有しているものかを判別するメソッド
-  # レコードの編集、更新、削除など、持ち主しかやってはいけない機能を作るときによく使う
   def correct_user
     @post = Post.find(params[:id])
     @user = @post.user
