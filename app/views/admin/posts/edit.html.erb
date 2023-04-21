@@ -14,7 +14,6 @@
         <div class="form-group">
           <%= f.text_area :caption, rows: '5', class: "form-control" %>
         </div>
-        <% #NOTE: post_typeがpost_publicだったら表示する %>
         <% if @post.post_type == "post_public" %>
           <div class="form-group">
             <%= f.text_field :tag_name, value: @tag_list, class: 'form-control' %>
