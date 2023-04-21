@@ -1,6 +1,5 @@
 class Post < ApplicationRecord
 
-  #アソシエーション
   has_many_attached :images
   belongs_to :user
   has_many :favorites, dependent: :destroy
@@ -19,13 +18,11 @@ class Post < ApplicationRecord
   
 
   # 公開・非公開の設定
-  # scope　：published　= 下記の内容をpublishedという一つのメソッドとして定義
-  # postのテーブルからwhereでis_statusカラムを検索し、true(公開)
   scope :published, -> {where(is_status: true)}
   # postのテーブルからwhereでis_statusカラムを検索し、false(公開)
   scope :unpublished, -> {where(is_status: false)}
   
-  # recent = マイページの投稿一覧の表示件数の定義
+  # recent = マイページの投稿一覧の表示件数
   scope :recent, -> { order(id: :desc).limit(5) }
   
 
@@ -45,7 +42,6 @@ class Post < ApplicationRecord
     new_tags = sent_tags - current_tags
 
     old_tags.each do |old|
-      # self = postモデルのこと
       self.tags.delete Tag.find_by(tag_name: old)
     end
 
@@ -55,18 +51,16 @@ class Post < ApplicationRecord
     end
   end
   
-  #検索の条件分岐　タグは部分一致と完全一致で検索　キーワードはタイトルとキャプションでのキーワード検索
+  # 検索機能
   def self.search(method,word)
     if method == "partial_match"
       @words = word.split(/[[:blank:]]+/)
       
-      #[]の中にeachの検索結果を収納
       posts = []
       @words.each do |word|
         tags = Tag.where("tag_name LIKE ?", "%#{word}%")
         tag_posts = PostTag.where(tag_id: tags.ids)
         posts = posts + tag_posts.pluck(:post_id)
-        #+(プラス)...concatと同じ意味
       end
       
       @posts = Post.where(id: posts.uniq).where(post_type: 0).published
@@ -78,10 +72,8 @@ class Post < ApplicationRecord
       posts = []
       @words.each do |word|
         posts = posts.concat(Post.where("title LIKE(?) or caption LIKE(?)", "%#{word}%", "%#{word}%").ids)
-        #concat.. 配列同士を結合するメソッド
       end
       @posts = Post.where(id: posts.uniq).where(post_type: 0).published
-      #uniq..重複をなくすメソッド
     else
       @posts = Post.where(post_type: 0).published
     end
