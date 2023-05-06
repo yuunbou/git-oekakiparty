@@ -7,26 +7,21 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   has_many :posts, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  #favorite_postsというないモデルを作成しfavoritesの先にあるpostをとってくる記述（ページネーションを反映させるため）
   has_many :favorite_posts, through: :favorites, :source => :post
   has_many :comments, dependent: :destroy
   has_many :group_users, dependent: :destroy
-  # 所属しているグループをとってくる
   has_many :group_members, through: :group_users, :source => :group
-  #所属しているグループのアソシエーション
   has_many :my_groups, through: :group_users, dependent: :destroy
-  #グループの作成者がownerにするための外部キー
   has_many :groups, foreign_key: :owner_id
 
   validates :nickname, presence: true, length: { in: 2..20 }
   validates :introduction, length: {maximum: 300 }
   validates :email, uniqueness: true
 
-  #ゲストログイン用
+  #ゲストログイン
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64
-      #  nickname を入力必須のため， user.nickname = "ゲスト"
       user.nickname = "ゲストユーザー"
     end
     redirect_to root_path
@@ -47,7 +42,6 @@ class User < ApplicationRecord
   end
 
   #検索フォーム
-  #検索の条件分岐　部分一致と完全一致で検索
   def self.search(method,word)
     if method == "partial_match"
       @users = User.where("nickname LIKE ?", "%#{word}%").where(is_active: true)

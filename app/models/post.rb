@@ -13,7 +13,6 @@ class Post < ApplicationRecord
 
   validates :images, presence: true
   validates :title, presence: true, length: { maximum: 50 }
-  #validates :caption, allow_blank: true, length: { minimum: 10, maximum: 2000 }
   validates :caption, length: { maximum: 2000 }
   
 
