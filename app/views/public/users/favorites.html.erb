@@ -10,7 +10,6 @@
         <% end %>
         </div>
         <div class="card-body" style="border-top:solid">
-          <% #NOTE:　引数には投稿したユーザーに遷移したいので（post.user）と %>
           <%= link_to user_path(post.user) do %>
             <%= image_tag post.user.get_profile_image(50,50), class:"rounded" %>
           <% end %>
@@ -30,7 +29,6 @@
     <% end %>
     </div>
     <div class="mx-auto">
-      <% #TODO: ページネーション追加　%>
       <%= paginate @favorite_posts %>
     </div>
   </div>

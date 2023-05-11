@@ -20,8 +20,6 @@
         <tbody>
           <% @users.each do |user| %>
             <% if user.email == "guest@example.com" %>
-            <% #NOTE: current.user.emailにすると、ログインしているユーザーが表示されないので注意　%>
-            <% #NOTE: 表示の指定をするならuser.emailなどにし ==の後に指定する値を入れる(この場合メアド等)　%>
              <% next %>
             <% end %>
           <tr>

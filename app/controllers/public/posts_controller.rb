@@ -4,7 +4,6 @@ class Public::PostsController < ApplicationController
 
   def new
     @post = current_user.posts.new
-    # ゲストログインは投稿画面に遷移できない
     if current_user.email == "guest@example.com" 
       redirect_to root_path
     end
@@ -12,14 +11,12 @@ class Public::PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    # postにgroup_idがあるかないか？確認
     if @post.group_id.nil?
       # 投稿のタイプ（個人投稿）
       @post.post_type = "post_public"
       tag_list = params[:post][:tag_name].split(/[[:blank:]]/)
       if @post.save
         @post.save_tag(tag_list)
-        #group_idが空の場合はpostのshowに移動
         redirect_to post_path(@post.id), notice: "投稿が成功しました"
       else
         flash.now[:alert] = "投稿が失敗しました"
@@ -29,9 +26,6 @@ class Public::PostsController < ApplicationController
       # 投稿タイプ = "グループ内投稿"
       @post.post_type = "post_private"
       if @post.save
-        # post_privateで投稿されたらgroup_post_index_pathに移動する
-        # もしgroup_idが入っていたらgroup_post_indexに移動する
-        #flash[:notice] = "登録しました"
         redirect_to group_post_index_path(@post.group), notice: "投稿が成功しました"
       else
         @group = @post.group
@@ -89,9 +83,7 @@ class Public::PostsController < ApplicationController
     redirect_to posts_user_path(current_user.id)
   end
 
-  # 検索ページ
   def search_index
-    # タグのリンクを押した場合
     if params[:tag_id].present?
       @tag = Tag.find(params[:tag_id])
       @posts = @tag.posts.page(params[:page]).published

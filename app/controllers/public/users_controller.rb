@@ -6,21 +6,13 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    
-    # ゲストログインはマイページへ遷移できない
     if @user.email == "guest@example.com" 
       redirect_to root_path
     end
-    # favorite_postsはuserモデルで定義
     @favorite_posts = @user.favorite_posts.order(id: :desc).limit(5).published
-
-    # 今ログインしているのが自分か確認　モデルに定義が記載
     if @user.me?(current_user.id)
-      # whereを使ってpostモデルで設定したenumのpost_typeの0:個人投稿を検索し、自分だったら全て表示
       @posts = @user.posts.where(post_type: 0).recent
     else
-      # published = postモデルのscopeで定義した投稿のステータスがtrue(公開)
-      # 公開中のもののみ他のユーザーに表示される 非公開は他のユーザーに表示されない
       @posts = @user.posts.where(post_type: 0).published.recent
     end
     
@@ -39,7 +31,6 @@ class Public::UsersController < ApplicationController
     end
   end
   
-  # 退会画面
   def confirm
     @user = User.find(params[:id])
     if @user.email == "guest@example.com" 
@@ -47,7 +38,6 @@ class Public::UsersController < ApplicationController
     end
   end
   
-  # 退会処理
   def withdraw
     user = User.find(params[:id])
     user.update(is_active: false)
@@ -55,48 +45,34 @@ class Public::UsersController < ApplicationController
     redirect_to root_path
   end
   
-  # いいね一覧
   def favorites
     @user = User.find(params[:id])
-    # ＠favorites_posts..userモデルファイルで定義
     @favorite_posts = @user.favorite_posts.page(params[:page]).published
   end
 
-  # ユーザーの投稿一覧
   def posts
     @user = User.find(params[:id])
-    # pluck = 指定したカラム(この場合post_id)のレコードの配列を取得
     @posts = Post.where(user_id: @user.id).pluck(:id)
-    # 今ログインしているのが自分か確認
     if @user.me?(current_user.id)
-      #whereを使ってpost_typeを検索して投稿した自分だったら全てを表示する
       @posts = @user.posts.where(post_type: 0).order('id DESC').page(params[:page])
     else
-     # 公開中のもののみ他人に表示される 非公開は他人に表示されない
       @posts = @user.posts.where(post_type: 0).order('id DESC').page(params[:page]).published
     end
   end
   
-  # グループ内投稿一覧
   def group_post
     @user = User.find(params[:id])
     @posts = @user.posts.where(post_type: 1).order('id DESC').page(params[:page])
   end
 
-  # グループ一覧
   def groups
     @user = User.find(params[:id])
-    # @group_users = @user.group_users.where(user_id: @user.id).pluck(:group_id)
-    # アソシエーションでgroupは持っているためwhereを使わずとも下記の定義でとってこれる
     @groups = @user.groups.order('id DESC').page(params[:page]).per(10)
     @group_members = @user.group_members.where.not(owner_id: current_user.id).order('id DESC').page(params[:page]).per(10)
   end
   
-  # ユーザー一覧
   def index
     if params[:search].present? && params[:word].present?
-      # Userモデルファイルにsearchとwordを定義
-      # ページネーション。。。per()で個別にページネーションを指定
       @users = User.search(params[:search], params[:word]).where(is_active:true).page(params[:page]).per(10)
     else
       @users = User.page(params[:page]).where(is_active: true).per(10)
@@ -109,13 +85,11 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:nickname, :introduction, :profile_image)
   end
 
-  # correct_user = レコードを本当にログインユーザの所有しているものかを判別するメソッド
   def correct_user
     @user = User.find(params[:id])
     redirect_to user_path(current_user.id) unless @user == current_user
   end
 
-  # favorites用
   def set_user
     @user = User.find(params[:id])
   end
