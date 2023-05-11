@@ -40,11 +40,9 @@
         <p class="text-muted"><%= @post.created_at.strftime('%Y/%m/%d %H:%M:%S') %></br></p>
         <%= @post.caption %>
       </div>
-      <% #NOTE: ゲストユーザーは表示しない %>
       <% if @post.post_type == "post_public" %>
         <% if current_user.email != "guest@example.com"  %>
           <div class="form-group">
-            <%# いいね機能 %>
             <% if @post.favorited_by?(current_user) %>
               <p>
                 <%= link_to post_favorites_path(@post), method: :delete do %>
@@ -65,7 +63,6 @@
   </div>
   <div class="row m-1">
     <div class="form-group col-8 col-xs-10">
-      <% #NOTE: ゲストログインなら表示させない %>
       <% if current_user.email != "guest@example.com"  %>
         <%= form_with model:[@post, @comment] do |f| %>
           <%= f.text_area :comment, row: '5', placeholder: "コメントする", rows: "4", class:"form-control col-xs-7 mb-2" %>

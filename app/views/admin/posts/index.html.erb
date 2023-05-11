@@ -23,7 +23,6 @@
         <% end %>
         </div>
         <div class="card-body" style="border-top:solid">
-          <% #NOTE:　引数には投稿したユーザーに遷移したいので（post.user）と記述する　%>
           <%= link_to admin_user_path(post.user) do %>
             <%= image_tag post.user.get_profile_image(50,50), class:"rounded" %>
           <% end %>
@@ -47,7 +46,6 @@
   </div>
   <div class="row">
     <div class="col-xs-12 mx-auto">
-      <% #NOTE: size..数　@postsの数が０の場合メッセージを表示する　%>
       <% if @posts.size == 0 %>
         <p class="text-center font-weight-bold">検索結果がありませんでした</p>
       <% end %>

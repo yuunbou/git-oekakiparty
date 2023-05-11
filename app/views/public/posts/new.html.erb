@@ -13,7 +13,6 @@
         <%= render 'layouts/error_messages', resource: f.object %>
         <div class="form-group">
           <%= f.file_field :images, multiple: true, accept: "images/*", onchange: "loadImage()", class: 'form-control-file text-center push'  %>
-          <% #NOTE: 複数画像のアップロード  %>
           <p id="preview"></p>
           <%= render "loadimage" %>
         </div>
