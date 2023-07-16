@@ -11,9 +11,9 @@ class Public::UsersController < ApplicationController
     end
     @favorite_posts = @user.favorite_posts.order(id: :desc).limit(5).published
     if @user.me?(current_user.id)
-      @posts = @user.posts.where(post_type: 0).recent
+      @posts = @user.posts.where(post_type: 0).order(id: :desc).limit(5)
     else
-      @posts = @user.posts.where(post_type: 0).published.recent
+      @posts = @user.posts.where(post_type: 0).order(id: :desc).limit(5).published
     end
     
   end
